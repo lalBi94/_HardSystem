@@ -55,9 +55,9 @@
                 <form>
                     <button class="btn-request" class="main-items2" type="submit" formaction="./clients/eClientLogin.php">Connectez-vous !</button>
                 <form>
-                <form>
+                <!-- <form>
                     <button class="btn-request" class="main-items2" type="submit" formaction="./admin/admin.php">Admin Panel</button>
-                </form>
+                </form> -->
             </div>
         </main>
     </body>

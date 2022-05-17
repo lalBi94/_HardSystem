@@ -33,7 +33,7 @@
             <li class="nav-item"><a href="#">Achat</a></li>
             <li class="nav-item"><a href="#">Vente</a></li>
             <p style="color: white;">|</p>
-            <?php echo "<a class='account' href='./account_info.php' style='color: white; margin-left: 2vw; text-decoration: none;'><b>".$_SESSION['username']."</b></a>"; ?>
+            <?php echo "<a class='account' href='./account_info.php' style='color: white; margin-left: 2vw; text-decoration: none;'><b>".$_SESSION['login']."</b></a>"; ?>
             <?php 
                 echo "<form style='margin-left: 1.5%; margin-right: 2%'>";
                 echo "<button class='btn-dis' type='submit' formaction='../../clients/process/disconnect.php'>"."Deconnexion"."</button>";

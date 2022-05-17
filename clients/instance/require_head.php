@@ -1,4 +1,4 @@
-<title>Hard System - <?php echo $_SESSION['username'];?></title>
+<title>Hard System - <?php echo $_SESSION['login'];?></title>
 
 <link rel="stylesheet" href="../../style/all.css">
 <link rel="stylesheet" href="../../style/nav.css">

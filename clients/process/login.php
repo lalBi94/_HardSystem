@@ -1,5 +1,12 @@
 <?php
     session_start();
+
+    $api = require("../process/clients_api.php");
+    if(!$api){
+        echo "Echec de la connexion vers l'api";
+        die;
+    }
+
     $connect = require("../../db/db_connect.php");
     if(!$connect){
         echo "echec de la connexion a la bdd";
@@ -8,8 +15,8 @@
         die;
     }
 
-    $user = $_POST['pseudo'];
-    $req = mysqli_query($db, "select login from Customer where login='$user'");
+    $log = $_POST['pseudo'];
+    $req = mysqli_query($db, "select login, id from Customer where login='$log'");
 
     if(mysqli_num_rows($req) == 0){
         echo "Aucun utilisateur trouve !";
@@ -17,13 +24,11 @@
         die;
     }
     
-    while(mysqli_fetch_assoc($req)){
-        //session
-        $_SESSION['username'] = $user;
+    while($fetch = mysqli_fetch_assoc($req)){
+        $_SESSION['login'] = $log;
         $_SESSION['sess_id'] = session_id();
-
-        //cookie
-        //setcookie("firstname");
+        $_SESSION['stash'] = getStash($log);
+        $_SESSION['id_client'] = $fetch['id'];
 
         header ("Location: ../instance/index_instance.php");
     }

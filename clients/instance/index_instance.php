@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php 
+    session_start();
+    require("../process/clients_api.php"); 
+?>
 
 <!DOCTYPE html>
 <html>
@@ -25,7 +28,7 @@
             }
 
             #main-container p{
-                font-size: 3vw;
+                font-size: 2.6vw;
                 font-weight: bold;
                 font-family: 'Courier New', Courier, monospace;
                 text-transform: uppercase;
@@ -55,7 +58,7 @@
         <?php require('./require_nav.php'); ?>
 
         <div id="main-container">
-            <p class="text" class="main-items1">Salut <?php echo $_SESSION['username'];?> !</p>
+            <p class="text" class="main-items1">Content de vous voir <?php echo $_SESSION['login'];?> !</p>
             
             <form>
                 <button class="btn-acc" class="main-items2" type="submit" formaction="./account_info.php">Consulter votre activite</button>
