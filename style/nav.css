@@ -1,0 +1,50 @@
+/* using color : #0a1b2f blue and #ffe72c yellow */
+
+#nav-container{
+    background-color: #0a1b2f;
+}
+
+#nav-menu-container{
+    padding: 1rem 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav-item{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.1vw;
+    font-family: 'Courier New', Courier, monospace;
+
+    list-style-type: none;
+    margin-right: 2rem;
+}  
+
+.nav-item:first-child{
+    margin-right: auto;
+    margin-left : 2rem;
+}
+
+.nav-item img{
+    width: 14rem;
+    height: 4rem;
+}
+
+li:hover {
+    display: inline-block;
+    transform: scale(1.1);
+    transition: 1s;
+    border-bottom: 3px solid #ffe72c;
+}
+
+.nav-item a{
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    letter-spacing: 1.2px;
+}
+
+.account-information:hover{
+    border-bottom: 0px solid #ffe72c;
+}

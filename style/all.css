@@ -1,0 +1,58 @@
+/* using color : #0a1b2f blue and #ffe72c yellow */
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body{
+    background-image: url("../assets/layout/layout-index.svg");
+    height: 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.text{
+    font-size: 1.1vw;
+}
+
+body{
+    height: 100vh;
+}
+
+.btn-request{
+    background-color: #0a1b2f;
+    color: white;
+    border: none;
+    border-radius: 2.3px;
+    padding: 11px;
+    font-size: 1vw;
+}
+
+.btn-request:hover{
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+.fields-box-large{
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 40vw;
+    height: 9vw;
+    padding: 1.5%;
+    font-size: 1em;
+}
+
+.fields-box-email{
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 20vw;
+    height: 1vw;
+    padding: 2%;
+    font-size: 1em;
+}

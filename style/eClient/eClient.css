@@ -1,0 +1,27 @@
+.checkbox{
+    accent-color: #0a1b2f;
+}
+
+#flex-container{
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+}
+
+.flex-1{
+    justify-content: center;
+    text-align: center;
+}
+
+.form-1{
+    margin-top: 5%;
+    border: 1px black solid;
+    border-radius: 4px;
+    padding: 2%;
+    width: 50vw;
+    margin-left: 25vw;
+}
+
+.content{
+    margin-left: 2%;
+}
