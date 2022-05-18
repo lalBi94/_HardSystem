@@ -31,7 +31,7 @@
         <ul id="nav-menu-container">
             <a class ="nav-item" href="./index_instance.php"><img class="image-logo" src="../../assets/logos/nav-con.png"></a>
             <li class="nav-item"><a href="#">Achat</a></li>
-            <li class="nav-item"><a href="#">Vente</a></li>
+            <li class="nav-item"><a href="./sell_instance.php">Vente</a></li>
             <p style="color: white;">|</p>
             <?php echo "<a class='account' href='./account_info.php' style='color: white; margin-left: 2vw; text-decoration: none;'><b>".$_SESSION['login']."</b></a>"; ?>
             <?php 

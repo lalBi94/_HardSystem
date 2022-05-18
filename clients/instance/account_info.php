@@ -14,13 +14,14 @@
             #elem-container{
                 margin: 0 auto;
                 margin-top: 2%;
-                width: 100px;
+                width: 400px;
             }
 
             table, th, td, tr{
                 border: 1px solid black;
                 border-collapse: collapse;
                 padding: 10px;
+                text-align: center;
             }
 
             .stash{
@@ -34,7 +35,7 @@
         </style>
 
         <?php require('./require_nav.php'); ?>
-        <p class='stash'>Cagnotte : <?php echo $_SESSION['stash'];?></p>
+        <p class='stash'>Cagnotte : <?php echo $_SESSION['stash'];?>€</p>
         <div id='elem-container'>
             <table>
                 <tr><th>Nom de l'element</th><th>Quantite</th></tr>
@@ -45,11 +46,15 @@
                     $nb = count($elem);
 
                     while($i != $nb){
-                        echo "<tr>"."<td>".$elem[$i]."</td>"."<td>".$qte[$i]."</td>"."</tr>";
+                        echo "<tr>"."<td>".$elem[$i]."</td>"."<td>".$qte[$i]." mg</td>"."</tr>";
                         $i++;
                     }
                 ?>
             </table>
+            <form style="margin-top: 10%;">
+                <button class='btn-request' type='submit' formaction='./showHistorySells.php'>Consulter l'historique de vos ventes</button>
+                <button style='margin-top: 3.5%;' class='btn-request' onsubmit='./process/showHistoryBuy.php'>Consulter l'historique de vos ventes</button>
+            <form>
         </div>
     </body>
 </html>
