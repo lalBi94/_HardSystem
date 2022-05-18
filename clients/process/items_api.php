@@ -70,4 +70,100 @@
 
         return $foo;
     }
+
+    function getAllSellIdsUser($login){
+        require("../../db/db_connect.php");
+        $id_client = getLoginId($login);
+
+        $req = mysqli_query($db, "select nsell from customersell where client='$id_client'");
+        if(!$req){
+            echo "echec de la fonction getAllSellIdsUser()";
+            return false;
+        }
+
+        $foo;
+        $stop_while = mysqli_num_rows($req);
+        $i = 0;
+        
+        while($i != $stop_while){
+            while($fetch = mysqli_fetch_assoc($req)){
+                $foo[$i] = $fetch['nsell'];
+                $i++;
+            }
+        }
+
+        return $foo;
+    }
+
+    function getAllQuantityItemsSellUser($login){
+        require("../../db/db_connect.php");
+        $id_client = getLoginId($login);
+
+        $req = mysqli_query($db, "select quantity from customersell where client='$id_client'");
+        if(!$req){
+            echo "echec de la fonction getAllQuantityItemsSellUser()";
+            return false;
+        }
+
+        $foo;
+        $stop_while = mysqli_num_rows($req);
+        $i = 0;
+        
+        while($i != $stop_while){
+            while($fetch = mysqli_fetch_assoc($req)){
+                $foo[$i] = $fetch['quantity'];
+                $i++;
+            }
+        }
+
+        return $foo;
+    }
+
+    function getAllDateItemsSellUser($login){
+        require("../../db/db_connect.php");
+        $id_client = getLoginId($login);
+
+        $req = mysqli_query($db, "select date_sell from customersell where client='$id_client'");
+        if(!$req){
+            echo "echec de la fonction getAllDateItemsSellUser()";
+            return false;
+        }
+
+        $foo;
+        $stop_while = mysqli_num_rows($req);
+        $i = 0;
+        
+        while($i != $stop_while){
+            while($fetch = mysqli_fetch_assoc($req)){
+                $foo[$i] = $fetch['date_sell'];
+                $i++;
+            }
+        }
+
+        return $foo;
+    }
+
+    function getAllTimeItemsSellUser($login){
+        require("../../db/db_connect.php");
+        $id_client = getLoginId($login);
+
+        $req = mysqli_query($db, "select time_sell from customersell where client='$id_client'");
+        if(!$req){
+            echo "echec de la fonction getAllTimeItemsSellUser()";
+            return false;
+        }
+
+        $foo;
+        $stop_while = mysqli_num_rows($req);
+        $i = 0;
+        
+        while($i != $stop_while){
+            while($fetch = mysqli_fetch_assoc($req)){
+                $foo[$i] = $fetch['time_sell'];
+                $i++;
+            }
+        }
+
+        return $foo;
+    }
 ?>
