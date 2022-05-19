@@ -2,10 +2,11 @@
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost
--- Généré le : mer. 11 mai 2022 à 08:44
--- Version du serveur :  10.5.5-MariaDB
--- Version de PHP : 7.4.9
+-- Hôte : 127.0.0.1:3306
+-- Généré le : jeu. 19 mai 2022 à 00:19
+-- Version du serveur :  5.7.31
+-- Version de PHP : 7.3.21
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -17,147 +18,232 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `senart21`
+-- Base de données : `hardsys`
 --
+
 -- --------------------------------------------------------
---
--- Structure de la table `Business`
---
-CREATE TABLE `Business` (
-  `id` int(11) NOT NULL,
-  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `Business`
+-- Structure de la table `business`
 --
-INSERT INTO `Business` (`id`, `name`, `country`) VALUES
+
+DROP TABLE IF EXISTS `business`;
+CREATE TABLE IF NOT EXISTS `business` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_business` (`country`,`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `business`
+--
+
+INSERT INTO `business` (`id`, `name`, `country`) VALUES
 (1, 'Ecologic', 'France'),
 (2, 'Veolia', 'France'),
 (3, 'yes yes', 'France');
 
 -- --------------------------------------------------------
+
 --
--- Structure de la table `BusinessBuy`
+-- Structure de la table `businessbuy`
 --
-CREATE TABLE `BusinessBuy` (
+
+DROP TABLE IF EXISTS `businessbuy`;
+CREATE TABLE IF NOT EXISTS `businessbuy` (
   `business` int(11) NOT NULL,
   `typeItem` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `price` int(11) NOT NULL COMMENT 'price per unit in euros'
+  `price` int(11) NOT NULL COMMENT 'price per unit in euros',
+  PRIMARY KEY (`business`,`typeItem`),
+  KEY `typeItem` (`typeItem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='The business wants to buy quantity of item at unit price';
 
 --
--- Déchargement des données de la table `BusinessBuy`
+-- Déchargement des données de la table `businessbuy`
 --
-INSERT INTO `BusinessBuy` (`business`, `typeItem`, `quantity`, `price`) VALUES
+
+INSERT INTO `businessbuy` (`business`, `typeItem`, `quantity`, `price`) VALUES
 (3, 1, 38, 20);
 
 -- --------------------------------------------------------
+
 --
--- Structure de la table `BusinessSell`
+-- Structure de la table `businesssell`
 --
-CREATE TABLE `BusinessSell` (
+
+DROP TABLE IF EXISTS `businesssell`;
+CREATE TABLE IF NOT EXISTS `businesssell` (
   `business` int(11) NOT NULL,
   `typeItem` int(11) NOT NULL,
   `quantity` int(11) NOT NULL COMMENT 'number of items on offer',
-  `price` int(11) NOT NULL COMMENT 'price per unit'
+  `price` int(11) NOT NULL COMMENT 'price per unit',
+  PRIMARY KEY (`business`,`typeItem`),
+  KEY `typeItem` (`typeItem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='the business wants to sell quantity of item at unit price';
 
 --
--- Déchargement des données de la table `BusinessSell`
+-- Déchargement des données de la table `businesssell`
 --
-INSERT INTO `BusinessSell` (`business`, `typeItem`, `quantity`, `price`) VALUES
+
+INSERT INTO `businesssell` (`business`, `typeItem`, `quantity`, `price`) VALUES
 (3, 1, 42, 65);
 
 -- --------------------------------------------------------
---
--- Structure de la table `Customer`
---
-CREATE TABLE `Customer` (
-  `id` bigint(20) NOT NULL,
-  `login` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `stash` smallint(6) NOT NULL COMMENT 'no more than 65000 euros'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `Customer`
+-- Structure de la table `customer`
 --
-INSERT INTO `Customer` (`id`, `login`, `stash`) VALUES
+
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE IF NOT EXISTS `customer` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `login` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `stash` smallint(6) NOT NULL COMMENT 'no more than 65000 euros',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `login` (`login`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `customer`
+--
+
+INSERT INTO `customer` (`id`, `login`, `stash`) VALUES
 (1, 'golgot77', 42),
-(2, 'JeanMi91', 33);
+(2, 'JeanMi91', 33),
+(9, 'bilal_94', 0);
 
 -- --------------------------------------------------------
+
 --
--- Structure de la table `CustomerExtraction`
+-- Structure de la table `customerextraction`
 --
-CREATE TABLE `CustomerExtraction` (
+
+DROP TABLE IF EXISTS `customerextraction`;
+CREATE TABLE IF NOT EXISTS `customerextraction` (
   `Customer` bigint(20) NOT NULL,
   `element` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL COMMENT 'in mg'
+  `quantity` int(11) NOT NULL COMMENT 'in mg',
+  KEY `Customer` (`Customer`),
+  KEY `element` (`element`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `CustomerExtraction`
+-- Déchargement des données de la table `customerextraction`
 --
-INSERT INTO `CustomerExtraction` (`Customer`, `element`, `quantity`) VALUES
+
+INSERT INTO `customerextraction` (`Customer`, `element`, `quantity`) VALUES
 (1, 13, 25000),
-(1, 79, 340);
+(1, 79, 340),
+(9, 13, 1000),
+(9, 29, 560),
+(9, 65, 200);
 
 -- --------------------------------------------------------
+
 --
--- Structure de la table `CustomerProtectedData`
+-- Structure de la table `customerprotecteddata`
 --
-CREATE TABLE `CustomerProtectedData` (
+
+DROP TABLE IF EXISTS `customerprotecteddata`;
+CREATE TABLE IF NOT EXISTS `customerprotecteddata` (
   `id` bigint(20) NOT NULL,
   `surname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `firstname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'can not be shared between accounts'
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'can not be shared between accounts',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `CustomerProtectedData`
+-- Déchargement des données de la table `customerprotecteddata`
 --
-INSERT INTO `CustomerProtectedData` (`id`, `surname`, `firstname`, `email`) VALUES
+
+INSERT INTO `customerprotecteddata` (`id`, `surname`, `firstname`, `email`) VALUES
 (1, 'Tartenpion', 'Cunégonde', 'cunegonde.tartenpion@toto.fr'),
-(2, 'Erraj', 'Jean-Michel', 'synthe@cool.fr');
+(2, 'Erraj', 'Jean-Michel', 'synthe@cool.fr'),
+(9, 'Bilou', 'Bdj', 'salut@fefse.fr');
 
 -- --------------------------------------------------------
+
 --
--- Structure de la table `ExtractionFromTypeItem`
+-- Structure de la table `customersell`
 --
-CREATE TABLE `ExtractionFromTypeItem` (
+
+DROP TABLE IF EXISTS `customersell`;
+CREATE TABLE IF NOT EXISTS `customersell` (
+  `nsell` int(11) NOT NULL AUTO_INCREMENT,
+  `client` int(11) DEFAULT NULL,
+  `item` int(11) DEFAULT NULL,
+  `price` float DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `date_sell` date DEFAULT NULL,
+  `time_sell` time DEFAULT NULL,
+  PRIMARY KEY (`nsell`),
+  KEY `client` (`client`),
+  KEY `item` (`item`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `customersell`
+--
+
+INSERT INTO `customersell` (`nsell`, `client`, `item`, `price`, `quantity`, `date_sell`, `time_sell`) VALUES
+(3, 9, 1, 200, 1, '2022-05-18', '02:39:40'),
+(4, 9, 17, 200, 2, '2022-05-18', '21:12:25'),
+(5, 9, 2, 500, 4, '2022-05-18', '21:12:33');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `extractionfromtypeitem`
+--
+
+DROP TABLE IF EXISTS `extractionfromtypeitem`;
+CREATE TABLE IF NOT EXISTS `extractionfromtypeitem` (
   `typeItem` int(11) NOT NULL,
   `element` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL COMMENT 'mg (thousandth of a gram)'
+  `quantity` int(11) NOT NULL COMMENT 'mg (thousandth of a gram)',
+  PRIMARY KEY (`typeItem`,`element`) USING BTREE,
+  KEY `element` (`element`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `ExtractionFromTypeItem`
+-- Déchargement des données de la table `extractionfromtypeitem`
 --
-INSERT INTO `ExtractionFromTypeItem` (`typeItem`, `element`, `quantity`) VALUES
+
+INSERT INTO `extractionfromtypeitem` (`typeItem`, `element`, `quantity`) VALUES
 (1, 13, 25000),
 (1, 29, 15000),
 (1, 46, 15),
 (1, 47, 340),
 (1, 78, 1),
-(1, 79, 34);
+(1, 79, 34),
+(17, 13, 5000);
 
 -- --------------------------------------------------------
+
 --
--- Structure de la table `Mendeleiev`
+-- Structure de la table `mendeleiev`
 --
-CREATE TABLE `Mendeleiev` (
+
+DROP TABLE IF EXISTS `mendeleiev`;
+CREATE TABLE IF NOT EXISTS `mendeleiev` (
   `Z` int(11) NOT NULL,
   `symbol` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`Z`),
+  UNIQUE KEY `symbol` (`symbol`),
+  UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `Mendeleiev`
+-- Déchargement des données de la table `mendeleiev`
 --
-INSERT INTO `Mendeleiev` (`Z`, `symbol`, `name`) VALUES
+
+INSERT INTO `mendeleiev` (`Z`, `symbol`, `name`) VALUES
 (13, 'Al', 'Aluminium'),
 (28, 'Ni', 'Nickel'),
 (29, 'Cu', 'Copper'),
@@ -174,176 +260,120 @@ INSERT INTO `Mendeleiev` (`Z`, `symbol`, `name`) VALUES
 (79, 'Au', 'gold');
 
 -- --------------------------------------------------------
---
--- Structure de la table `TypeItem`
---
-CREATE TABLE `TypeItem` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `TypeItem`
+-- Structure de la table `picture`
 --
-INSERT INTO `TypeItem` (`id`, `name`) VALUES
+
+DROP TABLE IF EXISTS `picture`;
+CREATE TABLE IF NOT EXISTS `picture` (
+  `id_url` int(11) NOT NULL AUTO_INCREMENT,
+  `item` int(11) NOT NULL,
+  `url` text NOT NULL,
+  PRIMARY KEY (`id_url`),
+  KEY `item` (`item`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `picture`
+--
+
+INSERT INTO `picture` (`id_url`, `item`, `url`) VALUES
+(1, 1, 'https://64.media.tumblr.com/a044f5b96803fcf620f0f68921963189/cf8df79bc8e7c906-82/s540x810/a1c0397f988454024d7cdf1c586c9f8051743996.pnj'),
+(2, 3, 'https://64.media.tumblr.com/81499487aa52b14f920ba39d34764471/a2aa9b7cfc4f7cce-a7/s500x750/3d41244d5e7491ab68bb64d1d3aaa3da4d1afc43.jpg'),
+(3, 2, 'https://64.media.tumblr.com/8e2e8fe4eae79fdf8daff4a2638ba08a/95fe767f1e84e861-78/s540x810/616eb3825eff68aa01a05a36200cd239fe84ea8e.pnj'),
+(5, 17, 'https://64.media.tumblr.com/e49a899f113557ec77a65059d8c98433/132c793828f472d3-e4/s540x810/5627395ad367672b0321aa1636f812a26a07c964.pnj');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `typeitem`
+--
+
+DROP TABLE IF EXISTS `typeitem`;
+CREATE TABLE IF NOT EXISTS `typeitem` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `typeitem`
+--
+
+INSERT INTO `typeitem` (`id`, `name`) VALUES
 (3, 'dell latitude 7490'),
 (2, 'Fairphone 2'),
+(17, 'Galaxie TAB'),
 (1, 'Iphone 5');
 
 -- --------------------------------------------------------
+
 --
--- Structure de la table `TypeItemDetails`
+-- Structure de la table `typeitemdetails`
 --
-CREATE TABLE `TypeItemDetails` (
+
+DROP TABLE IF EXISTS `typeitemdetails`;
+CREATE TABLE IF NOT EXISTS `typeitemdetails` (
   `typeItem` int(11) NOT NULL,
   `attribute` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL
+  `value` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`typeItem`,`attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `TypeItemDetails`
+-- Déchargement des données de la table `typeitemdetails`
 --
-INSERT INTO `TypeItemDetails` (`typeItem`, `attribute`, `value`) VALUES
+
+INSERT INTO `typeitemdetails` (`typeItem`, `attribute`, `value`) VALUES
 (1, 'main camera', '8 Mpx'),
 (1, 'screen', '4 in, 1136 × 640 '),
 (1, 'second camera', '1.2 Mpx');
 
 --
--- Index pour les tables déchargées
---
---
--- Index pour la table `Business`
---
-ALTER TABLE `Business`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_business` (`country`,`name`);
-
---
--- Index pour la table `BusinessBuy`
---
-ALTER TABLE `BusinessBuy`
-  ADD PRIMARY KEY (`business`,`typeItem`),
-  ADD KEY `typeItem` (`typeItem`);
-
---
--- Index pour la table `BusinessSell`
---
-ALTER TABLE `BusinessSell`
-  ADD PRIMARY KEY (`business`,`typeItem`),
-  ADD KEY `typeItem` (`typeItem`);
-
---
--- Index pour la table `Customer`
---
-ALTER TABLE `Customer`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `login` (`login`);
-
---
--- Index pour la table `CustomerExtraction`
---
-ALTER TABLE `CustomerExtraction`
-  ADD KEY `Customer` (`Customer`),
-  ADD KEY `element` (`element`);
-
---
--- Index pour la table `CustomerProtectedData`
---
-ALTER TABLE `CustomerProtectedData`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- Index pour la table `ExtractionFromTypeItem`
---
-ALTER TABLE `ExtractionFromTypeItem`
-  ADD PRIMARY KEY (`typeItem`,`element`) USING BTREE,
-  ADD KEY `element` (`element`);
-
---
--- Index pour la table `Mendeleiev`
---
-ALTER TABLE `Mendeleiev`
-  ADD PRIMARY KEY (`Z`),
-  ADD UNIQUE KEY `symbol` (`symbol`),
-  ADD UNIQUE KEY `name` (`name`);
-
---
--- Index pour la table `TypeItem`
---
-ALTER TABLE `TypeItem`
-  ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD UNIQUE KEY `name` (`name`);
-
---
--- Index pour la table `TypeItemDetails`
---
-ALTER TABLE `TypeItemDetails`
-  ADD PRIMARY KEY (`typeItem`,`attribute`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
---
--- AUTO_INCREMENT pour la table `Business`
---
-ALTER TABLE `Business`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT pour la table `Customer`
---
-ALTER TABLE `Customer`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT pour la table `TypeItem`
---
-ALTER TABLE `TypeItem`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
 -- Contraintes pour les tables déchargées
 --
---
--- Contraintes pour la table `BusinessBuy`
---
-ALTER TABLE `BusinessBuy`
-  ADD CONSTRAINT `BusinessBuy_ibfk_1` FOREIGN KEY (`business`) REFERENCES `Business` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `BusinessBuy_ibfk_2` FOREIGN KEY (`typeItem`) REFERENCES `TypeItem` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `BusinessSell`
+-- Contraintes pour la table `businessbuy`
 --
-ALTER TABLE `BusinessSell`
-  ADD CONSTRAINT `BusinessSell_ibfk_1` FOREIGN KEY (`business`) REFERENCES `Business` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `BusinessSell_ibfk_2` FOREIGN KEY (`typeItem`) REFERENCES `TypeItem` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `businessbuy`
+  ADD CONSTRAINT `BusinessBuy_ibfk_1` FOREIGN KEY (`business`) REFERENCES `business` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `BusinessBuy_ibfk_2` FOREIGN KEY (`typeItem`) REFERENCES `typeitem` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `CustomerExtraction`
+-- Contraintes pour la table `businesssell`
 --
-ALTER TABLE `CustomerExtraction`
-  ADD CONSTRAINT `CustomerExtraction_ibfk_1` FOREIGN KEY (`Customer`) REFERENCES `Customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `CustomerExtraction_ibfk_2` FOREIGN KEY (`element`) REFERENCES `Mendeleiev` (`Z`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `businesssell`
+  ADD CONSTRAINT `BusinessSell_ibfk_1` FOREIGN KEY (`business`) REFERENCES `business` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `BusinessSell_ibfk_2` FOREIGN KEY (`typeItem`) REFERENCES `typeitem` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `CustomerProtectedData`
+-- Contraintes pour la table `customerextraction`
 --
-ALTER TABLE `CustomerProtectedData`
-  ADD CONSTRAINT `CustomerProtectedData_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `customerextraction`
+  ADD CONSTRAINT `CustomerExtraction_ibfk_1` FOREIGN KEY (`Customer`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `CustomerExtraction_ibfk_2` FOREIGN KEY (`element`) REFERENCES `mendeleiev` (`Z`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `ExtractionFromTypeItem`
+-- Contraintes pour la table `customerprotecteddata`
 --
-ALTER TABLE `ExtractionFromTypeItem`
-  ADD CONSTRAINT `ExtractionFromTypeItem_ibfk_1` FOREIGN KEY (`element`) REFERENCES `Mendeleiev` (`Z`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ExtractionFromTypeItem_ibfk_2` FOREIGN KEY (`typeItem`) REFERENCES `TypeItem` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `customerprotecteddata`
+  ADD CONSTRAINT `CustomerProtectedData_ibfk_1` FOREIGN KEY (`id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `TypeItemDetails`
+-- Contraintes pour la table `extractionfromtypeitem`
 --
-ALTER TABLE `TypeItemDetails`
-  ADD CONSTRAINT `TypeItemDetails_ibfk_1` FOREIGN KEY (`typeItem`) REFERENCES `TypeItem` (`id`);
+ALTER TABLE `extractionfromtypeitem`
+  ADD CONSTRAINT `ExtractionFromTypeItem_ibfk_1` FOREIGN KEY (`element`) REFERENCES `mendeleiev` (`Z`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ExtractionFromTypeItem_ibfk_2` FOREIGN KEY (`typeItem`) REFERENCES `typeitem` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `typeitemdetails`
+--
+ALTER TABLE `typeitemdetails`
+  ADD CONSTRAINT `TypeItemDetails_ibfk_1` FOREIGN KEY (`typeItem`) REFERENCES `typeitem` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -71,7 +71,7 @@
         return $foo;
     }
 
-    function getAllSellIdsUser($login){
+    function getAllSellIdsUser($login){ //extrait le nsell de la vente de l'user
         require("../../db/db_connect.php");
         $id_client = getLoginId($login);
 
@@ -95,7 +95,7 @@
         return $foo;
     }
 
-    function getAllQuantityItemsSellUser($login){
+    function getAllQuantityItemsSellUser($login){ //extrait la quantity de la vente de l'user
         require("../../db/db_connect.php");
         $id_client = getLoginId($login);
 
@@ -119,7 +119,7 @@
         return $foo;
     }
 
-    function getAllDateItemsSellUser($login){
+    function getAllDateItemsSellUser($login){ //extrait la date de la vente de l'user
         require("../../db/db_connect.php");
         $id_client = getLoginId($login);
 
@@ -143,7 +143,7 @@
         return $foo;
     }
 
-    function getAllTimeItemsSellUser($login){
+    function getAllTimeItemsSellUser($login){ //extrait l'heure minute seconde de la vente de l'user
         require("../../db/db_connect.php");
         $id_client = getLoginId($login);
 
@@ -165,5 +165,38 @@
         }
 
         return $foo;
+    }
+
+    function getTheAllOfNameItem(){ //recuperer le nom de tous les items
+        require("../../db/db_connect.php");
+
+        $foo;
+        $i = 0;
+
+        $to_get = mysqli_query($db, "select name from typeitem");
+        if(!$to_get){
+            echo "echec de la fonction getTheAllOfNameItem()";
+            return false;
+        }
+
+        $stop_while = mysqli_num_rows($to_get);
+
+        while($i != $stop_while){
+            while($fetch = mysqli_fetch_assoc($to_get)){
+                $foo[$i] = $fetch['name'];
+                $i++;
+            }
+        }
+
+        return $foo;
+    }
+
+    function getPicture($id){ //recupere l'image sous forme d'url de typeitem(id) rentree en parametre
+        require("../../db/db_connect.php");
+        
+        $to_get = mysqli_query($db, "select url from picture where item='$id'");
+        $fetch = mysqli_fetch_assoc($to_get);
+        
+        return $fetch['url'];
     }
 ?>
