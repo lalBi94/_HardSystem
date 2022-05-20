@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 19 mai 2022 à 00:19
+-- Généré le : ven. 20 mai 2022 à 10:41
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `hardsys`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `adminuser`
+--
+
+DROP TABLE IF EXISTS `adminuser`;
+CREATE TABLE IF NOT EXISTS `adminuser` (
+  `user` int(11) NOT NULL,
+  KEY `user` (`user`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `adminuser`
+--
+
+INSERT INTO `adminuser` (`user`) VALUES
+(9);
 
 -- --------------------------------------------------------
 
@@ -280,7 +299,6 @@ CREATE TABLE IF NOT EXISTS `picture` (
 
 INSERT INTO `picture` (`id_url`, `item`, `url`) VALUES
 (1, 1, 'https://64.media.tumblr.com/a044f5b96803fcf620f0f68921963189/cf8df79bc8e7c906-82/s540x810/a1c0397f988454024d7cdf1c586c9f8051743996.pnj'),
-(2, 3, 'https://64.media.tumblr.com/81499487aa52b14f920ba39d34764471/a2aa9b7cfc4f7cce-a7/s500x750/3d41244d5e7491ab68bb64d1d3aaa3da4d1afc43.jpg'),
 (3, 2, 'https://64.media.tumblr.com/8e2e8fe4eae79fdf8daff4a2638ba08a/95fe767f1e84e861-78/s540x810/616eb3825eff68aa01a05a36200cd239fe84ea8e.pnj'),
 (5, 17, 'https://64.media.tumblr.com/e49a899f113557ec77a65059d8c98433/132c793828f472d3-e4/s540x810/5627395ad367672b0321aa1636f812a26a07c964.pnj');
 
@@ -303,7 +321,6 @@ CREATE TABLE IF NOT EXISTS `typeitem` (
 --
 
 INSERT INTO `typeitem` (`id`, `name`) VALUES
-(3, 'dell latitude 7490'),
 (2, 'Fairphone 2'),
 (17, 'Galaxie TAB'),
 (1, 'Iphone 5');
