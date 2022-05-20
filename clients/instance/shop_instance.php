@@ -14,42 +14,39 @@
         <?php require('./require_nav.php'); ?>
 
         <style>
-            #items-container{
+            #items-container{ /*Conteneur de div*/
                 display: flex;
                 flex-wrap: wrap;
+                justify-content: center;
                 justify-content: space-around;
-                max-width: 420px;
             }
 
-            #items-container .item{
+            .items{ /*Conteneur d'items */
+                border: 1px solid black;
+                border-radius: 4px;
+                padding: 10px;
+                background: white;
+            }
+
+            #items-container .item{ /*nom item*/
                 text-transform: uppercase;
                 text-align: center;
                 font-weight: bold;
                 font-family: 'Courier New', Courier, monospace;
                 font-size: 1vw;
+                margin-top: 4%;
             }
 
-            #items-container .items button{
+            #items-container .items button{ /*button*/
                 margin: 0;
                 width: 50%;
                 margin-left: 25%;
                 margin-top: 4%;
             }
 
-            #items-container .items img{
+            #items-container .items img{ /*image */
                 width: 50%;
                 margin-left: 25%;
-            }
-
-            .item{
-                margin-top: 4%;
-            }
-
-            .items{
-                border: 1px solid black;
-                border-radius: 4px;
-                padding: 10px;
-                background: white;
             }
         </style>
 
@@ -59,13 +56,13 @@
             $name = getTheAllOfNameItem();
             $stop_while = count($name);
             $i = 0;
+            $j = 0;
 
             echo "<div id='items-container'>";
             while($i != $stop_while){
+                $stop_desc = getDescRowsNumber($name[$i]);
                 echo "<div class='items'>";
-
                 $img = getPicture(getItemId($name[$i]));
-
                 echo "<img src='$img'></img>";
                 echo "<p class='item'>".$name[$i];
                 echo "<form>";

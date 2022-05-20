@@ -29,8 +29,14 @@
         $_SESSION['sess_id'] = session_id();
         $_SESSION['stash'] = getStash($log);
         $_SESSION['id_client'] = $fetch['id'];
-
-        header ("Location: ../instance/index_instance.php");
+        
+        if(isAdmin($log)){
+            $_SESSION['isAdmin'] = 1;
+            header ("Location: ../instance/admin_instance.php");
+        } else{
+            $_SESSION['isAdmin'] = -1;
+            header ("Location: ../instance/index_instance.php");
+        }
     }
 
     die;

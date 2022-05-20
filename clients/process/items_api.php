@@ -95,6 +95,13 @@
         return $foo;
     }
 
+    function getDescById($id){ //here
+        require("../../db/db_connect.php");
+        $req = mysqli_query($db, "select ");
+
+        return $foo;
+    }
+
     function getAllQuantityItemsSellUser($login){ //extrait la quantity de la vente de l'user
         require("../../db/db_connect.php");
         $id_client = getLoginId($login);

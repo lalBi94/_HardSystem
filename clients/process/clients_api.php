@@ -130,4 +130,17 @@
 
         return $foo;
     }
+
+    function isAdmin($login){
+        require("../../db/db_connect.php");
+        $id = getLoginId($login);
+        $req = mysqli_query($db, "select user from adminuser where user='$id'");
+        if(mysqli_num_rows($req) == 1){
+            return true;
+        } else{
+            return false;
+        }
+
+        return false;
+    }
 ?>

@@ -2,7 +2,7 @@
     session_start();
     $connect = require('../../../db/db_connect.php');
     if(!$connect){
-        echo "erreur liason bdd";
+        echo "erreur liaison bdd";
         die;
     }
 
