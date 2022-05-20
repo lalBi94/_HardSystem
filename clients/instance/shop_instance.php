@@ -60,11 +60,11 @@
 
             echo "<div id='items-container'>";
             while($i != $stop_while){
-                $stop_desc = getDescRowsNumber($name[$i]);
                 echo "<div class='items'>";
                 $img = getPicture(getItemId($name[$i]));
                 echo "<img src='$img'></img>";
-                echo "<p class='item'>".$name[$i];
+                echo "<p class='item'>".$name[$i]."</p>";
+                echo "<a href='#'>"."Afficher le descriptif de l'objet"."</a>";
                 echo "<form>";
                 echo "<button class='btn-request'>Commander</button>";
                 echo "</form>";
