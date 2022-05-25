@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 25 mai 2022 à 01:01
+-- Généré le : mer. 25 mai 2022 à 21:45
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -225,7 +225,17 @@ INSERT INTO `extractionfromtypeitem` (`typeItem`, `element`, `quantity`) VALUES
 (1, 47, 340),
 (1, 78, 1),
 (1, 79, 34),
-(17, 13, 5000);
+(17, 13, 5000),
+(31, 13, 20000),
+(34, 13, 28000),
+(35, 46, 4000),
+(40, 79, 40),
+(41, 79, 40),
+(42, 79, 40),
+(43, 13, 5000),
+(44, 13, 5000),
+(45, 47, 2000),
+(46, 47, 2000);
 
 -- --------------------------------------------------------
 
@@ -298,7 +308,7 @@ CREATE TABLE IF NOT EXISTS `picture` (
   `url` text NOT NULL,
   PRIMARY KEY (`id_url`),
   KEY `item` (`item`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `picture`
@@ -306,8 +316,19 @@ CREATE TABLE IF NOT EXISTS `picture` (
 
 INSERT INTO `picture` (`id_url`, `item`, `url`) VALUES
 (1, 1, 'https://64.media.tumblr.com/a044f5b96803fcf620f0f68921963189/cf8df79bc8e7c906-82/s540x810/a1c0397f988454024d7cdf1c586c9f8051743996.pnj'),
+(7, 31, 'https://64.media.tumblr.com/8f439c7708cfa87d131f3c5f1ff54f79/e7c58d51d497a272-b1/s540x810/68ea26fb5cf1591b069a9f53b1747d709dbb54fb.jpg'),
 (3, 2, 'https://64.media.tumblr.com/8e2e8fe4eae79fdf8daff4a2638ba08a/95fe767f1e84e861-78/s540x810/616eb3825eff68aa01a05a36200cd239fe84ea8e.pnj'),
-(5, 17, 'https://64.media.tumblr.com/e49a899f113557ec77a65059d8c98433/132c793828f472d3-e4/s540x810/5627395ad367672b0321aa1636f812a26a07c964.pnj');
+(5, 17, 'https://64.media.tumblr.com/e49a899f113557ec77a65059d8c98433/132c793828f472d3-e4/s540x810/5627395ad367672b0321aa1636f812a26a07c964.pnj'),
+(8, 34, 'https://64.media.tumblr.com/247f7e61282c43d1df3fde1917d3271c/0de36044b7d9e625-59/s500x750/8531a4c683ff6b95e9799316a88dc84bfe9ebfe1.jpg'),
+(9, 35, 'https://64.media.tumblr.com/24185b2075f2f524c96fa2a18657a4d7/2349e15f56da1f03-99/s1280x1920/299ac886b7d1697444f9b8d815d0cc930eca6cd5.pnj'),
+(13, 39, 'https://64.media.tumblr.com/3b0aed49db2ae96c6737d48ef2540443/cc7b35d0e64e82b6-1a/s500x750/7686833f26fd6b43bfefc003edd4d7aaddf94f03.jpg'),
+(14, 40, 'https://64.media.tumblr.com/b29259aab324ce197c379aab826ddd7e/eafddeb04ce55866-ac/s540x810/056eca45e4b658c6f46077cdce31bb00f36a0e67.jpg'),
+(15, 41, 'https://64.media.tumblr.com/463020c3c6ff9f12f1a202f4ab068bdb/e5533a66660a7737-f5/s540x810/45d0507f62a957f14321776bddec0d57cbb29ee2.jpg'),
+(16, 42, 'https://64.media.tumblr.com/377e012defd28b932d6789780774558f/a79fe39e8b083d75-fd/s540x810/c3abb403261546dfde22e616a327a3494d12110b.jpg'),
+(17, 43, 'https://64.media.tumblr.com/848bd02fd51337ffd09199ceaf4086de/cab1dee8cda8f7f9-2d/s250x400/7b6d5b215d54ca7278ae625f4340d2ed3ee9384e.jpg'),
+(18, 44, 'https://64.media.tumblr.com/1c4a45583cc4b23a50f2c88a2b590af5/703b2dd85b576515-bc/s540x810/7a1a74ec9a11d27b3dd837e5ca3f795f6884d299.pnj'),
+(19, 45, 'https://64.media.tumblr.com/33d7068a6448b4cef5841360e937948b/ff7d43eddf6f68dc-af/s540x810/463dee6f95f52a87285ce0a1a35327b8c958f30e.pnj'),
+(20, 46, 'https://64.media.tumblr.com/c18c0cbf9fe56b4699f876b5a7688e84/6d154c8006d52f4c-c8/s500x750/217d227c82ec05a975d1aea1e8c733442ed425ab.jpg');
 
 -- --------------------------------------------------------
 
@@ -323,7 +344,7 @@ CREATE TABLE IF NOT EXISTS `typeitem` (
   `byWho` int(11) NOT NULL COMMENT '1 = site, 2 = clients, 3 entreprises',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `typeitem`
@@ -332,7 +353,18 @@ CREATE TABLE IF NOT EXISTS `typeitem` (
 INSERT INTO `typeitem` (`id`, `name`, `price`, `byWho`) VALUES
 (1, 'Iphone 5', 0, 1),
 (2, 'Fairphone 2', 0, 1),
-(17, 'Galaxie TAB', 0, 1);
+(17, 'Galaxie TAB', 0, 1),
+(31, 'Iphone X', 1000, 1),
+(34, 'HP X24ih', 200, 1),
+(35, 'Optix MPG341CQR', 800, 1),
+(39, 'ASUS VZ229HE', 135, 1),
+(40, 'Dell Inspiration 12', 750, 1),
+(41, 'iMac', 900, 1),
+(42, 'Msi GF65 Thin 10UE-034XFR', 1150, 1),
+(43, 'iPad 2021', 1450, 1),
+(44, 'Xiaomi PAD 5qe', 400, 1),
+(45, 'Iphone 13 Pro', 1700, 1),
+(46, 'Samsung Galaxie Ultra', 1300, 1);
 
 -- --------------------------------------------------------
 
@@ -355,7 +387,10 @@ CREATE TABLE IF NOT EXISTS `typeitemdetails` (
 INSERT INTO `typeitemdetails` (`typeItem`, `attribute`, `value`) VALUES
 (1, 'main camera', '8 Mpx'),
 (1, 'screen', '4 in, 1136 × 640 '),
-(1, 'second camera', '1.2 Mpx');
+(1, 'second camera', '1.2 Mpx'),
+(31, 'cam', '10px'),
+(34, 'screen', '21,5\"'),
+(35, 'screen', '27\"');
 
 --
 -- Contraintes pour les tables déchargées
