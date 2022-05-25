@@ -3,6 +3,10 @@
     require("../process/clients_api.php"); 
     require("../process/items_api.php"); 
     require("../../db/db_connect.php");
+    if(!isset($_SESSION['id_client'])){
+        header ("location: ../eClientLogin.php");
+        die;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +52,11 @@
                 width: 50%;
                 margin-left: 25%;
             }
+
+            .desc{
+                margin-left: 20%;
+                color: #0a1b2f;
+            }
         </style>
 
             
@@ -64,7 +73,12 @@
                 $img = getPicture(getItemId($name[$i]));
                 echo "<img src='$img'></img>";
                 echo "<p class='item'>".$name[$i]."</p>";
-                echo "<a href='#'>"."Afficher le descriptif de l'objet"."</a>";
+
+                echo "<form>";
+                echo "<a class='desc' href='#'>"."Afficher le descriptif de l'objet"."</a>";
+                echo "</form>";
+
+
                 echo "<form>";
                 echo "<button class='btn-request'>Commander</button>";
                 echo "</form>";

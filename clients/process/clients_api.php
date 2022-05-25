@@ -131,14 +131,29 @@
         return $foo;
     }
 
-    function isAdmin($login){
+    function whoIsThis($login){
         require("../../db/db_connect.php");
         $id = getLoginId($login);
-        $req = mysqli_query($db, "select user from adminuser where user='$id'");
-        if(mysqli_num_rows($req) == 1){
-            return true;
-        } else{
+        $req = mysqli_query($db, "select permission from customer where id='$id'");
+        if(!$req){
+            echo "erreur de la fonction whoIsThis()";
             return false;
+        }
+
+        $fetch = mysqli_fetch_assoc($req);
+
+        if(mysqli_num_rows($req) == 0){
+            echo "erreur de la fonction whoIsThis()";
+            return false;
+        } 
+        
+        
+        if($fetch['permission'] == 1){
+            return 1;
+        } if($fetch['permission'] == 2){
+            return 2;
+        } if($fetch['permission'] == 3){
+            return 3;
         }
 
         return false;

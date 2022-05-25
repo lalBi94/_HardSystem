@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+<?php 
+    session_start(); 
+    if(!isset($_SESSION['id_client'])){
+        header ("location: ../eClientLogin.php");
+        die;
+    }
+?>
 <html>
     <head>
         <?php require('./require_head.php'); ?>

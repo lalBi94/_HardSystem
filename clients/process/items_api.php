@@ -50,6 +50,9 @@
     function getAllNameSellItemsUser($login){ //a utilier avec getItemName()
         require("../../db/db_connect.php");
         $id_client = getLoginId($login);
+        if(!$id_client){
+            echo "erreur de la recup du client";
+        }
 
         $req_get = mysqli_query($db, "select item from customersell where client='$id_client'");
         if(!$req_get){
@@ -57,7 +60,7 @@
             return false;
         }
 
-        $foo;
+        $foo = array();
         $stop_while = mysqli_num_rows($req_get);
         $i = 0;
         
@@ -81,7 +84,7 @@
             return false;
         }
 
-        $foo;
+        $foo = array();
         $stop_while = mysqli_num_rows($req);
         $i = 0;
         
@@ -112,7 +115,7 @@
             return false;
         }
 
-        $foo;
+        $foo = array();
         $stop_while = mysqli_num_rows($req);
         $i = 0;
         
@@ -136,7 +139,7 @@
             return false;
         }
 
-        $foo;
+        $foo = array();
         $stop_while = mysqli_num_rows($req);
         $i = 0;
         
@@ -160,7 +163,7 @@
             return false;
         }
 
-        $foo;
+        $foo = array();
         $stop_while = mysqli_num_rows($req);
         $i = 0;
         

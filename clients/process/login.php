@@ -30,11 +30,11 @@
         $_SESSION['stash'] = getStash($log);
         $_SESSION['id_client'] = $fetch['id'];
         
-        if(isAdmin($log)){
-            $_SESSION['isAdmin'] = 1;
+        if(whoIsThis($log) == 1){
+            $_SESSION['perm'] = 1;
             header ("Location: ../instance/admin_instance.php");
-        } else{
-            $_SESSION['isAdmin'] = -1;
+        } if(whoIsThis($log) == 2){
+            $_SESSION['perm'] = 2;
             header ("Location: ../instance/index_instance.php");
         }
     }

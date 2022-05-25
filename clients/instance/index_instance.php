@@ -1,6 +1,10 @@
 <?php 
     session_start();
     require("../process/clients_api.php"); 
+    if(!isset($_SESSION['id_client'])){
+        header ("location: ../eClientLogin.php");
+        die;
+    }
 ?>
 
 <!DOCTYPE html>

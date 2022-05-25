@@ -1,6 +1,10 @@
 <?php 
     session_start(); 
     require("../process/clients_api.php");
+    if(!isset($_SESSION['id_client'])){
+        header ("location: ../eClientLogin.php");
+        die;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -37,11 +41,18 @@
         <?php require('./require_nav.php'); ?>
         <p class='stash'>Cagnotte : <?php echo $_SESSION['stash'];?>€</p>
         <div id='elem-container'>
-            <table>
-                <tr><th>Nom de l'element</th><th>Quantite</th></tr>
                 <?php 
                     $i = 0;
                     $elem = getCustomersElementsExtraction($_SESSION['login']);
+                    if(!$elem){
+                        echo "<form style='margin-top: 10%;'>";
+                        echo "<button class='btn-request' type='submit' formaction='./showHistorySells.php'>Consulter l'historique de vos ventes</button>";
+                        echo "</form>";
+                        die;
+                    }
+
+                    echo "<table><tr><th>Nom de l'element</th><th>Quantite</th><th>Rapport</th></tr>";
+
                     $qte = getCustomersQteElementsExtraction($_SESSION['login']);
                     $nb = count($elem);
 
@@ -53,7 +64,7 @@
             </table>
             <form style="margin-top: 10%;">
                 <button class='btn-request' type='submit' formaction='./showHistorySells.php'>Consulter l'historique de vos ventes</button>
-                <button style='margin-top: 3.5%;' class='btn-request' onsubmit='./process/showHistoryBuy.php'>Consulter l'historique de vos ventes</button>
+                <button style='margin-top: 3.5%;' class='btn-request' onsubmit='./process/showHistoryBuy.php'>Consulter l'historique de vos achats</button>
             <form>
         </div>
     </body>

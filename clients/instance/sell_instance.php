@@ -3,6 +3,10 @@
     require("../process/clients_api.php"); 
     require("../process/items_api.php"); 
     require("../../db/db_connect.php");
+    if(!isset($_SESSION['id_client'])){
+        header ("location: ../eClientLogin.php");
+        die;
+    }
 ?>
 
 <!DOCTYPE html>
