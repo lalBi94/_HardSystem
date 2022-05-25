@@ -19,48 +19,49 @@
 
         <style>
             #items-container{ /*Conteneur de div*/
-                display: flex;
-                flex-wrap: wrap;
+                max-width: 1300px;
+                margin: 30px auto;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, 300px);
                 justify-content: center;
-                justify-content: space-around;
+                grid-gap: 10px;
             }
 
-            .items{ /*Conteneur d'items */
+            .items{ /*ITEM*/
                 border: 1px solid black;
                 border-radius: 4px;
-                padding: 10px;
+                padding: 15px;
                 background: white;
+                width: 300px;
+                height: auto;
+                text-align: center;
             }
 
-            #items-container .item{ /*nom item*/
+            .items .item{ /*nom item*/
                 text-transform: uppercase;
-                text-align: center;
                 font-weight: bold;
                 font-family: 'Courier New', Courier, monospace;
                 font-size: 1vw;
                 margin-top: 4%;
             }
 
-            #items-container .items button{ /*button*/
+            .items button{ /*button*/
                 margin: 0;
                 width: 50%;
-                margin-left: 25%;
                 margin-top: 4%;
             }
 
-            #items-container .items img{ /*image */
+            .items img{ /*image */
                 width: 50%;
-                margin-left: 25%;
             }
 
-            .desc{
-                margin-left: 20%;
+            .items .desc{
                 color: #0a1b2f;
             }
         </style>
 
             
-        <p style='text-align: center; margin-top: 4%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Vendu par le site</p>
+        <p style='text-align: center; margin-top: 4%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Vendu par le site</p> 
         <?php 
             $name = getTheAllOfNameItem();
             $stop_while = count($name);
@@ -75,7 +76,7 @@
                 echo "<p class='item'>".$name[$i]."</p>";
 
                 echo "<form>";
-                echo "<a class='desc' href='#'>"."Afficher le descriptif de l'objet"."</a>";
+                echo "<a class='desc' href='#'>"."Fiche technique"."</a>";
                 echo "</form>";
 
 

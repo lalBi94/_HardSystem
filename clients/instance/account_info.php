@@ -64,7 +64,13 @@
             </table>
             <form style="margin-top: 10%;">
                 <button class='btn-request' type='submit' formaction='./showHistorySells.php'>Consulter l'historique de vos ventes</button>
-                <button style='margin-top: 3.5%;' class='btn-request' onsubmit='./process/showHistoryBuy.php'>Consulter l'historique de vos achats</button>
+                <button style='margin-top: 3.5%;' class='btn-request' formaction='./process/showHistoryBuy.php'>Consulter l'historique de vos achats</button>
+                <?php 
+                    if($_SESSION['perm'] == 1){
+                        echo "<button style='margin-top: 2%;' class='btn-request' type='submit' formaction='./admin_instance.php'>Acceder a l'Admin Panel</button>";
+                        die;
+                    }
+                ?>
             <form>
         </div>
     </body>

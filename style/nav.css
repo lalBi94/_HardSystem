@@ -1,16 +1,18 @@
 /* using color : #0a1b2f blue and #ffe72c yellow */
-
-#nav-container{
+/* #nav-container{
     background-color: #0a1b2f;
-}
+} */
 
-#nav-menu-container{
-    padding: 1rem 0;
+#nav-menu-container {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    background-color: #0a1b2f;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1%;
 }
-
 .nav-item{
     text-transform: uppercase;
     font-weight: bold;

@@ -10,11 +10,8 @@
 
 body{
     background-image: url("../assets/layout/layout-index.svg");
-    height: 100%;
-
-    background-position: center;
+    background-attachment: scroll;
     background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .text{
@@ -22,7 +19,9 @@ body{
 }
 
 body{
-    height: 100vh;
+    background-image: url("../assets/layout/layout-index.svg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 .btn-request{

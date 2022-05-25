@@ -1,0 +1,5 @@
+- XIAOMI 11
+- main camera : 13px 
+- second camera : 10px 
+- ecran : 13 pouces 
+- matière : silver 2000 , Aluminium 40000
