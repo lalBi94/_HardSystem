@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 20 mai 2022 à 10:41
+-- Généré le : mer. 25 mai 2022 à 01:01
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -20,25 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `hardsys`
 --
-
--- --------------------------------------------------------
-
---
--- Structure de la table `adminuser`
---
-
-DROP TABLE IF EXISTS `adminuser`;
-CREATE TABLE IF NOT EXISTS `adminuser` (
-  `user` int(11) NOT NULL,
-  KEY `user` (`user`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `adminuser`
---
-
-INSERT INTO `adminuser` (`user`) VALUES
-(9);
 
 -- --------------------------------------------------------
 
@@ -121,6 +102,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `login` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `stash` smallint(6) NOT NULL COMMENT 'no more than 65000 euros',
+  `permission` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -129,10 +111,10 @@ CREATE TABLE IF NOT EXISTS `customer` (
 -- Déchargement des données de la table `customer`
 --
 
-INSERT INTO `customer` (`id`, `login`, `stash`) VALUES
-(1, 'golgot77', 42),
-(2, 'JeanMi91', 33),
-(9, 'bilal_94', 0);
+INSERT INTO `customer` (`id`, `login`, `stash`, `permission`) VALUES
+(1, 'golgot77', 0, 2),
+(2, 'JeanMi91', 0, 2),
+(9, 'bilal_94', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -158,7 +140,8 @@ INSERT INTO `customerextraction` (`Customer`, `element`, `quantity`) VALUES
 (1, 79, 340),
 (9, 13, 1000),
 (9, 29, 560),
-(9, 65, 200);
+(9, 65, 200),
+(9, 13, 100);
 
 -- --------------------------------------------------------
 
@@ -203,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `customersell` (
   PRIMARY KEY (`nsell`),
   KEY `client` (`client`),
   KEY `item` (`item`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `customersell`
@@ -212,7 +195,9 @@ CREATE TABLE IF NOT EXISTS `customersell` (
 INSERT INTO `customersell` (`nsell`, `client`, `item`, `price`, `quantity`, `date_sell`, `time_sell`) VALUES
 (3, 9, 1, 200, 1, '2022-05-18', '02:39:40'),
 (4, 9, 17, 200, 2, '2022-05-18', '21:12:25'),
-(5, 9, 2, 500, 4, '2022-05-18', '21:12:33');
+(5, 9, 2, 500, 4, '2022-05-18', '21:12:33'),
+(6, 1, 1, 432, 33, '2022-05-25', '01:08:51'),
+(7, 2, 2, 678, 7, '2022-05-25', '01:11:24');
 
 -- --------------------------------------------------------
 
@@ -281,6 +266,28 @@ INSERT INTO `mendeleiev` (`Z`, `symbol`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `permissions`
+--
+
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE IF NOT EXISTS `permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `permissions`
+--
+
+INSERT INTO `permissions` (`id`, `name`) VALUES
+(1, 'admin'),
+(2, 'customer'),
+(3, 'business');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `picture`
 --
 
@@ -312,6 +319,8 @@ DROP TABLE IF EXISTS `typeitem`;
 CREATE TABLE IF NOT EXISTS `typeitem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` int(11) NOT NULL,
+  `byWho` int(11) NOT NULL COMMENT '1 = site, 2 = clients, 3 entreprises',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -320,10 +329,10 @@ CREATE TABLE IF NOT EXISTS `typeitem` (
 -- Déchargement des données de la table `typeitem`
 --
 
-INSERT INTO `typeitem` (`id`, `name`) VALUES
-(2, 'Fairphone 2'),
-(17, 'Galaxie TAB'),
-(1, 'Iphone 5');
+INSERT INTO `typeitem` (`id`, `name`, `price`, `byWho`) VALUES
+(1, 'Iphone 5', 0, 1),
+(2, 'Fairphone 2', 0, 1),
+(17, 'Galaxie TAB', 0, 1);
 
 -- --------------------------------------------------------
 
