@@ -20,8 +20,13 @@
 
     .account:hover{
         transform: scale(1.1);
-        transition: 1s;
+        transition: 1s; 
         border-bottom: 3px solid #ffe72c;
+    }
+
+    .cart_logo{
+        width: 20%;
+        height: auto;
     }
 </style>
 
@@ -29,7 +34,7 @@
     <nav id="nav-container">
         <ul id="nav-menu-container">
             <a class ="nav-item" href="./index_instance.php"><img class="image-logo" src="../../assets/logos/nav-con.png"></a>
-            <li class="nav-item"><a href="./cart_instance.php">Panier</a></li>
+            <a style='text-align: right; margin-right: 1.6%;' href="./cart_instance.php"><img class='cart_logo' src='../../assets/logos/cart.png'></img></a>
             <li class="nav-item"><a href="./shop_instance.php">Achat</a></li>
             <li class="nav-item"><a href="./sell_instance.php">Vente</a></li>
             <p class='account' style="color: white;">|</p>

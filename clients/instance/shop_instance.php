@@ -33,7 +33,8 @@
         <?php require('./require_nav.php'); ?>
 
         <style>
-            #items-container{ /*Conteneur de div*/
+            .items-container{ /*Conteneur de div*/
+                position:relative;
                 max-width: 1300px;
                 margin: 30px auto;
                 display: grid;
@@ -63,38 +64,42 @@
 
             .items button{ /*button*/
                 margin: 0;
-                width: 50%;
+                width: 35%;
                 margin-top: 4%;
             }
 
-            .items img{ /*image */
+            .items .item-img{ /*image */
                 width: 50%;
-            }
+            } 
 
             .items .desc{
                 color: #0a1b2f;
             }
+
+            .addCart{
+                width: 35%;
+                height: auto;
+            }
         </style>
 
             
-        <p style='text-align: center; margin-top: 4%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Vendu par le site <?php //echo " cart : ".$_SESSION['cart'][$get];?></p> 
+        <p style='text-align: center; margin-top: 4%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Vendu par le site</p> 
         <?php 
             $name = getTheAllOfNameItemFrom(1);
             $stop_while = count($name);
             $i = 0;
             $j = 0;
 
-            echo "<div id='items-container'>";
+            echo "<div class='items-container'>";
             while($i != $stop_while){
                 echo "<div class='items'>";
                 $img = getPicture(getItemId($name[$i]));
-                echo "<img src='$img'></img>";
+                echo "<img class='item-img' src='$img'></img>";
                 echo "<p class='item'>".$name[$i]."</p>";
 
                 echo "<form>";
                 echo "<a class='desc' href='#'>"."Fiche technique"."</a>";
                 echo "</form>";
-
 
                 echo "<form method='get'>";
                 $get++;
@@ -102,7 +107,7 @@
                 echo "<input type='hidden' name='nbitem' value='$get'>";
                 echo "<input type='hidden' name='item' value='$send'>";
 
-                echo "<button class='btn-request'>Ajouter au panier</button>";
+                echo "<button class='btn-request'><img class='addCart' src='../../assets/logos/cart.png'></img></button>";
 
                 echo "</form>";
 
@@ -112,19 +117,6 @@
             echo "</div>";
         ?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         <p style='text-align: center; margin-top: 10%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Vendu par les utilisateurs</p> 
         <?php 
             $cli = getTheAllOfNameItemFromClients();
@@ -132,11 +124,11 @@
             $i = 0;
             $j = 0;
 
-            echo "<div id='items-container'>";
+            echo "<div class='items-container'>";
             while($i != $stop_while){
                 echo "<div class='items'>";
                 $img = getPicture(getItemId($cli[$i]));
-                echo "<img src='$img'></img>";
+                echo "<img class='item-img' src='$img'></img>";
                 echo "<p class='item'>".$cli[$i]."</p>";
 
                 echo "<form>";
@@ -146,9 +138,11 @@
 
                 echo "<form method='get'>";
                 $get++;
+                $send = getItemId($cli[$i]);
                 echo "<input type='hidden' name='nbitem' value='$get'>";
+                echo "<input type='hidden' name='item' value='$send'>";
                 
-                echo "<button class='btn-request'>Ajouter au panier</button>";
+                echo "<button class='btn-request'><img class='addCart' src='../../assets/logos/cart.png'></img></button>";
                 echo "</form>";
 
                 echo "</div>";

@@ -18,49 +18,55 @@
     </head>
     <body>
         <style>
-            img{
-                width: 250px;
-                height: auto;
-            }
-
             #cart-container{
-                display: flex;
-                flex-direction: column;
-                justify-content: space-around;
+                max-width: 1300px;
+                margin: 30px auto;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, 300px);
+                justify-content: center;
+                grid-gap: 2%;
+                text-align: center;
             }
 
             .cart{
-                border: 2px solid black;
-                margin-top: 2%;
+                border: 1px solid black;
+                border-radius: 4px;
+                padding: 15px;
                 background: white;
+                width: 300px;
+                height: auto;
+                text-align: center;
             }
 
+            img{
+                width: 45%;
+                height: auto;
+            }
         </style>
         <?php require('./require_nav.php'); ?>
 
+        <p style='text-align: center; margin-top: 4%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Votre panier <?php //echo " cart : ".$_SESSION['cart'][$get];?></p> 
         <div id='cart-container'>
             <?php 
                 $i = 1;
-                $count = count($_SESSION['cart']);
                 $foo = $_SESSION['cart'];
                 $count = count($foo);
 
-                
-                while($i != 100){
-                    echo "<div class='cart'>";
-                    if($foo[$i] == NULL or $foo[$i] == "" or $foo[$i] == " " or empty($foo[$i])){
+                // var_dump($foo);
+
+                while($i <= $count){
+                    if($foo[$i] == NULL || $foo[$i] == "" || $foo[$i] == " " || empty($foo[$i])){
                         $i++;
+                    } else{
+                        echo "<div class='cart'>";
+                        $name = getItemName($foo[$i]);
+                        $img = getPicture($foo[$i]);
+                        echo "<p>".$name."</p>";
+                        echo "<img src='$img'></img>";
+                        $i++;   
+                        echo "</div>"; 
                     }
-
-                    $name = getItemName($foo[$i]);
-                    $img = getPicture($foo[$i]);
-                    echo "<p>".$name."</p>";
-                    echo "<img src='$img'></img>";
-                    $i++;
-                    echo "</div>";
                 }
-
-                echo $_SESSION['totalcart'];
 
                 die;    
             ?>
