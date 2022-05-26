@@ -11,6 +11,18 @@
         return $nb;
     }
 
+    function getNbItemPerSelect(){ //nombre total d'item
+        require("../../db/db_connect.php");
+        $req_nb = mysqli_query($db, "select I.id, I.name from typeitem I, extractionfromtypeitem E where I.id=E.typeitem");
+        if(!$req_nb){
+            echo "erreur dans la fonction getNbItemPerSelect()";
+            return false;
+        }
+
+        $nb = mysqli_num_rows($req_nb);
+        return $nb;
+    }
+
     function getItemId($item){ //id de l'item
         require("../../db/db_connect.php");
         $req_id = mysqli_query($db, "select id from typeitem where name='$item'");

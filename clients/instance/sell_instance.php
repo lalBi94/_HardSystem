@@ -50,12 +50,23 @@
                 color: #0a1b2f;
             }
 
+            .adresse:hover{
+                transform: scale(1.05);
+                transition: 0.5s;
+            }
+
             .ad{
                 background: #0a1b2f;
                 border-radius: 4px;
                 color: white;
                 padding: 5px;
             }
+
+            a{
+                text-decoration: none;
+                color: white;
+            }
+
         </style>
         <?php require('./require_nav.php'); ?>
         <div id='douze'>
@@ -66,10 +77,9 @@
                     <option>-- Selectionner un objet --</option>
                     <?php /*Afficher la liste des objets disponible a la vente*/
                         $i = 0;
-                        $stop_while = getNbItem();
+                        $stop_while = getNbItemPerSelect();
                         while($i != $stop_while){
-                            $req = mysqli_query($db, "select id, name from typeitem");
-
+                            $req = mysqli_query($db, "select I.id, I.name from typeitem I, extractionfromtypeitem E where I.id=E.typeitem");
                             while($fetch = mysqli_fetch_assoc($req)){
                                 $id = $fetch['id'];
                                 $name = $fetch['name'];
@@ -89,7 +99,7 @@
                 <p style='margin-top: 2%;'>Adresse :</p> <!-- factice -->
                 <input class='fields-box-email' type='text'><br>
 
-                <p style='margin-top: 5%;' class='adresse'><b><br>L'appareil devra etre envoyer a l'adresse suivante <br><br><span class='ad'>36 Rue Georges Charpak, 77127 Lieusaint</span></b><br><br></p>
+                <p style='margin-top: 5%;' class='adresse'><b><br>L'appareil devra etre envoyer a l'adresse suivante <br><br><span class='ad'><a href='https://goo.gl/maps/Lqac8fMbmzoD4d8AA' target="_blank">36 Rue Georges Charpak, 77127 Lieusaint</a></span></b><br><br></p>
 
                 <input class='btn-request' style='margin-top: 5%;' type='submit' value='Vendre !'>
             <form>
