@@ -17,7 +17,7 @@
 
     <body>
         <style>
-            #douze{
+            #cashback, #perso{
                 margin: 0 auto;
                 margin-top: 2%;
                 width: 600px;
@@ -27,7 +27,7 @@
                 background: white;
             }
 
-            #douze .title{
+            .title{
                 font-weight: bold;
                 font-family: 'Courier New', Courier, monospace;
                 text-align: center;
@@ -69,8 +69,8 @@
 
         </style>
         <?php require('./require_nav.php'); ?>
-        <div id='douze'>
-            <h2 class='title'>Que voulez-vous vendre ?</h2>
+        <div id='cashback'>
+            <h2 class='title'>Participer a l'economie circulaire !</h2>
             <p style='margin-top: 2%;'>Objet :</p> 
             <form action='./process/sellItem.php' method='post'>
                 <select class='slction' name='sellItem'>
@@ -79,7 +79,7 @@
                         $i = 0;
                         $stop_while = getNbItemPerSelect();
                         while($i != $stop_while){
-                            $req = mysqli_query($db, "select I.id, I.name from typeitem I, extractionfromtypeitem E where I.id=E.typeitem");
+                            $req = mysqli_query($db, "select id, name from typeitem");
                             while($fetch = mysqli_fetch_assoc($req)){
                                 $id = $fetch['id'];
                                 $name = $fetch['name'];
@@ -89,6 +89,9 @@
                         }
                     ?>
                 </select>
+                <button class='btn-request'>Voir</button>
+
+                <input type='text' name='price' value='0'>
 
                 <p style='margin-top: 2%;'>Quantite :</p>
                 <input class='fields-box-email' type='number' name='qte'><br>
@@ -104,5 +107,29 @@
                 <input class='btn-request' style='margin-top: 5%;' type='submit' value='Vendre !'>
             <form>
         </div>
+
+        <!-- <div id='perso'>
+        <h2 class='title'>Vendez votre objet</h2>
+            <form action='./process/sellItem.php' method='post'>
+                <p style='margin-top: 2%;'>Nom :</p>
+                <input class='fields-box-email' type='text' name='name'><br>
+
+                <p style='margin-top: 2%;'>Prix :</p>
+                <input class='fields-box-email' type='number' name='qte'><br>
+
+                <p style='margin-top: 2%;'>Quantite :</p>
+                <input class='fields-box-email' type='number' name='qte'><br>
+
+                <p style='margin-top: 2%;'>Nom Prenom:</p> factice 
+                <input class='fields-box-email' type='text'><br>
+
+                <p style='margin-top: 2%;'>Adresse :</p>  factice 
+                <input class='fields-box-email' type='text'><br>
+
+                <p style='margin-top: 2%;'>IBAN pour recevoir le paiement :</p>  factice
+                <input class='fields-box-email' type='text'><br>
+
+                <input class='btn-request' style='margin-top: 5%;' type='submit' value='Vendre !'>
+        </div> -->
     </body>
 </html>

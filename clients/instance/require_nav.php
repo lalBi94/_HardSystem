@@ -29,6 +29,7 @@
     <nav id="nav-container">
         <ul id="nav-menu-container">
             <a class ="nav-item" href="./index_instance.php"><img class="image-logo" src="../../assets/logos/nav-con.png"></a>
+            <li class="nav-item"><a href="./cart_instance.php">Panier</a></li>
             <li class="nav-item"><a href="./shop_instance.php">Achat</a></li>
             <li class="nav-item"><a href="./sell_instance.php">Vente</a></li>
             <p class='account' style="color: white;">|</p>

@@ -13,7 +13,7 @@
 
     function getNbItemPerSelect(){ //nombre total d'item
         require("../../db/db_connect.php");
-        $req_nb = mysqli_query($db, "select I.id, I.name from typeitem I, extractionfromtypeitem E where I.id=E.typeitem");
+        $req_nb = mysqli_query($db, "select id, name from typeitem");
         if(!$req_nb){
             echo "erreur dans la fonction getNbItemPerSelect()";
             return false;
@@ -189,16 +189,50 @@
         return $foo;
     }
 
-    function getTheAllOfNameItem(){ //recuperer le nom de tous les items
+    function getTheAllOfNameItemFrom($byWho){ //recuperer le nom de tous les items
         require("../../db/db_connect.php");
 
         $foo;
         $i = 0;
 
-        $to_get = mysqli_query($db, "select name from typeitem");
+        $to_get = mysqli_query($db, "select name from typeitem where byWho=$byWho");
         if(!$to_get){
             echo "echec de la fonction getTheAllOfNameItem()";
             return false;
+        }
+
+        if(mysqli_num_rows($to_get) == 0){
+            echo "<p style='text-align: center;'>Aucun appareil a vendre !</p>";
+            die;
+        }
+
+        $stop_while = mysqli_num_rows($to_get);
+
+        while($i != $stop_while){
+            while($fetch = mysqli_fetch_assoc($to_get)){
+                $foo[$i] = $fetch['name'];
+                $i++;
+            }
+        }
+
+        return $foo;
+    }
+
+    function getTheAllOfNameItemFromClients(){ //recuperer le nom de tous les items
+        require("../../db/db_connect.php");
+
+        $foo;
+        $i = 0;
+
+        $to_get = mysqli_query($db, "select I.name from customersell C, typeitem I where C.item = I.id");
+        if(!$to_get){
+            echo "echec de la fonction getTheAllOfNameItemFromClients()";
+            return false;
+        }
+
+        if(mysqli_num_rows($to_get) == 0){
+            echo "<p style='text-align: center;'>Aucun appareil a vendre !</p>";
+            die;
         }
 
         $stop_while = mysqli_num_rows($to_get);

@@ -29,6 +29,8 @@
         $_SESSION['sess_id'] = session_id();
         $_SESSION['stash'] = getStash($log);
         $_SESSION['id_client'] = $fetch['id'];
+        $_SESSION['cart'] = array();
+        $_SESSION['totalcart'] = 0;
         
         if(whoIsThis($log) == 1){
             $_SESSION['perm'] = 1;
