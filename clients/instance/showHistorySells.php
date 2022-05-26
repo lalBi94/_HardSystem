@@ -25,6 +25,7 @@
                 border-collapse: collapse;
                 padding: 10px;
                 text-align: center;
+                background: white;
             }
         </style>
 

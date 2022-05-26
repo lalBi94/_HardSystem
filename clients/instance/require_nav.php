@@ -16,7 +16,6 @@
 
     .account{
         text-transform: uppercase;
-        font-weight: bold;
     }
 
     .account:hover{

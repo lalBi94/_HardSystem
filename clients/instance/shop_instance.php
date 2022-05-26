@@ -24,7 +24,8 @@
                 display: grid;
                 grid-template-columns: repeat(auto-fill, 300px);
                 justify-content: center;
-                grid-gap: 10px;
+                grid-gap: 2%;
+                text-align: center;
             }
 
             .items{ /*ITEM*/

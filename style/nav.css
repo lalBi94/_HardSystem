@@ -8,7 +8,7 @@
     justify-content: flex-end;
     align-items: center;
     background-color: #0a1b2f;
-    position: fixed;
+    position: relative;
     top: 0;
     width: 100%;
     padding: 1%;
