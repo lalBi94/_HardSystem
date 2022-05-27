@@ -25,12 +25,15 @@
     }
     
     while($fetch = mysqli_fetch_assoc($req)){
+        //relatif aux clients
         $_SESSION['login'] = $log;
         $_SESSION['sess_id'] = session_id();
-        $_SESSION['stash'] = getStash($log);
         $_SESSION['id_client'] = $fetch['id'];
+        $_SESSION['stash'] = getStash($log);
+
+        //Panier
         $_SESSION['cart'] = array();
-        $_SESSION['totalcart'] = 0;
+        $_SESSION['qtecart'] = array();
         
         if(whoIsThis($log) == 1){
             $_SESSION['perm'] = 1;

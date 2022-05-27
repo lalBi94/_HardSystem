@@ -251,6 +251,11 @@
         require("../../db/db_connect.php");
         
         $to_get = mysqli_query($db, "select url from picture where item='$id'");
+        if(!$to_get){
+            echo "probleme dans getPicture()";
+            die;
+        }
+
         $fetch = mysqli_fetch_assoc($to_get);
         
         return $fetch['url'];
@@ -259,6 +264,11 @@
     function getUserSeller($id){ //recuperer le vendeur d'un item par son id
         require("../../db/db_connect.php");
         $user_req = mysqli_query($db, "select C.login from customer C, customersell S where C.id=S.client and S.item='$id'");
+        if(!$user_req){
+            echo "probleme dans getUserSeller()";
+            die;
+        }
+
         $fetch = mysqli_fetch_assoc($user_req);
 
         return $fetch['login'];
@@ -278,5 +288,19 @@
         }
 
         return $thecart;
+    }
+
+    function getPriceInTypeItem($id){
+        require("../../db/db_connect.php");
+        
+        $req = mysqli_query($db, "select price from typeitem where id='$id'");
+        if(!$req){
+            echo "probleme dans getPriceInTypeItem()";
+            die;
+        }
+
+        $fetch = mysqli_fetch_assoc($req);
+        
+        return $fetch['price'];
     }
 ?>

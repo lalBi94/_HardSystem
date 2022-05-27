@@ -1,7 +1,12 @@
 <?php 
     session_start();
+
     $foo = array();
     array_push($_SESSION['cart'], $foo);
+    
+    $foo1 = array();
+    array_push($_SESSION['qtecart'], $foo1);
+
     $nbitem = 0;
     $send = 0;
 
@@ -18,8 +23,12 @@
 <?php 
     @$get = $_GET['nbitem'];
     @$item = $_GET['item'];
-    if(isset($get)){
+    @$qtecarte = $_GET['quantity'];
+     
+    if(isset($get) and isset($item) and isset($qtecarte)){
         $_SESSION['cart'][$get] = (int) $item;
+        $_SESSION['qtecart'][$get] = (int) $qtecarte;
+
         $nbitem++;
     }
 ?>
@@ -34,10 +43,10 @@
         <style>
             .items-container{ /*Conteneur de div*/
                 position:relative;
-                max-width: 1300px;
+                max-width: 1500px;
                 margin: 30px auto;
                 display: grid;
-                grid-template-columns: repeat(auto-fill, 300px);
+                grid-template-columns: repeat(auto-fill, 350px);
                 justify-content: center;
                 grid-gap: 2%;
                 text-align: center;
@@ -48,7 +57,7 @@
                 border-radius: 4px;
                 padding: 15px;
                 background: white;
-                width: 300px;
+                width: 350px;
                 height: auto;
                 text-align: center;
             }
@@ -68,7 +77,8 @@
             }
 
             .items .item-img{ /*image */
-                width: 50%;
+                width: 120px;
+                height: 120px;
             } 
 
             .items .desc{
@@ -76,8 +86,13 @@
             }
 
             .addCart{
-                width: 35%;
+                width: 25%;
                 height: auto;
+            }
+
+            .qte{
+                width: 15%;
+                padding: 2%;
             }
         </style>
 
@@ -85,12 +100,14 @@
         <p style='text-align: center; margin-top: 4%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Vendu par le site</p> 
         <?php 
             $name = getTheAllOfNameItemFrom(1);
-            $stop_while = count($name);
+            $stop_while = count($name); 
             $i = 0;
             $j = 0;
 
             echo "<div class='items-container'>";
             while($i != $stop_while){
+                $price = getPriceInTypeItem(getItemId($name[$i]));
+
                 echo "<div class='items'>";
                 $img = getPicture(getItemId($name[$i]));
                 echo "<img class='item-img' src='$img'></img>";
@@ -104,9 +121,12 @@
                 echo "<form method='get'>";
                 $get++;
                 $send = getItemId($name[$i]);
-                echo "<input type='hidden' name='nbitem' value='$get'>";
-                echo "<input type='hidden' name='item' value='$send'>";
-
+                echo "<input type='hidden' name='nbitem' value='$get'>"; //envoie en get de la cle contenant l'id de l'item dans $_SESSION['cart']
+                echo "<input type='hidden' name='item' value='$send'>"; //envoie en get l'id de l'item
+                echo "<input type='hidden' name='price' value='$price'>";
+                
+                echo "<br><p><b>".$price.",00€/u TTC</b></p>";
+                echo "<br><input class='qte' type='number' name='quantity' value='1'><br>";
                 echo "<button class='btn-request'><img class='addCart' src='../../assets/logos/cart.png'></img></button>";
 
                 echo "</form>";
@@ -116,6 +136,13 @@
             }
             echo "</div>";
         ?>
+
+
+
+
+
+
+
 
         <p style='text-align: center; margin-top: 10%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Vendu par les utilisateurs</p> 
         <?php 
@@ -143,6 +170,7 @@
                 echo "<input type='hidden' name='nbitem' value='$get'>";
                 echo "<input type='hidden' name='item' value='$send'>";
                 
+                echo "<br><input class='qte' type='number' name='qte' value='1'><br>";
                 echo "<button class='btn-request'><img class='addCart' src='../../assets/logos/cart.png'></img></button>";
                 echo "</form>";
 
