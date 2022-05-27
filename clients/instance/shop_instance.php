@@ -31,7 +31,6 @@
     </head>
     <body>
         <?php require('./require_nav.php'); ?>
-
         <style>
             .items-container{ /*Conteneur de div*/
                 position:relative;
@@ -96,6 +95,7 @@
                 $img = getPicture(getItemId($name[$i]));
                 echo "<img class='item-img' src='$img'></img>";
                 echo "<p class='item'>".$name[$i]."</p>";
+                echo "<p>Vendu par HardSystem</p>";
 
                 echo "<form>";
                 echo "<a class='desc' href='#'>"."Fiche technique"."</a>";
@@ -130,6 +130,7 @@
                 $img = getPicture(getItemId($cli[$i]));
                 echo "<img class='item-img' src='$img'></img>";
                 echo "<p class='item'>".$cli[$i]."</p>";
+                echo "<p>Vendu par ".getUserSeller(getItemId($cli[$i]))."</p>";
 
                 echo "<form>";
                 echo "<a class='desc' href='#'>"."Fiche technique"."</a>";

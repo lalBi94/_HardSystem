@@ -255,4 +255,28 @@
         
         return $fetch['url'];
     }
+
+    function getUserSeller($id){ //recuperer le vendeur d'un item par son id
+        require("../../db/db_connect.php");
+        $user_req = mysqli_query($db, "select C.login from customer C, customersell S where C.id=S.client and S.item='$id'");
+        $fetch = mysqli_fetch_assoc($user_req);
+
+        return $fetch['login'];
+    }
+
+    function purgeTab($thecart){
+        $i = 0;
+        $count = count($thecart);
+
+        while($i <= $count){
+            if($thecart[$i] == NULL || $thecart[$i] == "" || $thecart[$i] == " " || empty($thecart[$i])){
+                unset($thecart[$i]);
+                $i++;
+            } else{
+                $i++;
+            }
+        }
+
+        return $thecart;
+    }
 ?>

@@ -11,6 +11,11 @@
     }
 ?>
 
+<?php 
+    $foo = $_SESSION['cart'];
+    purgeTab($foo);
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -45,17 +50,27 @@
         </style>
         <?php require('./require_nav.php'); ?>
 
-        <p style='text-align: center; margin-top: 4%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Votre panier <?php //echo " cart : ".$_SESSION['cart'][$get];?></p> 
+        <p style='text-align: center; margin-top: 4%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Votre panier 
+            (<?php 
+                echo count(purgeTab($foo)); 
+                if(count($foo) >= 2){
+                    echo " objets";
+                } if(count($foo) == 1){
+                    echo " objet";
+                } if(count($foo) < 0){
+                    echo "Probleme avec le server";
+                    die;
+                } 
+            ?>)
+        </p> 
         <div id='cart-container'>
             <?php 
-                $i = 1;
-                $foo = $_SESSION['cart'];
-                $count = count($foo);
+                $i = 0;
+                $counti = array_key_last($foo);
 
-                // var_dump($foo);
-
-                while($i <= $count){
+                while($i <= $counti){
                     if($foo[$i] == NULL || $foo[$i] == "" || $foo[$i] == " " || empty($foo[$i])){
+                        unset($foo[$i]);
                         $i++;
                     } else{
                         echo "<div class='cart'>";
@@ -67,7 +82,9 @@
                         echo "</div>"; 
                     }
                 }
-
+                
+                var_dump($foo);
+                
                 die;    
             ?>
         </div>
