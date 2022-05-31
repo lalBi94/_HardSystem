@@ -31,6 +31,7 @@
                 justify-content: center;
                 grid-gap: 2%;
                 text-align: center;
+                margin-top: 4%;
             }
 
             .cart{
@@ -49,23 +50,9 @@
             }
         </style>
         <?php require('./require_nav.php'); ?>
-
-        <p style='text-align: center; margin-top: 4%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Votre panier
-            (<?php
-                echo count(purgeTab($foo));
-                if(count($foo) >= 2){
-                    echo " objets";
-                } if(count($foo) == 1){
-                    echo " objet";
-                } if(count($foo) < 0){
-                    echo "Probleme avec le server";
-                    die;
-                }
-            ?>)
-        </p>
         <div id='cart-container'> <!-- containeur des items contenue dans le panier -->
             <?php
-                $i = 1;
+                $i = 0;
                 $counti = array_key_last($foo);
 
                 //suppression des valeurs null
@@ -74,28 +61,63 @@
 
                 //suppression de doublons
                 $foo = array_unique($foo);
+            ?>
 
-                while($i <= $counti){
-                    $u = (int) getPriceInTypeItem($foo[$i]);
-                    $k = (int) $foo1[$i];
+            <div class='cart'>
+                <p style='text-align: center; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Votre panier<br>
+                    (<?php
+                        echo count($foo)-1;
+
+                        if(count($foo) >= 2){
+                            echo " objets";
+                        } if(count($foo) == 1){
+                            echo " objet";
+                        } if(count($foo) < 0){
+                            echo "Probleme avec le server";
+                            die;
+                        }
+                    ?>)
+                </p>
+            </div>
+
+            <?php
+                $stockprice = array();
+
+                foreach($foo as $c => $v){
+                    $u = (int) getPriceInTypeItem($foo[$c]);
+                    $k = (int) $foo1[$c];
                     $price = (int) $u * $k;
+                    $stockprice[$c] = $price;
 
-                    echo "<div class='cart'>";
-                    $name = getItemName($foo[$i]);
-                    $img = getPicture($foo[$i]);
-                    echo "<p>".$name."</p>";
-                    echo "<img src='$img'></img>";
-                    echo "<p>Quantite : ".$foo1[$i]."</p>";
-                    echo "<p>Total : ".$price.",00€ TTC</p>";
-                    $i++;
-                    echo "</div>";
+                    if($c == 0){
+                        $c++;
+                    }else{
+                        echo "<div class='cart'>";
+                        $name = getItemName($foo[$c]);
+                        $img = getPicture($foo[$c]);
+                        echo "<p>".$name."</p>";
+                        echo "<img src='$img'></img>";
+                        echo "<p>Quantite : ".$foo1[$c]."</p>";
+                        echo "<p>Total : ".$price.",00€ TTC</p>";
+                        echo "</div>";
+                        $c++;
+                    }
                 }
 
-                var_dump($foo); //dump le tableau $foo pour test
-                var_dump($foo1); //dump le tableau $foo1 pour test
-
-                die;
+                //var_dump($foo); //dump le tableau $foo pour test
+                //var_dump($foo1); //dump le tableau $foo1 pour test
+                //var_dump($stockprice); //dump le tableau $stockprice pour test
             ?>
+
+            <div class='cart'>
+                <p style='text-align: center; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Total<br>
+                    <?php
+                        $finalprice = array_sum($stockprice);
+                        echo $finalprice." €";
+                    ?>
+                </p>
+            </div>
         </div>
     </body>
+    <?php die; ?>
 </html>

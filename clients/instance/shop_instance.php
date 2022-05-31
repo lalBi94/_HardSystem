@@ -118,7 +118,7 @@
                 echo "<a class='desc' href='#'>"."Fiche technique"."</a>";
                 echo "</form>";
 
-                echo "<form method='get'>";
+                echo "<form method='get' onsubmit='return whenAlreadyChecked();'>";
                 $get++;
                 $send = getItemId($name[$i]);
                 echo "<input type='hidden' name='nbitem' value='$get'>"; //envoie en get de la cle contenant l'id de l'item dans $_SESSION['cart']
@@ -127,10 +127,9 @@
                 
                 echo "<br><p><b>".$price.",00€/u TTC</b></p>";
                 echo "<br><input class='qte' type='number' name='quantity' value='1'><br>";
-                echo "<button class='btn-request'><img class='addCart' src='../../assets/logos/cart.png'></img></button>";
+                echo "<button id='addCart-$send-1' class='btn-request' onclick='inc();'><img class='addCart' src='../../assets/logos/cart.png'></img></button>";
 
                 echo "</form>";
-
                 echo "</div>";
                 $i++;
             }
@@ -139,12 +138,7 @@
 
 
 
-
-
-
-
-
-        <p style='text-align: center; margin-top: 10%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Vendu par les utilisateurs</p> 
+        <p style='text-align: center; margin-top: 15%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Vendu par les utilisateurs</p> 
         <?php 
             $cli = getTheAllOfNameItemFromClients();
             $stop_while = count($cli);
@@ -179,5 +173,7 @@
             }
             echo "</div>";
         ?>
+
+        <script src='../process/cart_system.js'></script>
     </body>
 </html>

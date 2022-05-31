@@ -91,7 +91,7 @@
                 </select>
                 <button class='btn-request'>Voir</button>
 
-                <input type='text' name='price' value='0'>
+                <input type='hidden' name='price' value='0'>
 
                 <p style='margin-top: 2%;'>Quantite :</p>
                 <input class='fields-box-email' type='number' name='qte'><br>

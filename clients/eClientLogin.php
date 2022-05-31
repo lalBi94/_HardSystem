@@ -21,6 +21,7 @@
                     <li class="nav-item"><a href="#">Achat</a></li>
                     <li class="nav-item"><a href="#">Vente</a></li>
                     <li class="nav-item"><a href="./eClientLogin.php">Connexion</a></li>
+                    <li class="nav-item"><a href="./eClientRegister.php">Inscription</a></li>
                 </ul>
             </nav>
         </header>
