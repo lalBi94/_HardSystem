@@ -1,4 +1,5 @@
 <?php 
+    error_reporting(0);
     session_start();
 
     $foo = array();
@@ -28,6 +29,13 @@
     if(isset($get) and isset($item) and isset($qtecarte)){
         $_SESSION['cart'][$get] = (int) $item;
         $_SESSION['qtecart'][$get] = (int) $qtecarte;
+
+        if(array_count_values($tmp) > 1){
+            echo "detect";
+        }
+
+        $test = array_count_values(array_column($qtecarte, "1"));
+        print_r($test);
 
         $nbitem++;
     }

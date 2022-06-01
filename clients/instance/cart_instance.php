@@ -48,6 +48,11 @@
                 width: 120px;
                 height: 120px;
             }
+
+            .qte{
+                width: 15%;
+                padding: 2%;
+            }
         </style>
         <?php require('./require_nav.php'); ?>
         <div id='cart-container'> <!-- containeur des items contenue dans le panier -->
@@ -96,8 +101,9 @@
                         $name = getItemName($foo[$c]);
                         $img = getPicture($foo[$c]);
                         echo "<p>".$name."</p>";
-                        echo "<img src='$img'></img>";
-                        echo "<p>Quantite : ".$foo1[$c]."</p>";
+                        echo "<img src='$img'></img><br>";
+                        echo "<label for='finalqte-de-$c'>Quantite :";
+                        echo "<input class='qte' type='number' name='finalqte-de-$c' value="."'$foo1[$c]'".">";
                         echo "<p>Total : ".$price.",00€ TTC</p>";
                         echo "</div>";
                         $c++;
