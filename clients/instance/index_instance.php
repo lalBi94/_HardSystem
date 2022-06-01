@@ -65,7 +65,7 @@
             <p class="text" class="main-items1">Content de vous voir <?php echo $_SESSION['login'];?> !</p>
             
             <form>
-                <button class="btn-acc" class="main-items2" type="submit" formaction="./account_info.php">Consulter votre activite</button>
+                <button class="btn-acc" class="main-items2" type="submit" formaction="./account_info.php">Consulter votre activite</button> <!-- Redirection vers la page du client -->
             <form>
         </div>
         

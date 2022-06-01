@@ -1,4 +1,4 @@
-function checkeur_login(){
+function checkeur_login(){ //verifie le form de eClientLogin
     const src_pseudo = document.getElementById("init-pseudo");
     
     if(src_pseudo.value === ""){
@@ -9,7 +9,7 @@ function checkeur_login(){
     return true;
 }
 
-function checkeur_register(){
+function checkeur_register(){ //verifie le form de eClientRegister
     const src_nom = document.getElementById("init-nom");
     const src_prenom = document.getElementById("init-prenom");
     const src_email = document.getElementById("init-email");

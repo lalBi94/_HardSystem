@@ -31,7 +31,7 @@
 
         <?php require("./require_nav.php"); ?>
         <div style='margin-top: 2%; text-align: center;'>
-            <form action='./process/process_admin.php' method='post'><br><br>
+            <form action='./process/process_admin.php' method='post'><br><br> <!-- Creation d'un item -->
                 <h2>Createur d'item</h2><br>
                 <input type="text" name='name' placeholder="Nom de l'item"><br><br>
                 <input type="number" name='price' placeholder='prix'><br><br>

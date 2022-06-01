@@ -2,9 +2,9 @@
     error_reporting(0);
     session_start();
     $nbitem = 0;
-    require("../process/clients_api.php");
-    require("../process/items_api.php");
-    require("../../db/db_connect.php");
+    require("../process/clients_api.php"); //connexion api client
+    require("../process/items_api.php"); //connexion api items
+    require("../../db/db_connect.php"); //connexion a la bdd
     if(!isset($_SESSION['id_client'])){
         header ("location: ../eClientLogin.php");
         die;
@@ -19,7 +19,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php require('./require_head.php'); ?>
+        <?php require('./require_head.php'); //requiere le fichier "./require_header.php" ?>
     </head>
     <body>
         <style>
@@ -54,11 +54,11 @@
                 padding: 2%;
             }
         </style>
-        <?php require('./require_nav.php'); ?>
+        <?php require('./require_nav.php'); //requiere le fichier "./require_nav.php" ?>
         <div id='cart-container'> <!-- containeur des items contenue dans le panier -->
             <?php
                 $i = 0;
-                $counti = array_key_last($foo);
+                $counti = array_key_last($foo); //prends la dernier cle du tableau pour le foreach
 
                 //suppression des valeurs null
                 purgeTab($foo); 
@@ -73,12 +73,12 @@
                     (<?php
                         echo count($foo)-1;
 
-                        if(count($foo) >= 2){
+                        if(count($foo) >= 2){ //si objet superieur ou egal a 2, mettre un s a objet
                             echo " objets";
                         } if(count($foo) == 1){
-                            echo " objet";
+                            echo " objet"; //si objet egal a 1, ne pas mettre de s 
                         } if(count($foo) < 0){
-                            echo "Probleme avec le server";
+                            echo "Probleme avec le server"; //si items inferieur a 1, probleme !
                             die;
                         }
                     ?>)
@@ -86,7 +86,7 @@
             </div>
 
             <?php
-                $stockprice = array();
+                $stockprice = array(); //init. du tableau contenant les prix des items
 
                 foreach($foo as $c => $v){
                     $u = (int) getPriceInTypeItem($foo[$c]);
@@ -94,17 +94,17 @@
                     $price = (int) $u * $k;
                     $stockprice[$c] = $price;
 
-                    if($c == 0){
+                    if($c == 0){ //comme le tab commence a zero, skip la cle pour qu'elle ne soit pas affiche
                         $c++;
                     }else{
-                        echo "<div class='cart'>";
+                        echo "<div class='cart'>"; //"Structure" du schema d'une carte contenant les informations lie a l'item + desc choisit par l'utilisateur
                         $name = getItemName($foo[$c]);
                         $img = getPicture($foo[$c]);
-                        echo "<p>".$name."</p>";
-                        echo "<img src='$img'></img><br>";
-                        echo "<label for='finalqte-de-$c'>Quantite :";
-                        echo "<input class='qte' type='number' name='finalqte-de-$c' value="."'$foo1[$c]'".">";
-                        echo "<p>Total : ".$price.",00€ TTC</p>";
+                        echo "<p>".$name."</p>"; //Nom de l'item
+                        echo "<img src='$img'></img><br>"; //image de l'item
+                        echo "<label for='finalqte-de-$c'>Quantite :"; 
+                        echo "<input class='qte' type='number' name='finalqte-de-$c' value="."'$foo1[$c]'".">"; //modification, si y a une, de la qte
+                        echo "<p>Total : ".$price.",00€ TTC</p>"; //Prix
                         echo "</div>";
                         $c++;
                     }
@@ -119,11 +119,11 @@
                 <p style='text-align: center; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Total<br>
                     <?php
                         $finalprice = array_sum($stockprice);
-                        echo $finalprice." €";
+                        echo $finalprice." €"; //Prix
                     ?>
                 </p>
             </div>
         </div>
     </body>
-    <?php die; ?>
+    <?php die; //Pour ne pas depenser les ressources inutiles ?>
 </html>

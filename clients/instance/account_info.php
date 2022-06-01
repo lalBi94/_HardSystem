@@ -1,6 +1,6 @@
 <?php 
     session_start(); 
-    require("../process/clients_api.php");
+    require("../process/clients_api.php"); //connexion a l'api cliente
     if(!isset($_SESSION['id_client'])){
         header ("location: ../eClientLogin.php");
         die;
@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php require('./require_head.php'); ?>
+        <?php require('./require_head.php'); //requiere le fichier "./require_head.php" ?>
     </head>
     
     <body>
@@ -39,12 +39,12 @@
             }
         </style>
 
-        <?php require('./require_nav.php'); ?>
+        <?php require('./require_nav.php'); //requiere le fichier "./require_nav.php" ?>
         <p class='stash'>Cagnotte : <?php echo $_SESSION['stash'];?>€</p>
         <div id='elem-container'>
                 <?php 
                     $i = 0;
-                    $elem = getCustomersElementsExtraction($_SESSION['login']);
+                    $elem = getCustomersElementsExtraction($_SESSION['login']); //liste dans un tableau la liste des elements extrait par l'user
                     if(!$elem){
                         echo "<form style='margin-top: 10%;'>";
                         echo "<button class='btn-request' type='submit' formaction='./showHistorySells.php'>Consulter l'historique de vos ventes</button>";
@@ -54,11 +54,11 @@
 
                     echo "<table><tr><th>Nom de l'element</th><th>Quantite</th><th>Rapport</th></tr>";
 
-                    $qte = getCustomersQteElementsExtraction($_SESSION['login']);
-                    $nb = count($elem);
+                    $qte = getCustomersQteElementsExtraction($_SESSION['login']); //liste dans un tableau la liste en mg la qte des elements extrait par l'user
+                    $nb = count($elem); //pour stop la boucle
 
                     while($i != $nb){
-                        echo "<tr>"."<td>".$elem[$i]."</td>"."<td>".$qte[$i]." mg</td>"."</tr>";
+                        echo "<tr>"."<td>".$elem[$i]."</td>"."<td>".$qte[$i]." mg</td>"."</tr>"; //liste les elements
                         $i++;
                     }
                 ?>
@@ -67,7 +67,7 @@
                 <button class='btn-request' type='submit' formaction='./showHistorySells.php'>Consulter l'historique de vos ventes</button>
                 <button style='margin-top: 3.5%;' class='btn-request' formaction='./process/showHistoryBuy.php'>Consulter l'historique de vos achats</button>
                 <?php 
-                    if($_SESSION['perm'] == 1){
+                    if($_SESSION['perm'] == 1){ //si le login est admin, afficher ce boutton en fin de page
                         echo "<button style='margin-top: 2%;' class='btn-request' type='submit' formaction='./admin_instance.php'>Acceder a l'Admin Panel</button>";
                         die;
                     }

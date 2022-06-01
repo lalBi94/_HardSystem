@@ -27,7 +27,7 @@
         </header>
 
         <main>
-            <form style="background: white;" class="form-1" action="./process/register.php" method="post" onsubmit="return checkeur_register();">
+            <form style="background: white;" class="form-1" action="./process/register.php" method="post" onsubmit="return checkeur_register();"> <!-- A l'envoie, checkeur_registeur verifie que tout est bien rentre -->
                 <label class="text" class="emailRequest" for="nom"><b>Nom : </b><br><br></label>
                 <input id="init-nom" class="fields-box-email" type="text" name="nom"><br><br>
 

@@ -110,13 +110,6 @@
         return $foo;
     }
 
-    function getDescById($id){ //here
-        require("../../db/db_connect.php");
-        $req = mysqli_query($db, "select ");
-
-        return $foo;
-    }
-
     function getAllQuantityItemsSellUser($login){ //extrait la quantity de la vente de l'user
         require("../../db/db_connect.php");
         $id_client = getLoginId($login);
@@ -274,7 +267,7 @@
         return $fetch['login'];
     }
 
-    function purgeTab($thecart){
+    function purgeTab($thecart){ //permet de supprimer toutes les cases vides de la variable de session contenant le panier
         $i = 0;
         $count = count($thecart);
 
@@ -290,7 +283,7 @@
         return $thecart;
     }
 
-    function getPriceInTypeItem($id){
+    function getPriceInTypeItem($id){ //extrait le prix d'un item par son id
         require("../../db/db_connect.php");
         
         $req = mysqli_query($db, "select price from typeitem where id='$id'");

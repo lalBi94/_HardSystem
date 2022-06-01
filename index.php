@@ -54,7 +54,7 @@
                 <p class="text" class="main-items1">Bienvenue sur <br>Hard System</p>
                 
                 <form>
-                    <button class="btn-request" class="main-items2" type="submit" formaction="./clients/eClientLogin.php">Connectez-vous !</button>
+                    <button class="btn-request" class="main-items2" type="submit" formaction="./clients/eClientLogin.php">Connectez-vous !</button> <!-- Envoie vers la page de connexion -->
                 <form>
                 <!-- <form>
                     <button class="btn-request" class="main-items2" type="submit" formaction="./admin/admin.php">Admin Panel</button>

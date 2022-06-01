@@ -131,7 +131,7 @@
         return $foo;
     }
 
-    function whoIsThis($login){
+    function whoIsThis($login){ //Extrait la permission d'un utilisateur
         require("../../db/db_connect.php");
         $id = getLoginId($login);
         $req = mysqli_query($db, "select permission from customer where id='$id'");

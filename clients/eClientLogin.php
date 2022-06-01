@@ -27,11 +27,11 @@
         </header>
 
         <main>
-            <form class="form-1" action="./process/login.php" method="post" onsubmit="return checkeur_login();">
+            <form class="form-1" action="./process/login.php" method="post" onsubmit="return checkeur_login();"> <!-- A l'envoie, il verifie si tout est bien rempli -->
                 <label class="text" class="emailRequest" for="pseudo"><b>Utilisateur : </b><br><br></label>
-                <input id="init-pseudo" class="fields-box-email" type="text" name="pseudo"><br><br><br>
+                <input id="init-pseudo" class="fields-box-email" type="text" name="pseudo"><br><br><br> 
 
-                <input class="btn-request" type="submit" value="Connexion">
+                <input class="btn-request" type="submit" value="Connexion"> <!-- Envoies name='pseudo' a login.php -->
             </form>
 
             <script src="./process/check_info.js"></script>
