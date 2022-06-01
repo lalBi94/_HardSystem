@@ -1,5 +1,6 @@
 <?php 
     session_start(); 
+    require("../../db/db_connect.php");
     require("../process/clients_api.php"); //connexion a l'api cliente
     if(!isset($_SESSION['id_client'])){
         header ("location: ../eClientLogin.php");
@@ -40,7 +41,14 @@
         </style>
 
         <?php require('./require_nav.php'); //requiere le fichier "./require_nav.php" ?>
-        <p class='stash'>Cagnotte : <?php echo $_SESSION['stash'];?>€</p>
+        <p class='stash'>Cagnotte : 
+            <?php 
+                $id = $_SESSION['id_client'];
+                $stash = mysqli_query($db, "select stash from customer where id='$id'");
+                $cagnotte = mysqli_fetch_assoc($stash);
+                echo $cagnotte['stash'];
+            ?>
+        €</p>
         <div id='elem-container'>
                 <?php 
                     $i = 0;
