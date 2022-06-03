@@ -6,7 +6,6 @@
     $prenom = $_POST['prenom'];
     $email = $_POST['email'];
     $pseudo = $_POST['pseudo'];
-    $mdp = passsword_hash($_POST['mdp']);
     
     $conflogin = mysqli_query($db, "select login from customer where login='$pseudo'");
     if(mysqli_num_rows($conflogin) >= 1){ //si le nombre de ligne est egal ou superieur a 1 (meme si inutile < 1), client deja existant
@@ -20,7 +19,7 @@
         die;
     }
 
-    $insertInCustomer = mysqli_query($db, "insert into customer(login, password, stash) values('$pseudo', '$mdp', 0)"); //insertion des variables + (0) dans customer
+    $insertInCustomer = mysqli_query($db, "insert into customer(login, stash, permission) values('$pseudo', 0, 2)"); //insertion des variables + (0) dans customer
     if(!$insertInCustomer){
         echo "erreur d'insertion dans customer";
         die;
@@ -33,7 +32,8 @@
     }
 
     $fetch = mysqli_fetch_assoc($getId);
-    $insertInCustomerextdata = mysqli_query($db, "insert into customerprotecteddata values(, '$prenom', '$nom', '$email')"); //insertion des variables dans customerprotecteddata
+    $id = $fetch['id'];
+    $insertInCustomerextdata = mysqli_query($db, "insert into customerprotecteddata values($id, '$nom', '$prenom', '$email')"); //insertion des variables dans customerprotecteddata
     if(!$insertInCustomerextdata){
         echo "erreur d'insertion dans customerprotectdata";
         die;

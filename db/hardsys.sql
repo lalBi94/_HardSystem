@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 02 juin 2022 à 00:08
+-- Généré le : ven. 03 juin 2022 à 00:37
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `permission` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `customer`
@@ -150,7 +150,8 @@ CREATE TABLE IF NOT EXISTS `customer` (
 INSERT INTO `customer` (`id`, `login`, `stash`, `permission`) VALUES
 (1, 'golgot77', 0, 2),
 (2, 'JeanMi91', 0, 2),
-(9, 'bilal_94', 50, 1);
+(9, 'bilal_94', 50, 1),
+(10, 'onde-folie', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -197,7 +198,8 @@ CREATE TABLE IF NOT EXISTS `customerprotecteddata` (
 INSERT INTO `customerprotecteddata` (`id`, `surname`, `firstname`, `email`) VALUES
 (1, 'Tartenpion', 'Cunégonde', 'cunegonde.tartenpion@toto.fr'),
 (2, 'Erraj', 'Jean-Michel', 'synthe@cool.fr'),
-(9, 'Bilou', 'Bdj', 'salut@fefse.fr');
+(9, 'Bilou', 'Bdj', 'salut@fefse.fr'),
+(10, 'Lebon', 'Tiphaine', 'tiphaine.leb@gmail.com');
 
 -- --------------------------------------------------------
 

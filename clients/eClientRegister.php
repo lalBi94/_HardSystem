@@ -14,6 +14,13 @@
     </head>
 
     <body>
+        <style>
+            .cgu-link{
+                color: #0a1b2f;
+                text-decoration: none;
+            }
+        </style>
+
         <header>
             <nav id="nav-container">
                 <ul id="nav-menu-container">
@@ -27,29 +34,23 @@
         </header>
 
         <main>
-            <form style="background: white;" class="form-1" action="./process/register.php" method="post" onsubmit="return checkeur_register();"> <!-- A l'envoie, checkeur_registeur verifie que tout est bien rentre -->
-                <label class="text" class="emailRequest" for="nom"><b>Nom : </b><br><br></label>
-                <input id="init-nom" class="fields-box-email" type="text" name="nom"><br><br>
+            <form class="form-1" action="./process/register.php"  method="post" onsubmit="return register_checker();">
+                <label class="text" class="emailRequest" for="email"><b>E-mail :</label><br>
+                <input id="init-email" class="fields-box-email" type="email" name="email"><br><br>
 
-                <label class="text" class="emailRequest" for="prenom"><b>Prenom : </b><br><br></label>
-                <input id="init-prenom" class="fields-box-email" type="text" name="prenom"><br><br>
-
-                <label class="text" class="emailRequest" for="email"><b>E-mail : </b><br><br></label>
-                <input id="init-email" class="fields-box-email" type="text" name="email"><br><br>
-
-                <label class="text" class="emailRequest" for="pseudo"><b>Nom d'utilisateur : </b><br><br></label>
+                <label class="text" class="emailRequest" for="pseudo"><b>Pseudo :</label><br>
                 <input id="init-pseudo" class="fields-box-email" type="text" name="pseudo"><br><br>
 
-                <label class="text" class="emailRequest" for="mdp"><b>Mot de passe : </b><br><br></label>
-                <input id="init-mdp" class="fields-box-email" type="text" name="mdp"><br><br>
+                <label class="text" class="emailRequest" for="nom"><b>Nom : </b><br></label>
+                <input id="init-nom" class="fields-box-email" type="text" name="nom"><br><br>
 
-                <label class="text" class="emailRequest" for="mdpconf"><b>Confirmer le mot de passe : </b><br><br></label>
-                <input id="init-mdpconf" class="fields-box-email" type="text" name="mdpconf"><br><br><br>
+                <label class="text" class="emailRequest" for="prenom"><b>Prenom : </b><br></label>
+                <input id="init-prenom" class="fields-box-email" type="text" name="prenom"><br><br>
+
+                <input id="cgu" class="checkbox" type="checkbox" name="CGU" value='0'>
+                <label class="text" for="CGU"><b>Accepter les <a href="../assets/cgu/CGU-Hard-System.fr.pdf" style="color: #0a1b2f;">CGU</a></b></label><br><br>
                 
-                <label class="text" class="emailRequest" for="cgu"><b>Accepter les <a href='../assets/cgu/CGU-Hard-System.fr.pdf' target='_blank'>CGU</a></b></label>
-                <input id="init-cgu" class="accept-cgu" type="checkbox" name="cgu"><br><br><br>
-
-                <input class="btn-request" type="submit" value="Inscription">
+                <input class="btn-request" type="submit" value="S'inscrire"><br><br>
             </form>
 
             <script src="./process/check_info.js"></script>
