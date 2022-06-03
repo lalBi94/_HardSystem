@@ -48,7 +48,7 @@
                 <input id="init-prenom" class="fields-box-email" type="text" name="prenom"><br><br>
 
                 <input id="cgu" class="checkbox" type="checkbox" name="CGU" value='0'>
-                <label class="text" for="CGU"><b>Accepter les <a href="../assets/cgu/CGU-Hard-System.fr.pdf" style="color: #0a1b2f;">CGU</a></b></label><br><br>
+                <label class="text" for="CGU"><b>Accepter les <a href="../assets/cgu/CGU-Hard-System.fr.pdf" style="color: #0a1b2f;">CGU</a></b></label><br><br><br>
                 
                 <input class="btn-request" type="submit" value="S'inscrire"><br><br>
             </form>
