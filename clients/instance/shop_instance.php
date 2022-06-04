@@ -1,22 +1,50 @@
+<!-- 
+    # Fonctionnement de la mise en forme :
+        - A l'aide de php, on creer une sorte d'objet (div.items contenue dans div.items-container) contenant les informations de l'item charger grace a la boucle
+        - La boucle fonctionne / les informations sont recupere ainsi :
+            - Les informations des items sont stocke dans $name[] et sont recuperes par la fonction de l'api item_api.php getAllItemFromCat($cat) ou $cat represente le filtre (ordinateur, telephone etc...)
+            - La boucle commence a $i = 0 et fini a $stop_while = le nombre d'element dans $name[]
+
+    # Fonctionnement de notre systeme de panier : 
+        - Le clique sur le logo panier envoie en GET les informations liees au carte du produit
+            - Alloue une case dans $_SESSION['cart'] en l'initialisant par $nbitem
+            - Ecrit dedans :
+                - Id de l'item get.item
+                - Le prix get.price
+                - La quantite get.quantity
+                - La categorie get.cat (non utiliser appart pour filtrer les categories)
+
+            - Le processus de chaque clique :
+                - On incremente la variable $nbitem
+                - $nbitem est recuperer dans $get
+                    - Si le $get est deja initialise dans le tableau, on l'icremente (ce qui cree parfois dans ecart entre les cles qui cree des cases a la valeur null)
+                    - Pour remedier aux casex null, on a cree une fonction qui les supprimes : purgeTab();
+                - La page enclanche la fonction disable(id); contenant dans la balise <script> line.189 ou id represente l'id du boutton qui a ete clique : addCart-$id
+                    - La fonction permet de bloquer le bouton pour que l'utisateur ne puisse pas ajouter le meme item dans le panier
+
+            - Suite :
+                - $_SESSION['cart'] est envoye a cart_instance.php
+ -->
+
+
 <?php //initialisation
-    error_reporting(0);
     session_start();
 
     $nbitem = 0; //passage a la cle suivant du tableau contenant le panier
     $send = 0;
 
     @$categorie = $_GET['cat']; //recup du filtre
-    if($categorie == 'Ordinateur'){
+    if($categorie == 'Ordinateurs'){
         $prefix = "d'";
         $category = 3;
-    } if($categorie == 'Telephone'){
-        $prefix = "de";
+    } if($categorie == 'Telephones'){
+        $prefix = "de ";
         $category = 2;
-    } if($categorie == 'Ecran'){
+    } if($categorie == 'Ecrans'){
         $prefix = "d'";
         $category = 4;
-    } if($categorie == 'Tablette'){
-        $prefix = "de";
+    } if($categorie == 'Tablettes'){
+        $prefix = "de ";
         $category = 1;
     } 
 
@@ -35,13 +63,23 @@
     @$item = $_GET['item'];
     @$qtecarte = $_GET['quantity'];
 
+    //var_dump($_SESSION['cart']); //dump du panier
+
     foreach($_SESSION['cart'] as $c => $v){
-        if(array_key_exists($c)){
-            echo "detect";
-            $get = $get+2;
+        if(array_key_exists(1, $_SESSION['cart'])){
+            $get++;
             $c++;
         } else{
-            echo "non detect";
+            $c++;
+        }
+    }
+
+    foreach($_SESSION['qtecart'] as $c => $v){
+        if(array_key_exists(1, $_SESSION['qtecart'])){
+            $get *=3;
+            $get -=2;
+            $c++;
+        } else{
             $c++;
         }
     }
@@ -127,7 +165,6 @@
             $name = getAllItemFromCat($category);
             $stop_while = count($name); 
             $i = 0;
-            $j = 0;
 
             echo "<div class='items-container'>";
             while($i != $stop_while){
@@ -151,8 +188,6 @@
                 echo "<input type='hidden' name='item' value='$send'>"; //envoie en get l'id de l'item
                 echo "<input type='hidden' name='price' value='$price'>";
                 echo "<input type='hidden' name='cat' value='$categorie'>";
-
-                var_dump($_SESSION['cart']);
                 
                 echo "<br><p><b>".$price.",00€/u TTC</b></p>";
                 echo "<br><input class='qte' type='number' name='quantity' value='1'><br>";
@@ -169,7 +204,6 @@
             function disable(id){
                 document.getElementById("addCart-"+id).style.backgroundColor = "grey";
                 document.getElementById("addCart-"+id).disabled = true;
-                console.log(id + " plus appuyable");
             }
 
             function hide(){

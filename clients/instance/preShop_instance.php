@@ -29,10 +29,10 @@
             <h1 style='text-align: center; margin-top: 4%;'>Vous recherchez...</h2>
             <form action='./shop_instance.php' method='get' style='margin-top: 2%;'>
                 <div id='btn-container'>
-                    <input class='btn-request' class='filter' type='submit' name='cat' value='Ordinateur'>
-                    <input class='btn-request' class='filter' type='submit' name='cat' value='Tablette'>
-                    <input class='btn-request' class='filter' type='submit' name='cat' value='Telephone'>
-                    <input class='btn-request' class='filter' type='submit' name='cat' value='Ecran'>
+                    <input class='btn-request' class='filter' type='submit' name='cat' value='Ordinateurs'>
+                    <input class='btn-request' class='filter' type='submit' name='cat' value='Tablettes'>
+                    <input class='btn-request' class='filter' type='submit' name='cat' value='Telephones'>
+                    <input class='btn-request' class='filter' type='submit' name='cat' value='Ecrans'>
                 </div>
             <form>
         </main>

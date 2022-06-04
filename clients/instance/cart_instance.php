@@ -1,4 +1,4 @@
-<?php
+<?php //demarrage
     error_reporting(0);
     session_start();
 
@@ -12,14 +12,26 @@
     }
 ?>
 
-<?php 
+<?php //Lie a la suppression d'element
     if(isset($_GET['delI'])){
         @$get = $_GET['delI'];
         unset($_SESSION['cart'][$get]);
     }
+
+    if(isset($_GET['request'])){
+        foreach($_SESSION['cart'] as $c => $v){
+            unset($_SESSION['cart'][$c]);
+            $c++;
+        }
+
+        foreach($_SESSION['qtecart'] as $c => $v){
+            unset($_SESSION['qtecart'][$c]);
+            $c++;
+        }
+    }
 ?>
 
-<?php
+<?php //supprimer les potentiels cases vident (inutile car deja purger dans shop_instance.php mais on sait jamais)
     $foo = $_SESSION['cart']; //$foo est egal au tableau $_SESSION['cart']
     $foo1 = $_SESSION['qtecart']; //$foo2 est egal au tableau $_SESSION['qtecart']
     purgeTab($foo); 
@@ -99,6 +111,11 @@
                         echo "<p style='text-align: center; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Votre panier(";
                         echo count($foo);
                         echo ")</p>";
+
+                        echo "<form>";
+                        echo "<input type='hidden' name='request' value='1'>";
+                        echo "<input type='submit' class='btn-request' value='Vider le panier'>";
+                        echo "</form>";
                     }
                 ?>
             </div>
@@ -133,6 +150,7 @@
                 }
                 
                 //var_dump($_SESSION['cart']); //dump la var session cart
+                //var_dump($_SESSION['qtecart']); //dump la var session qtecart
                 //var_dump($foo); //dump le tableau $foo pour test
                 //var_dump($foo1); //dump le tableau $foo1 pour test
                 //var_dump($stockprice); //dump le tableau $stockprice pour test
