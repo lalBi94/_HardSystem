@@ -10,18 +10,12 @@
 
 body{
     background-image: url("../assets/layout/layout-index.svg");
-    background-attachment: scroll;
+    background-attachment: fixed;
     background-repeat: no-repeat;
 }
 
 .text{
     font-size: 1.1vw;
-}
-
-body{
-    background-image: url("../assets/layout/layout-index.svg");
-    background-attachment: fixed;
-    background-repeat: no-repeat;
 }
 
 .btn-request{

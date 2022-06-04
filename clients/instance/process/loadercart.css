@@ -1,0 +1,47 @@
+.traitement{
+    margin-top: 2%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 1.4vw;
+}
+
+.apresAjoutPanier{
+    background-color: transparent;
+    
+    border: 20px solid transparent;
+    border-top: 20px solid #0a1b2f;
+    border-bottom: 20px solid #ffe72c;
+    border-radius: 50%;
+
+    margin: 0 auto;
+    width: 100px;
+
+    width: 200px;
+    height: 200px;
+
+    -webkit-animation: spin 3s linear infinite;
+    -o-animation: spin 3s linear infinite;
+    animation: spin 3s linear infinite;
+
+    margin-top: 4%;
+}
+
+@-webkit-keyframes spin{
+    0%{
+        -webkit-transform: rotate(0deg);
+    }
+
+    100%{
+        -webkit-tranform: rotate(360deg);
+    }
+}
+
+@keyframes spin{
+    0%{
+        transform: rotate(0deg);
+    }
+
+    100%{
+        transform: rotate(360deg);
+    }
+}

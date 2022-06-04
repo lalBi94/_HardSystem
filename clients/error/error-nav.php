@@ -1,6 +1,3 @@
-<style>
-</style>
-
 <header>
     <nav id="nav-container">
         <ul id="nav-menu-container">

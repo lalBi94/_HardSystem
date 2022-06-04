@@ -1,6 +1,7 @@
 <?php
     error_reporting(0);
     session_start();
+
     $nbitem = 0;
     require("../process/clients_api.php"); //connexion api client
     require("../process/items_api.php"); //connexion api items
@@ -11,17 +12,26 @@
     }
 ?>
 
+<?php 
+    if(isset($_GET['delI'])){
+        @$get = $_GET['delI'];
+        unset($_SESSION['cart'][$get]);
+    }
+?>
+
 <?php
     $foo = $_SESSION['cart']; //$foo est egal au tableau $_SESSION['cart']
     $foo1 = $_SESSION['qtecart']; //$foo2 est egal au tableau $_SESSION['qtecart']
+    purgeTab($foo); 
+    purgeTab($foo1);
 ?>
 
-<!DOCTYPE html>
 <html>
     <head>
         <?php require('./require_head.php'); //requiere le fichier "./require_header.php" ?>
+        <link rel='stylesheet' href='./process/loadercart.css'>
     </head>
-    <body>
+    <body onload='hide();'>
         <style>
             #cart-container{
                 max-width: 1300px;
@@ -53,36 +63,44 @@
                 width: 15%;
                 padding: 2%;
             }
+
+            .btn{
+                background-color: #0a1b2f;
+                color: white;
+                border: none;
+                border-radius: 2.3px;
+                padding: 11px;
+                font-size: 0.8vw;
+                width: 110px;
+                height: 40px;
+            }
+
+            .btn:hover{
+                transform: scale(1.1);
+                transition: 0.3s;
+            }
         </style>
+        
         <?php require('./require_nav.php'); //requiere le fichier "./require_nav.php" ?>
         <div id='cart-container'> <!-- containeur des items contenue dans le panier -->
             <?php
                 $i = 0;
                 $counti = array_key_last($foo); //prends la dernier cle du tableau pour le foreach
 
-                //suppression des valeurs null
-                purgeTab($foo); 
-                purgeTab($foo1);
-
                 //suppression de doublons
                 $foo = array_unique($foo);
             ?>
 
             <div class='cart'>
-                <p style='text-align: center; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Votre panier<br>
-                    (<?php
-                        echo count($foo)-1;
-
-                        if(count($foo) >= 2){ //si objet superieur ou egal a 2, mettre un s a objet
-                            echo " objets";
-                        } if(count($foo) == 1){
-                            echo " objet"; //si objet egal a 1, ne pas mettre de s 
-                        } if(count($foo) < 0){
-                            echo "Probleme avec le server"; //si items inferieur a 1, probleme !
-                            die;
-                        }
-                    ?>)
-                </p>
+                <?php
+                    if(count($foo) == 0){
+                        echo "<p style='text-align: center; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Aucun article</p>";
+                    }else{
+                        echo "<p style='text-align: center; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Votre panier(";
+                        echo count($foo);
+                        echo ")</p>";
+                    }
+                ?>
             </div>
 
             <?php
@@ -100,28 +118,37 @@
                         echo "<div class='cart'>"; //"Structure" du schema d'une carte contenant les informations lie a l'item + desc choisit par l'utilisateur
                         $name = getItemName($foo[$c]);
                         $img = getPicture($foo[$c]);
-                        echo "<p>".$name."</p>"; //Nom de l'item
-                        echo "<img src='$img'></img><br>"; //image de l'item
+                        echo "<p>".$name."</p><br>"; //Nom de l'item
+                        echo "<img src='$img'></img><br><br>"; //image de l'item
                         echo "<label for='finalqte-de-$c'>Quantite :"; 
                         echo "<input class='qte' type='number' name='finalqte-de-$c' value="."'$foo1[$c]'".">"; //modification, si y a une, de la qte
-                        echo "<p>Total : ".$price.",00€ TTC</p>"; //Prix
+                        echo "<br><br><p>Total : ".$price.",00€ TTC</p><br>"; //Prix
+                        echo "<form method='get'>";
+                        echo "<button class='btn'>Supprimer</button>";
+                        echo "<input type='hidden' name='delI' value='$c'>";
+                        echo "</form>";
                         echo "</div>";
                         $c++;
                     }
                 }
-
+                
+                //var_dump($_SESSION['cart']); //dump la var session cart
                 //var_dump($foo); //dump le tableau $foo pour test
                 //var_dump($foo1); //dump le tableau $foo1 pour test
                 //var_dump($stockprice); //dump le tableau $stockprice pour test
             ?>
 
-            <div class='cart'>
-                <p style='text-align: center; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Total<br>
-                    <?php
+                <?php
+                    if(count($foo) >= 1){
+                        echo "<div class='cart'>";
+                        echo "<p style='text-align: center; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Total<br>";
                         $finalprice = array_sum($stockprice);
                         echo $finalprice." €"; //Prix
-                    ?>
-                </p>
+                        echo "</div>";
+                    } else{
+                        die;
+                    }
+                ?>
             </div>
         </div>
     </body>

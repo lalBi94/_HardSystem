@@ -70,7 +70,7 @@
         </style>
         <?php require('./require_nav.php'); ?>
         <div id='cashback'>
-            <h2 class='title'>Participer a l'economie circulaire !</h2>
+            <h2 class='title'>Participer a l'economie circulaire !</h2><br><br>
             <p style='margin-top: 2%;'>Objet :</p> 
             <form action='./process/sellItem.php' method='post'>
                 <select class='slction' name='sellItem'>
@@ -89,7 +89,6 @@
                         }
                     ?>
                 </select>
-                <button class='btn-request'>Voir</button>
 
                 <input type='hidden' name='price' value='0'>
 
@@ -102,7 +101,7 @@
                 <p style='margin-top: 2%;'>Adresse :</p> <!-- factice -->
                 <input class='fields-box-email' type='text'><br>
 
-                <p style='margin-top: 5%;' class='adresse'><b><br>L'appareil devra etre envoyer a l'adresse suivante <br><br><span class='ad'><a href='https://goo.gl/maps/Lqac8fMbmzoD4d8AA' target="_blank">36 Rue Georges Charpak, 77127 Lieusaint</a></span></b><br><br></p>
+                <p style='margin-top: 5%;' class='adresse'><b><br>L'appareil devra etre envoyer a l'adresse suivante <br><br><span class='ad'><a href='https://goo.gl/maps/Lqac8fMbmzoD4d8AA' target="_blank">36 Rue Georges Charpak, 77127 Lieusaint</a></span></b><br><br></p><br>
 
                 <input class='btn-request' style='margin-top: 5%;' type='submit' value='Vendre !'>
             <form>

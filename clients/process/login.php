@@ -8,19 +8,13 @@
     }
 
     $connect = require("../../db/db_connect.php"); //connexion a la bdd
-    if(!$connect){ //si la connexion vers la bdd echoue
-        echo "echec de la connexion a la bdd";
-        session_unset();
-        session_destroy();
-        die;
-    }
 
     $log = $_POST['pseudo'];
     $req = mysqli_query($db, "select login, id from Customer where login='$log'");
 
     if(mysqli_num_rows($req) == 0){ //si zero ligne sortis, aucun utilisateur
-        echo "Aucun utilisateur trouve !";
         session_destroy();
+        header ("location: ../error/login_clientExist.php");
         die;
     }
     

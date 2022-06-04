@@ -211,15 +211,15 @@
         return $foo;
     }
 
-    function getTheAllOfNameItemFromClients(){ //recuperer le nom de tous les items
+    function getAllItemFromCat($cat){
         require("../../db/db_connect.php");
 
         $foo;
         $i = 0;
 
-        $to_get = mysqli_query($db, "select I.name from customersell C, typeitem I where C.item = I.id");
+        $to_get = mysqli_query($db, "select name from typeitem where cat='$cat'");
         if(!$to_get){
-            echo "echec de la fonction getTheAllOfNameItemFromClients()";
+            echo "echec de la fonction getAllItemFromCat()";
             return false;
         }
 

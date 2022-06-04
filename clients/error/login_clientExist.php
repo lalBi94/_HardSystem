@@ -1,4 +1,4 @@
-<?php
+<?php 
     session_start();
 ?>
 
@@ -44,11 +44,12 @@
                 echo "<div id='whenRequestSend'>";
                 echo "<img class='gif_request' src='../../assets/request_send/false_request.gif' alt='Request send !'></img>";
                 echo "<p class='failure_msg'>
-                Il y a un probleme lors de l'inscription au site<br>
-                </br>Contactez <b>l'equipe</b>! <br><br><b>Email</b> : equipe@hard-system.fr<br></h1><br>";
+                Il y a un probleme lors de la connexion<br>
+                L'utilisateur n'existe pas !
+                </p><br><br>";
                 echo "<div class='homepage_link'>";
                 echo "<form>";
-                echo "<button class='btn-request' formaction='../eClientRegister.php'>Ressayer</button>";
+                echo "<button class='btn-request' formaction='../eClientLogin.php'>Ressayer</button>";
                 echo "</form>";
                 echo "</div>";
             ?>
