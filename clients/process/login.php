@@ -10,7 +10,7 @@
     $connect = require("../../db/db_connect.php"); //connexion a la bdd
 
     $log = $_POST['pseudo'];
-    $req = mysqli_query($db, "select login, id from Customer where login='$log'");
+    $req = mysqli_query($db, "select login, id from customer where login='$log'");
 
     if(mysqli_num_rows($req) == 0){ //si zero ligne sortis, aucun utilisateur
         session_destroy();

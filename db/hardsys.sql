@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 03 juin 2022 à 00:37
+-- Généré le : lun. 06 juin 2022 à 13:12
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -53,20 +53,28 @@ INSERT INTO `business` (`id`, `name`, `country`) VALUES
 
 DROP TABLE IF EXISTS `businessbuy`;
 CREATE TABLE IF NOT EXISTS `businessbuy` (
-  `business` int(11) NOT NULL,
-  `typeItem` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `price` int(11) NOT NULL COMMENT 'price per unit in euros',
-  PRIMARY KEY (`business`,`typeItem`),
+  `business` int(11) DEFAULT NULL,
+  `typeItem` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  KEY `business` (`business`),
   KEY `typeItem` (`typeItem`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='The business wants to buy quantity of item at unit price';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `businessbuy`
 --
 
 INSERT INTO `businessbuy` (`business`, `typeItem`, `quantity`, `price`) VALUES
-(3, 1, 38, 20);
+(1, 1, 30, 200),
+(1, 1, 30, 200),
+(2, 1, 30, 200),
+(3, 1, 30, 200),
+(1, 1, 30, 200),
+(1, 2, 30, 200),
+(3, 31, 30, 200),
+(2, 17, 30, 200),
+(3, 39, 30, 200);
 
 -- --------------------------------------------------------
 
@@ -130,6 +138,29 @@ INSERT INTO `cagnotte` (`idCagnotte`, `idElem`, `qteMG`, `price`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `categorie`
+--
+
+DROP TABLE IF EXISTS `categorie`;
+CREATE TABLE IF NOT EXISTS `categorie` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `categorie`
+--
+
+INSERT INTO `categorie` (`id`, `nom`) VALUES
+(1, 'Tablette'),
+(2, 'Telephone'),
+(3, 'Ordinateur'),
+(4, 'Ecran');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `customer`
 --
 
@@ -141,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `permission` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `customer`
@@ -150,8 +181,9 @@ CREATE TABLE IF NOT EXISTS `customer` (
 INSERT INTO `customer` (`id`, `login`, `stash`, `permission`) VALUES
 (1, 'golgot77', 0, 2),
 (2, 'JeanMi91', 0, 2),
-(9, 'bilal_94', 50, 1),
-(10, 'onde-folie', 0, 2);
+(9, 'bilal_94', 157, 1),
+(10, 'onde-folie', 0, 2),
+(12, 'admin', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -173,7 +205,9 @@ CREATE TABLE IF NOT EXISTS `customerextraction` (
 --
 
 INSERT INTO `customerextraction` (`Customer`, `element`, `quantity`) VALUES
-(9, 13, 20000);
+(9, 13, 20000),
+(9, 79, 40),
+(9, 13, 5000);
 
 -- --------------------------------------------------------
 
@@ -199,7 +233,8 @@ INSERT INTO `customerprotecteddata` (`id`, `surname`, `firstname`, `email`) VALU
 (1, 'Tartenpion', 'Cunégonde', 'cunegonde.tartenpion@toto.fr'),
 (2, 'Erraj', 'Jean-Michel', 'synthe@cool.fr'),
 (9, 'Bilou', 'Bdj', 'salut@fefse.fr'),
-(10, 'Lebon', 'Tiphaine', 'tiphaine.leb@gmail.com');
+(10, 'Lebon', 'Tiphaine', 'tiphaine.leb@gmail.com'),
+(12, 'HardSystem', 'Team', 'admin@hard-system.fr');
 
 -- --------------------------------------------------------
 
@@ -219,13 +254,15 @@ CREATE TABLE IF NOT EXISTS `customersell` (
   PRIMARY KEY (`nsell`),
   KEY `client` (`client`),
   KEY `item` (`item`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `customersell`
 --
 
 INSERT INTO `customersell` (`nsell`, `client`, `item`, `price`, `quantity`, `date_sell`, `time_sell`) VALUES
+(34, 9, 17, 0, 1, '2022-06-05', '23:30:58'),
+(33, 9, 40, 0, 1, '2022-06-04', '15:10:24'),
 (32, 9, 31, 0, 1, '2022-06-02', '00:56:53');
 
 -- --------------------------------------------------------
@@ -316,8 +353,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
 
 INSERT INTO `permissions` (`id`, `name`) VALUES
 (1, 'admin'),
-(2, 'customer'),
-(3, 'business');
+(2, 'customer');
 
 -- --------------------------------------------------------
 
@@ -366,6 +402,7 @@ CREATE TABLE IF NOT EXISTS `typeitem` (
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` int(11) NOT NULL,
   `byWho` int(11) NOT NULL COMMENT '1 = site, 2 = clients, 3 entreprises',
+  `cat` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -374,21 +411,21 @@ CREATE TABLE IF NOT EXISTS `typeitem` (
 -- Déchargement des données de la table `typeitem`
 --
 
-INSERT INTO `typeitem` (`id`, `name`, `price`, `byWho`) VALUES
-(1, 'Iphone 5', 200, 1),
-(2, 'Fairphone 2', 120, 1),
-(17, 'Galaxie TAB', 300, 1),
-(31, 'Iphone X', 1000, 1),
-(34, 'HP X24ih', 200, 1),
-(35, 'Optix MPG341CQR', 800, 1),
-(39, 'ASUS VZ229HE', 135, 1),
-(40, 'Dell Inspiration 12', 750, 1),
-(41, 'iMac', 900, 1),
-(42, 'Msi GF65 Thin 10UE-034XFR', 1150, 1),
-(43, 'iPad 2021', 1450, 1),
-(44, 'Xiaomi PAD 5qe', 400, 1),
-(45, 'Iphone 13 Pro', 1700, 1),
-(46, 'Samsung Galaxie Ultra', 1300, 1);
+INSERT INTO `typeitem` (`id`, `name`, `price`, `byWho`, `cat`) VALUES
+(1, 'Iphone 5', 200, 1, 2),
+(2, 'Fairphone 2', 120, 1, 2),
+(17, 'Galaxie TAB', 300, 1, 1),
+(31, 'Iphone X', 1000, 1, 2),
+(34, 'HP X24ih', 200, 1, 4),
+(35, 'Optix MPG341CQR', 800, 1, 4),
+(39, 'ASUS VZ229HE', 135, 1, 4),
+(40, 'Dell Inspiration 12', 750, 1, 3),
+(41, 'iMac', 900, 1, 3),
+(42, 'Msi GF65 Thin 10UE-034XFR', 1150, 1, 3),
+(43, 'iPad 2021', 1450, 1, 1),
+(44, 'Xiaomi PAD 5qe', 400, 1, 1),
+(45, 'Iphone 13 Pro', 1700, 1, 2),
+(46, 'Samsung Galaxie Ultra', 1300, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -419,13 +456,6 @@ INSERT INTO `typeitemdetails` (`typeItem`, `attribute`, `value`) VALUES
 --
 -- Contraintes pour les tables déchargées
 --
-
---
--- Contraintes pour la table `businessbuy`
---
-ALTER TABLE `businessbuy`
-  ADD CONSTRAINT `BusinessBuy_ibfk_1` FOREIGN KEY (`business`) REFERENCES `business` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `BusinessBuy_ibfk_2` FOREIGN KEY (`typeItem`) REFERENCES `typeitem` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `businesssell`

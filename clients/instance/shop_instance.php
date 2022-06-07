@@ -76,8 +76,7 @@
 
     foreach($_SESSION['qtecart'] as $c => $v){
         if(array_key_exists(1, $_SESSION['qtecart'])){
-            $get *=3;
-            $get -=2;
+            $get++;
             $c++;
         } else{
             $c++;

@@ -25,6 +25,7 @@
 
     function getItemId($item){ //id de l'item
         require("../../db/db_connect.php");
+        
         $req_id = mysqli_query($db, "select id from typeitem where name='$item'");
         if(!$req_id){
             echo "erreur dans la fonction getItemId()";

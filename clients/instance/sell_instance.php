@@ -68,67 +68,83 @@
             }
 
         </style>
+
         <?php require('./require_nav.php'); ?>
         <div id='cashback'>
             <h2 class='title'>Participer a l'economie circulaire !</h2><br><br>
-            <p style='margin-top: 2%;'>Objet :</p> 
-            <form action='./process/sellItem.php' method='post'>
-                <select class='slction' name='sellItem'>
-                    <option>-- Selectionner un objet --</option>
-                    <?php /*Afficher la liste des objets disponible a la vente*/
-                        $i = 0;
-                        $stop_while = getNbItemPerSelect();
-                        while($i != $stop_while){
-                            $req = mysqli_query($db, "select id, name from typeitem");
-                            while($fetch = mysqli_fetch_assoc($req)){
-                                $id = $fetch['id'];
-                                $name = $fetch['name'];
-                                echo "<option value='$id'>$name</option>";
-                                $i++;
-                            }
+
+            
+
+            <form method='get'>
+                <input class='fields-box-email' style='margin-top: 2%;' name='item' placeholder='Rechercher un objet'>
+                <input class='btn-request' style='font-size: 12px; width: 100px; height: auto;' type='submit' value='rechercher'>
+            </form>
+
+            <form action='./process/sellItem.php' method='get'> 
+                <?php //Afficher les items du site
+                    if(isset($_GET['item']) && !empty($_GET['item']) && $_GET['item'] != "" && $_GET['item'] != " "){
+                        @$get = $_GET['item'];
+                        $displayitem = mysqli_query($db, "select I.name, I.price, BB.id, P.url, BB.quantity from typeitem I, picture P, businessbuy BB, business B where I.name like '%$get%' and BB.typeItem = I.id and B.id = BB.business and P.item = BB.typeItem");
+                        $displayitem2 = mysqli_query($db, "select I.name, I.price, BB.id, P.url, BB.quantity from typeitem I, picture P, businessbuy BB, business B where I.name like '%$get%' and BB.typeItem = I.id and B.id = BB.business and P.item = BB.typeItem");
+                        $displaybusiness = mysqli_query($db, "select B.name from typeitem I, picture P, businessbuy BB, business B where I.name like '%$get%' and BB.typeItem = I.id and B.id = BB.business and P.item = BB.typeItem");
+                        $nb = mysqli_num_rows($displayitem);
+
+                        if($nb > 0){
+                            echo "<p style='color: green'>Disponible ! ($nb resultat";
+                        if($nb > 1){
+                            echo "s)</p>";
+                        } else{
+                            echo ")</p>";
+                        } 
+
+                        $item = (int) getItemId($get);
+                        
+                        while($fetch = mysqli_fetch_assoc($displayitem) and $fetch2 = mysqli_fetch_assoc($displaybusiness)){
+                            $initprice = $fetch['price'];
+                            $price1 = ($initprice*40)/100;
+                            $price = $initprice-$price1;
+                            $id = $fetch['id'];
+
+                            // $cagnotte_price = mysqli_query($db, "select E.element, E.quantity, C.qteMG, C.price from cagnotte C, extractionfromtypeitem E where E.typeitem = '$item' and C.idElem = E.element");
+                            // $q = $fetch3['quantity'];
+                            // $p = $fetch3['price'];
+                            // $add = $q*$p;
+
+                            echo "<div style='border: 1px solid black; margin-bottom: 2%;'></div>";
+                            echo "<input style='float: left;' type='radio' name='id' value='$id'>"; //contient id de 
+                            echo "<p style='font-weight: bold; margin-left: 5%;'>".$fetch['name']."</p><br>";
+                            echo "<img style='width: 15%; height: auto; margin-left: 3%; margin-bottom: 2%;' src='".$fetch['url']."'>";
+                            echo "<input type='hidden' name='price' value='$price'>";
+                            echo "<p style='float: right; text-align: right;'>".
+                            "<b>".$price."</b>".
+                            "€<br>Acheteur <b>".$fetch2['name']."</b>".
+                            "<br>Quantite : "."<b>".$fetch['quantity']."</b>".
+                            "</p><br>";
                         }
-                    ?>
-                </select>
 
-                <input type='hidden' name='price' value='0'>
+                        } if($nb == 0){
+                            echo "<p style='color: red'>Aucun resultat !</p><br>";
+                        }
 
-                <p style='margin-top: 2%;'>Quantite :</p>
-                <input class='fields-box-email' type='number' name='qte'><br>
+                        echo "<div style='border: 1px solid black;'></div><br>";
+                    }
+                ?>
 
-                <p style='margin-top: 2%;'>Nom Prenom:</p> <!-- factice -->
+                <p style='margin-top: 2%; font-weight: bold;'>Quantite :</p>
+                <input style='width: 55px; text-align: center;' min='1' class='fields-box-email' type='number' name='qte' value='1'><br><br>
+
+                <p style='margin-top: 2%; font-weight: bold;'>Nom Prenom:</p> <!-- factice -->
                 <input class='fields-box-email' type='text'><br>
 
-                <p style='margin-top: 2%;'>Adresse :</p> <!-- factice -->
+                <p style='margin-top: 2%; font-weight: bold;'>Adresse :</p> <!-- factice -->
                 <input class='fields-box-email' type='text'><br>
 
-                <p style='margin-top: 5%;' class='adresse'><b><br>L'appareil devra etre envoyer a l'adresse suivante <br><br><span class='ad'><a href='https://goo.gl/maps/Lqac8fMbmzoD4d8AA' target="_blank">36 Rue Georges Charpak, 77127 Lieusaint</a></span></b><br><br></p><br>
+                <p style='margin-top: 5%; font-weight: bold;' class='adresse'><b><br>L'appareil devra etre envoyer a l'adresse suivante <br>Il sera envoye a l'entreprise par nos propres soins<br><br><span class='ad'><a href='https://goo.gl/maps/Lqac8fMbmzoD4d8AA' target="_blank">36 Rue Georges Charpak, 77127 Lieusaint</a></span></b><br><br></p><br>
 
+                <input id="cgu" class="checkbox" type="checkbox" name="CGU">
+                <label class="text" for="CGU"><b>Accepter les <a href="../../assets/cgu/CGU-Hard-System.fr.pdf" style="color: #0a1b2f;">CGU</a></b></label><br><br><br>
                 <input class='btn-request' style='margin-top: 5%;' type='submit' value='Vendre !'>
             <form>
         </div>
-
-        <!-- <div id='perso'>
-        <h2 class='title'>Vendez votre objet</h2>
-            <form action='./process/sellItem.php' method='post'>
-                <p style='margin-top: 2%;'>Nom :</p>
-                <input class='fields-box-email' type='text' name='name'><br>
-
-                <p style='margin-top: 2%;'>Prix :</p>
-                <input class='fields-box-email' type='number' name='qte'><br>
-
-                <p style='margin-top: 2%;'>Quantite :</p>
-                <input class='fields-box-email' type='number' name='qte'><br>
-
-                <p style='margin-top: 2%;'>Nom Prenom:</p> factice 
-                <input class='fields-box-email' type='text'><br>
-
-                <p style='margin-top: 2%;'>Adresse :</p>  factice 
-                <input class='fields-box-email' type='text'><br>
-
-                <p style='margin-top: 2%;'>IBAN pour recevoir le paiement :</p>  factice
-                <input class='fields-box-email' type='text'><br>
-
-                <input class='btn-request' style='margin-top: 5%;' type='submit' value='Vendre !'>
-        </div> -->
     </body>
 </html>
