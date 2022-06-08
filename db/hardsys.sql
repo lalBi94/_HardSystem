@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 06 juin 2022 à 13:12
+-- Généré le : mer. 08 juin 2022 à 10:19
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -53,28 +53,27 @@ INSERT INTO `business` (`id`, `name`, `country`) VALUES
 
 DROP TABLE IF EXISTS `businessbuy`;
 CREATE TABLE IF NOT EXISTS `businessbuy` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `business` int(11) DEFAULT NULL,
   `typeItem` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `business` (`business`),
   KEY `typeItem` (`typeItem`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `businessbuy`
 --
 
-INSERT INTO `businessbuy` (`business`, `typeItem`, `quantity`, `price`) VALUES
-(1, 1, 30, 200),
-(1, 1, 30, 200),
-(2, 1, 30, 200),
-(3, 1, 30, 200),
-(1, 1, 30, 200),
-(1, 2, 30, 200),
-(3, 31, 30, 200),
-(2, 17, 30, 200),
-(3, 39, 30, 200);
+INSERT INTO `businessbuy` (`id`, `business`, `typeItem`, `quantity`, `price`) VALUES
+(10, 2, 35, 8, 450),
+(3, 2, 1, 18, 200),
+(6, 1, 2, 30, 200),
+(7, 3, 31, 13, 200),
+(8, 2, 17, 16, 200),
+(9, 3, 39, 30, 200);
 
 -- --------------------------------------------------------
 
@@ -120,20 +119,20 @@ CREATE TABLE IF NOT EXISTS `cagnotte` (
 --
 
 INSERT INTO `cagnotte` (`idCagnotte`, `idElem`, `qteMG`, `price`) VALUES
-(1, 13, 4000, 10),
-(2, 28, 1000, 20),
-(3, 29, 1000, 5),
-(4, 39, 100, 1),
-(5, 46, 1000, 11),
-(6, 47, 500, 3),
-(7, 57, 400, 20),
-(8, 59, 1000, 10),
-(9, 60, 100, 5),
-(10, 64, 500, 2),
-(11, 65, 20, 1),
-(12, 77, 100, 5),
-(13, 78, 400, 2),
-(14, 79, 50, 75);
+(1, 13, 1, 0.0031),
+(2, 28, 1, 0.0031),
+(3, 29, 1, 0.0031),
+(4, 39, 1, 0.0031),
+(5, 46, 1, 0.021),
+(6, 47, 1, 0.031),
+(7, 57, 1, 0.5),
+(8, 59, 1, 0.5),
+(9, 60, 1, 1),
+(10, 64, 1, 1),
+(11, 65, 1, 1),
+(12, 77, 1, 1),
+(13, 78, 1, 1),
+(14, 79, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -254,16 +253,29 @@ CREATE TABLE IF NOT EXISTS `customersell` (
   PRIMARY KEY (`nsell`),
   KEY `client` (`client`),
   KEY `item` (`item`)
-) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `customersell`
 --
 
 INSERT INTO `customersell` (`nsell`, `client`, `item`, `price`, `quantity`, `date_sell`, `time_sell`) VALUES
-(34, 9, 17, 0, 1, '2022-06-05', '23:30:58'),
-(33, 9, 40, 0, 1, '2022-06-04', '15:10:24'),
-(32, 9, 31, 0, 1, '2022-06-02', '00:56:53');
+(91, 9, 35, 450, 1, '2022-06-08', '03:57:55'),
+(90, 9, 1, 200, 1, '2022-06-08', '02:59:25'),
+(92, 9, 35, 450, 1, '2022-06-08', '04:00:17'),
+(88, 9, 1, 200, 1, '2022-06-08', '02:58:30'),
+(89, 9, 1, 200, 1, '2022-06-08', '02:59:03'),
+(87, 9, 1, 200, 1, '2022-06-08', '02:58:02'),
+(86, 9, 1, 200, 1, '2022-06-08', '02:57:46'),
+(85, 9, 1, 200, 1, '2022-06-08', '02:57:38'),
+(84, 9, 1, 200, 1, '2022-06-08', '02:57:19'),
+(83, 9, 17, 200, 1, '2022-06-08', '02:55:20'),
+(82, 9, 17, 200, 1, '2022-06-08', '02:54:56'),
+(81, 9, 17, 200, 1, '2022-06-08', '02:54:26'),
+(80, 9, 17, 200, 1, '2022-06-08', '02:54:22'),
+(79, 9, 17, 200, 1, '2022-06-08', '02:53:24'),
+(78, 9, 17, 200, 1, '2022-06-08', '02:53:06'),
+(77, 9, 17, 200, 1, '2022-06-08', '02:52:39');
 
 -- --------------------------------------------------------
 
