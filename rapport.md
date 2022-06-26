@@ -110,4 +110,4 @@ Ce site est un lieu commercial technologique **B2C**.
 - Via la plateforme <a href =''>Pastebin</a> pour écrire des procédures utiles au groupe
 	- https://pastebin.com/u8MXVwfU
 	- https://pastebin.com/gkNmu6NX
-- Via <a href=''>GitHub</a> pour synchroniser le travail :
+- Via <a href='https://github.com/lalBi94/_HardSystem'>GitHub</a> pour synchroniser le travail :
