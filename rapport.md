@@ -1,8 +1,5 @@
 # Rapport <font color="#0a1b2f"> Hard-System </font>
-
-
-
-## Bilal Boudjemline, Fares Sid Athmane, Guy Bade
+``Bilal Boudjemline, Fares Sid Athmane, Guy Bade``
 
 ## Introduction
 Aujourd'hui, nous vous présentons le site qu'on a crée : **Hard-System**.</br>
