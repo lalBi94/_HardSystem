@@ -110,11 +110,11 @@ Ce site est un lieu commercial technologique **B2C**.
 - Via <a href='https://github.com/lalBi94/_HardSystem'>GitHub</a> pour synchroniser le travail
 
 ## Conclusion individuelle
-</br>**Bilal** </br>
+**Bilal BOUDJEMLINE**
 > J''ai trouve cette SAE interessante et amusante a faire. Malgres le faites que les consignes de la SAE n'ont pas ete clair sur certain point, nous avons essayer de faire de notre mieux.</br>
 > 
-</br>**Guy** </br>
+</br>**Guy BADE** 
 > J''ai trouve cette SAE interessante et amusante a faire. Malgres le faites que les consignes de la SAE n'ont pas ete clair sur certain point, nous avons essayer de faire de notre mieux.</br>
 > 
-</br>**Fares** </br>
+</br>**Fares Sid Athmane**
 > J''ai trouve cette SAE interessante et amusante a faire. Malgres le faites que les consignes de la SAE n'ont pas ete clair sur certain point, nous avons essayer de faire de notre mieux.</br>
