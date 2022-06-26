@@ -1,11 +1,12 @@
 /* using color : #0a1b2f blue and #ffe72c yellow */
+/* Framework CSS by Hard System*/
 
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     list-style-type: none;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Comics Sans ms', Courier, monospace;
 }
 
 body{
@@ -18,7 +19,7 @@ body{
     font-size: 1.1vw;
 }
 
-.btn-request{
+.btn-request{ /*Boutton*/
     background-color: #0a1b2f;
     color: white;
     border: none;
@@ -27,12 +28,12 @@ body{
     font-size: 1vw;
 }
 
-.btn-request:hover{
+.btn-request:hover{ /*Boutton*/
     transform: scale(1.1);
     transition: 0.3s;
 }
 
-.fields-box-large{
+.fields-box-large{ /* Champs d'ecriture gros */
     box-sizing: border-box;
     border-radius: 4px;
     width: 40vw;
@@ -41,11 +42,19 @@ body{
     font-size: 1em;
 }
 
-.fields-box-email{
+.fields-box-email{ /* Champs d'ecriture normal */
     box-sizing: border-box;
     border-radius: 4px;
     width: 20vw;
     height: 1vw;
     padding: 2%;
     font-size: 1em;
+}
+
+table, th, td, tr{ /* <table> */
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+    text-align: center;
+    background: white;
 }

@@ -36,6 +36,19 @@
         return $fetch['id'];
     }
 
+    function getItemCategory($id){
+        require("../../db/db_connect.php");
+        
+        $req_cat = mysqli_query($db, "select cat from typeitem where id='$id'");
+        if(!$req_cat){
+            echo "erreur de la fonction getItemCategory()";
+            return false;
+        } 
+
+        $fetch = mysqli_fetch_assoc($req_cat);
+        return $fetch['cat'];
+    }
+
     function getItemName($id){ //nom de l'item avec id
         require("../../db/db_connect.php");
         $req_id = mysqli_query($db, "select name from typeitem where id='$id'");
@@ -50,7 +63,7 @@
 
     function getAllItemName($id){ //nom de l'item via id
         require("../../db/db_connect.php");
-        $req_name = mysqli_query($db, "select id,  from typeitem where id='$id'");
+        $req_name = mysqli_query($db, "select id from typeitem where id='$id'");
         if(!$req_name){
             echo "erreur dans la fonction getAllItemName()";
             return false;
@@ -183,35 +196,6 @@
         return $foo;
     }
 
-    function getTheAllOfNameItemFrom($byWho){ //recuperer le nom de tous les items
-        require("../../db/db_connect.php");
-
-        $foo;
-        $i = 0;
-
-        $to_get = mysqli_query($db, "select name from typeitem where byWho=$byWho");
-        if(!$to_get){
-            echo "echec de la fonction getTheAllOfNameItem()";
-            return false;
-        }
-
-        if(mysqli_num_rows($to_get) == 0){
-            echo "<p style='text-align: center;'>Aucun appareil a vendre !</p>";
-            die;
-        }
-
-        $stop_while = mysqli_num_rows($to_get);
-
-        while($i != $stop_while){
-            while($fetch = mysqli_fetch_assoc($to_get)){
-                $foo[$i] = $fetch['name'];
-                $i++;
-            }
-        }
-
-        return $foo;
-    }
-
     function getAllItemFromCat($cat){
         require("../../db/db_connect.php");
 
@@ -296,5 +280,58 @@
         $fetch = mysqli_fetch_assoc($req);
         
         return $fetch['price'];
+    }
+
+    function getAttribute($id){ //recupere les attributs de chaque item par ID
+        require("../../db/db_connect.php");
+
+        $foo = array();
+
+        $req = mysqli_query($db, "select * from typeitemdetails where typeitem = $id");
+        if(!$req){
+            echo "echec de la fonction getAttribute()";
+            return false;
+        }
+        
+        $i = 0;
+        $stop_while = mysqli_num_rows($req); 
+        while($i <= $stop_while){
+            while($fetch = mysqli_fetch_assoc($req)){
+                $foo[$i] = array($fetch['attribute'] => $fetch['value']);
+                $i++;
+            }
+            $i++;
+        }
+        
+
+        return $foo;
+    }
+
+    function getAllBuyIdFromClient($id){ //recuperation des achats d'un id utilisateur par ordre decroissant 
+        require("../../db/db_connect.php");
+
+        $foo = array();
+        $i = 0;
+        $req_id_buy = mysqli_query($db, "select nbuy from customerbuy where client='$id' order by nbuy desc");
+        while($fetch = mysqli_fetch_assoc($req_id_buy)){
+            $foo[$i] = $fetch['nbuy'];
+            $i++;
+        }
+
+        return $foo;
+    }
+
+    function getItemNameFromCustomerBuy($id){ //recuperation du nom des items achete par id d'user, il faudra utiliser la fonction getItemName() pour l'utilser dans lhistorique d'achat
+        require("../../db/db_connect.php");
+
+        $foo = array();
+        $i = 0;
+        $req_id_buy = mysqli_query($db, "select item from customerbuy where client='$id' order by nbuy desc");
+        while($fetch = mysqli_fetch_assoc($req_id_buy)){
+            $foo[$i] = $fetch['item'];
+            $i++;
+        }
+
+        return $foo;
     }
 ?>

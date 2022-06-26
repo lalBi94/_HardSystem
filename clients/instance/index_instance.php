@@ -62,12 +62,13 @@
         <?php require('./require_nav.php'); ?>
 
         <div id="main-container">
-            <p class="text" class="main-items1">Content de vous voir <?php echo $_SESSION['login'];?> !</p>
+            <p class="text" class="main-items1">Content de vous voir <?php echo $_SESSION['surname'];?> !</p>
             
             <form>
                 <button class="btn-acc" class="main-items2" type="submit" formaction="./account_info.php">Consulter votre activite</button> <!-- Redirection vers la page du client -->
             <form>
         </div>
-        
+
+        <?php require('./require_footer.php'); ?>
     </body>
 </html>

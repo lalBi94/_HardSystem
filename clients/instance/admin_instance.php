@@ -39,10 +39,13 @@
                 <input type="number" name='qte' placeholder='qte extrait par lelem'><br><br>
                 <input type="text" name='url' placeholder='url de limage de lobjet'><br><br>
                 <input type='text' name='attrib' placeholder='attribut'><br><br>
-                <input type='text' name='desc' placeholder='details de lattribut'><br><br><br>
+                <input type='text' name='desc' placeholder='details de lattribut'><br><br>
+                <input type='text' name='categorie' placeholder='1 = Tablette, 2 = Telephone, 3 = Ordinateur, 4 = Ecran'><br><br><br>
 
-                <input class='btn-request' type="submit" value='Ajouter l item!'><br><br>
+                <button class='btn-request' type="submit">Ajouter l item!</button><br><br>
             </form>
         </div>
+        
+        <?php require('./require_footer.php'); ?>
     </body>
 </html>

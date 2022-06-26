@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="../style/nav.css">
         <link rel="stylesheet" href="../style/contact/contact.css">
         <link rel="stylesheet" href="../style/eClient/eClient.css">
+        <link rel="stylesheet" href="../style/footer.css">
+
         <link rel="icon" href="../assets/logos/favicon.svg">
 
         <meta charset="UTF-8">
@@ -25,8 +27,6 @@
             <nav id="nav-container">
                 <ul id="nav-menu-container">
                     <a class ="nav-item" href="../index.php"><img class="image-logo" src="../assets/logos/nav-con.png"></a>
-                    <li class="nav-item"><a href="#">Achat</a></li>
-                    <li class="nav-item"><a href="#">Vente</a></li>
                     <li class="nav-item"><a href="./eClientLogin.php">Connexion</a></li>
                     <li class="nav-item"><a href="./eClientRegister.php">Inscription</a></li>
                 </ul>
@@ -55,5 +55,9 @@
 
             <script src="./process/check_info.js"></script>
         </main>
+
+        <footer>
+            <p>Copyright © 1999-2022 Hard-System. Tous droits réservés.</p>
+        </footer>
     </body>
 </html>

@@ -20,22 +20,30 @@
     
     while($fetch = mysqli_fetch_assoc($req)){
         //relatif aux clients
+        $id = $fetch['id'];
+        $identity_req = mysqli_query($db, "select CE.firstname, CE.surname from customerprotecteddata CE where id='$id'");
+        $identity = mysqli_fetch_assoc($identity_req); 
         $_SESSION['login'] = $log; //contient le login
         $_SESSION['sess_id'] = session_id(); //contient l'id de session
-        $_SESSION['id_client'] = $fetch['id']; //contient l'id du client
+        $_SESSION['id_client'] = $id; //contient l'id du client
         $_SESSION['stash'] = getStash($log); //contient sa cagnotte
+        $_SESSION['firstname'] = $identity['firstname']; //nom
+        $_SESSION['surname'] = $identity['surname']; //prenom
 
         //Panier
-        $_SESSION['cart'] = array(); //contient le panier
+        $_SESSION['cart'] = array(); //contient le prix
         $_SESSION['qtecart'] = array(); //contient la qte de l'item present dans le panier
+        $_SESSION['url'] = array(); //contient les id item mis dans le panier 
+        $_SESSION['cart-business'] = array(); //Contient l'idrequest (customersssell) pour enlever la qte dispo dans businesssell
+        
         
         if(whoIsThis($log) == 1){ //si c'est un administrateur
             $_SESSION['perm'] = 1;
-            header ("Location: ../instance/admin_instance.php");
         } if(whoIsThis($log) == 2){ //si c'est un utilisateur
             $_SESSION['perm'] = 2;
-            header ("Location: ../instance/index_instance.php");
         }
+
+        header ("Location: ../instance/index_instance.php");
     }
 
     die;

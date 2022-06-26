@@ -9,7 +9,6 @@
     }
 ?>
 
-<!DOCTYPE html>
 <html>
     <head>
         <?php require('./require_head.php'); ?>
@@ -20,6 +19,7 @@
             #cashback, #perso{
                 margin: 0 auto;
                 margin-top: 2%;
+                margin-bottom: 1.5%;
                 width: 600px;
                 border: 1px solid black;
                 border-radius: 4px;
@@ -77,14 +77,12 @@
         <div id='cashback'>
             <h2 class='title'>Participer a l'economie circulaire !</h2><br><br>
 
-            
-
             <form method='get'>
                 <input class='fields-box-email' style='margin-top: 2%;' name='item' placeholder='Rechercher un objet'>
                 <input class='btn-request' style='font-size: 12px; width: 100px; height: auto;' type='submit' value='rechercher'>
             </form>
 
-            <form action='./process/sellItem.php' method='get'> 
+            <form action='./process/sellItem.php' method='get' onsubmit='return check();'> 
                 <?php //Afficher les items du site
                     if(isset($_GET['item']) && !empty($_GET['item']) && $_GET['item'] != "" && $_GET['item'] != " "){
                         @$get = $_GET['item'];
@@ -93,10 +91,10 @@
                         $nb = mysqli_num_rows($displayitem);
 
                         if($nb == 0 || empty($get) || !isset($get) || $get == null || $get == " " || $get == ""){
-                            echo "<p style='color: red'>Aucun resultat !</p><br>";
+                            echo "<p style='color: red'>Aucun resultat !</p>";
                             die;
                         } if($nb > 0){
-                            echo "<p style='color: green'>Disponible ! ($nb resultat";
+                            echo "<br><p style='color: green'>Disponible ! ($nb resultat";
                         } if($nb > 1){
                             echo "s)</p>";
                         } else{
@@ -116,40 +114,55 @@
                             // $q = $fetch3['quantity'];
                             // $p = $fetch3['price'];
                             // $add = $q*$p;
+                            if($fetch['quantity'] < 1){
+                                $delSellId = mysqli_query($db, "delete from businessbuy where quantity < 1");
+                                if(!$delSellId){
+                                    echo "ca n'a pas mrche ntm";
+                                    die;
+                                }
+                            }
 
-                            echo "<div style='border: 1px solid black; margin-bottom: 2%;'></div>";
+                            if($fetch['quantity'] >= 1){ //si quantite est superieur a 0
+                                echo "<div style='border: 1px solid black; margin-bottom: 2%;'></div>";
 
-                            echo "<div>";
-                            echo "<input style='float: left;' type='radio' name='id' value='$id'>"; //contient id de la demande
-                            echo "<p style='font-weight: bold; margin-left: 5%;'>".$fetch['name']."</p><br>";
-                            echo "<img style='width: 15%; height: auto; margin-left: 3%; margin-bottom: 2%;' src='".$fetch['url']."'>";
-                            echo "<p style='float: right; text-align: right;'>".
-                            "<b>".$price."</b>".
-                            "€<br>Acheteur <b>".$fetch2['name']."</b>".
-                            "<br>Quantite : "."<b>".$fetch['quantity']."</b>".
-                            "</p><br>";
-                            echo "</div>";
+                                echo "<div>";
+                                echo "<input style='float: left;' type='radio' name='id' value='$id'>"; //contient id de la demande
+                                echo "<p style='font-weight: bold; margin-left: 5%;'>".$fetch['name']."</p><br>";
+                                echo "<img style='width: 15%; height: auto; margin-left: 3%; margin-bottom: 2%;' src='".$fetch['url']."'>";
+                                echo "<p style='float: right; text-align: right;'>".
+                                "<b>".$price."</b>".
+                                "€<br>Acheteur <b>".$fetch2['name']."</b>".
+                                "<br>Quantite : "."<b>".$fetch['quantity']."</b>".
+                                "</p><br>";
+                                echo "</div>";
+                            }
                         }
 
                         echo "<div style='border: 1px solid black;'></div><br>";
 
                         echo "<p style='margin-top: 2%; font-weight: bold;'>Quantite :</p>";
-                        echo "<input style='width: 55px; text-align: center;' min='1' class='fields-box-email' type='number' name='qte' value='1'><br><br>";
+                        echo "<input id='qtein' style='width: 55px; text-align: center;' min='1' class='fields-box-email' type='number' name='qte' value='1'><br><br>";
     
                         echo "<p style='margin-top: 2%; font-weight: bold;'>Nom Prenom:</p> <!-- factice -->";
-                        echo "<input class='fields-box-email' type='text'><br>";
+                        echo "<input id='clientin' class='fields-box-email' type='text'><br>";
     
                         echo "<p style='margin-top: 2%; font-weight: bold;'>Adresse :</p> <!-- factice -->";
+                        echo "<input class='fields-box-email' type='text'><br>";
+
+                        echo "<p style='margin-top: 2%; font-weight: bold;'>IBAN :</p> <!-- factice -->";
                         echo "<input class='fields-box-email' type='text'><br>";
     
                         echo "<p style='margin-top: 5%; font-weight: bold;' class='adresse'><b><br>L'appareil devra etre envoyer a l'adresse suivante <br>Il sera envoye a l'entreprise par nos propres soins<br><br><span class='ad'><a href='https://goo.gl/maps/Lqac8fMbmzoD4d8AA' target='_blank'>36 Rue Georges Charpak, 77127 Lieusaint</a></span></b><br><br></p><br>";
     
                         echo "<input id='cgu' class='checkbox' type='checkbox' name='CGU'>";
-                        echo "<label class='text-cgu' for='CGU'><b> Accepter les <a href='../../assets/cgu/CGU-Hard-System.fr.pdf' style='color: #0a1b2f;'>CGU</a></b></label><br><br><br>";
+                        echo "<label class='text-cgu' for='CGU'><b> Accepter les <a href='../../assets/cgu/CGU-Hard-System.fr.pdf' style='color: #0a1b2f;'>CGU</a></b></label><br>";
                         echo "<input class='btn-request' style='margin-top: 5%;' type='submit' value='Vendre !'>";
                         echo "</form>";
                     }
                 ?>
+                <script src='./process/check-info.js'></script>
         </div>
+
+        <?php require('../instance/require_footer.php'); ?>
     </body>
 </html>

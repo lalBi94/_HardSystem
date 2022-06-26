@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 08 juin 2022 à 10:19
+-- Généré le : jeu. 23 juin 2022 à 10:58
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `business` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `country` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `site` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_business` (`country`,`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -40,10 +41,27 @@ CREATE TABLE IF NOT EXISTS `business` (
 -- Déchargement des données de la table `business`
 --
 
-INSERT INTO `business` (`id`, `name`, `country`) VALUES
-(1, 'Ecologic', 'France'),
-(2, 'Veolia', 'France'),
-(3, 'yes yes', 'France');
+INSERT INTO `business` (`id`, `name`, `country`, `site`) VALUES
+(1, 'Ecologic', 'France', 'https://www.ecologic-france.com/'),
+(2, 'Veolia', 'France', 'https://www.service.eau.veolia.fr/home.html'),
+(3, 'Yes Yes', 'France', 'https://www.yes-yes.com/'),
+(4, 'LDLC', 'France', 'https://www.ldlc.com/'),
+(5, 'Electro Depot', 'France', 'https://www.electrodepot.fr/'),
+(6, 'Fnac', 'France', 'https://www.fnac.com/'),
+(7, 'Amazon', 'Etat-unis', 'https://www.amazon.com/'),
+(8, 'Google', 'Etat-unis', 'https://www.google.com/'),
+(9, 'LLIS-NETWORK', 'France', 'https://www.llis-network.fr/'),
+(10, 'Natixis', 'France', 'https://natixis.groupebpce.com/natixis/fr/accueil-j_6.html'),
+(11, 'Credit Agricole', 'France', 'https://www.credit-agricole.fr/'),
+(12, 'Societe general', 'France', 'https://particuliers.societegenerale.fr/'),
+(13, 'IPE', 'France', 'https://www.ipe.fr/'),
+(14, 'Darty', 'France', 'https://www.darty.com/'),
+(15, 'IBM', 'France', 'https://www.ibm.com/fr-fr'),
+(16, 'Fujitsu', 'Etat-unis', 'https://www.fujitsu.com/fr/'),
+(17, 'HP', 'Etat-unis', 'https://www.service.eau.veolia.fr/home.html'),
+(18, 'Hitachi', 'Japon', 'https://www.service.eau.veolia.fr/home.html'),
+(19, 'CSC', 'Etat-unis', 'https://www.service.eau.veolia.fr/home.html'),
+(20, 'NEC', 'Japon', 'https://www.service.eau.veolia.fr/home.html');
 
 -- --------------------------------------------------------
 
@@ -61,42 +79,44 @@ CREATE TABLE IF NOT EXISTS `businessbuy` (
   PRIMARY KEY (`id`),
   KEY `business` (`business`),
   KEY `typeItem` (`typeItem`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `businessbuy`
 --
 
 INSERT INTO `businessbuy` (`id`, `business`, `typeItem`, `quantity`, `price`) VALUES
-(10, 2, 35, 8, 450),
-(3, 2, 1, 18, 200),
-(6, 1, 2, 30, 200),
-(7, 3, 31, 13, 200),
-(8, 2, 17, 16, 200),
-(9, 3, 39, 30, 200);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `businesssell`
---
-
-DROP TABLE IF EXISTS `businesssell`;
-CREATE TABLE IF NOT EXISTS `businesssell` (
-  `business` int(11) NOT NULL,
-  `typeItem` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL COMMENT 'number of items on offer',
-  `price` int(11) NOT NULL COMMENT 'price per unit',
-  PRIMARY KEY (`business`,`typeItem`),
-  KEY `typeItem` (`typeItem`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='the business wants to sell quantity of item at unit price';
-
---
--- Déchargement des données de la table `businesssell`
---
-
-INSERT INTO `businesssell` (`business`, `typeItem`, `quantity`, `price`) VALUES
-(3, 1, 42, 65);
+(3, 1, 17, 33, 280),
+(2, 1, 2, 13, 100),
+(1, 1, 1, 2, 175),
+(4, 1, 31, 65, 800),
+(5, 1, 34, 10, 145),
+(6, 1, 35, 2, 780),
+(7, 1, 39, 1, 111),
+(8, 1, 40, 5, 600),
+(9, 1, 41, 2, 890),
+(10, 1, 42, 87, 900),
+(11, 2, 43, 6, 1000),
+(12, 2, 44, 3, 300),
+(13, 2, 45, 3, 1555),
+(14, 2, 46, 2, 1100),
+(15, 2, 51, 1, 150),
+(16, 2, 52, 67, 600),
+(17, 2, 1, 3, 160),
+(18, 2, 39, 2, 110),
+(19, 2, 40, 2, 500),
+(20, 3, 45, 1, 1600),
+(21, 3, 31, 2, 750),
+(22, 3, 1, 3, 200),
+(23, 3, 39, 5, 110),
+(24, 3, 44, 6, 200),
+(25, 3, 39, 7, 145),
+(26, 3, 40, 8, 499),
+(27, 3, 31, 4, 760),
+(28, 3, 39, 4, 125),
+(29, 3, 40, 2, 510),
+(30, 3, 52, 3, 599),
+(31, 3, 52, 3, 600);
 
 -- --------------------------------------------------------
 
@@ -171,18 +191,70 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `permission` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `customer`
 --
 
 INSERT INTO `customer` (`id`, `login`, `stash`, `permission`) VALUES
-(1, 'golgot77', 0, 2),
-(2, 'JeanMi91', 0, 2),
-(9, 'bilal_94', 157, 1),
-(10, 'onde-folie', 0, 2),
-(12, 'admin', 0, 1);
+(9, 'bilal_94', 6617, 1),
+(10, 'onde-folie', 650, 2),
+(15, 'Pourtest', 200, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `customerbuy`
+--
+
+DROP TABLE IF EXISTS `customerbuy`;
+CREATE TABLE IF NOT EXISTS `customerbuy` (
+  `nbuy` int(11) NOT NULL AUTO_INCREMENT,
+  `client` int(11) NOT NULL,
+  `item` int(11) NOT NULL,
+  `price` float NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `date_buy` date NOT NULL,
+  `time_buy` time NOT NULL,
+  PRIMARY KEY (`nbuy`),
+  KEY `client` (`client`),
+  KEY `item` (`item`)
+) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `customerbuy`
+--
+
+INSERT INTO `customerbuy` (`nbuy`, `client`, `item`, `price`, `quantity`, `date_buy`, `time_buy`) VALUES
+(24, 9, 35, 2850, 1, '2022-06-16', '05:10:56'),
+(23, 9, 34, 2850, 1, '2022-06-16', '05:10:56'),
+(22, 9, 44, 2850, 1, '2022-06-16', '05:10:56'),
+(21, 9, 43, 2850, 1, '2022-06-16', '05:10:56'),
+(20, 9, 44, 1850, 1, '2022-06-16', '05:10:13'),
+(19, 9, 43, 1850, 1, '2022-06-16', '05:10:13'),
+(25, 9, 35, 2620, 2, '2022-06-16', '11:21:28'),
+(26, 9, 39, 2620, 2, '2022-06-16', '11:21:28'),
+(27, 9, 40, 2620, 1, '2022-06-16', '11:21:28'),
+(28, 9, 41, 2050, 1, '2022-06-16', '14:22:07'),
+(29, 9, 42, 2050, 1, '2022-06-16', '14:22:07'),
+(30, 9, 43, 1850, 1, '2022-06-16', '14:24:09'),
+(31, 9, 44, 1850, 1, '2022-06-16', '14:24:09'),
+(32, 9, 48, 99999, 1, '2022-06-16', '15:32:56'),
+(33, 10, 41, 2050, 1, '2022-06-18', '21:29:21'),
+(34, 10, 42, 2050, 1, '2022-06-18', '21:29:21'),
+(35, 10, 2, 720, 6, '2022-06-18', '21:37:40'),
+(36, 10, 40, 750, 1, '2022-06-20', '20:33:11'),
+(37, 9, 43, 1850, 1, '2022-06-21', '20:02:14'),
+(38, 9, 44, 1850, 1, '2022-06-21', '20:02:14'),
+(39, 9, 43, 1850, 1, '2022-06-23', '02:11:08'),
+(40, 9, 44, 1850, 1, '2022-06-23', '02:11:08'),
+(41, 9, 40, 1650, 1, '2022-06-23', '08:35:40'),
+(42, 9, 41, 1650, 1, '2022-06-23', '08:35:40'),
+(43, 9, 40, 3750, 1, '2022-06-23', '11:08:13'),
+(44, 9, 42, 3750, 1, '2022-06-23', '11:08:13'),
+(45, 9, 43, 3750, 1, '2022-06-23', '11:08:13'),
+(46, 9, 44, 3750, 1, '2022-06-23', '11:08:13');
 
 -- --------------------------------------------------------
 
@@ -206,7 +278,8 @@ CREATE TABLE IF NOT EXISTS `customerextraction` (
 INSERT INTO `customerextraction` (`Customer`, `element`, `quantity`) VALUES
 (9, 13, 20000),
 (9, 79, 40),
-(9, 13, 5000);
+(9, 13, 5000),
+(10, 13, 3000);
 
 -- --------------------------------------------------------
 
@@ -229,11 +302,9 @@ CREATE TABLE IF NOT EXISTS `customerprotecteddata` (
 --
 
 INSERT INTO `customerprotecteddata` (`id`, `surname`, `firstname`, `email`) VALUES
-(1, 'Tartenpion', 'Cunégonde', 'cunegonde.tartenpion@toto.fr'),
-(2, 'Erraj', 'Jean-Michel', 'synthe@cool.fr'),
 (9, 'Bilou', 'Bdj', 'salut@fefse.fr'),
-(10, 'Lebon', 'Tiphaine', 'tiphaine.leb@gmail.com'),
-(12, 'HardSystem', 'Team', 'admin@hard-system.fr');
+(10, 'Tiphaine', 'Lebon', 'tiphaine.leb@gmail.com'),
+(15, 'Prenom', 'Nom', 'test@test.fr');
 
 -- --------------------------------------------------------
 
@@ -253,7 +324,7 @@ CREATE TABLE IF NOT EXISTS `customersell` (
   PRIMARY KEY (`nsell`),
   KEY `client` (`client`),
   KEY `item` (`item`)
-) ENGINE=MyISAM AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=123 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `customersell`
@@ -264,6 +335,16 @@ INSERT INTO `customersell` (`nsell`, `client`, `item`, `price`, `quantity`, `dat
 (90, 9, 1, 200, 1, '2022-06-08', '02:59:25'),
 (92, 9, 35, 450, 1, '2022-06-08', '04:00:17'),
 (88, 9, 1, 200, 1, '2022-06-08', '02:58:30'),
+(93, 9, 17, 200, 1, '2022-06-11', '01:50:02'),
+(94, 9, 31, 200, 10, '2022-06-11', '01:50:22'),
+(96, 9, 1, 200, 19, '2022-06-11', '01:55:25'),
+(97, 9, 1, 200, 12, '2022-06-11', '01:57:54'),
+(98, 9, 31, 200, 1, '2022-06-11', '02:01:23'),
+(99, 9, 31, 200, 1, '2022-06-11', '02:01:35'),
+(100, 9, 17, 200, 1, '2022-06-11', '02:06:36'),
+(95, 9, 31, 200, 1, '2022-06-11', '01:54:34'),
+(101, 9, 17, 200, 14, '2022-06-11', '02:07:38'),
+(102, 9, 2, 200, 1, '2022-06-11', '02:20:49'),
 (89, 9, 1, 200, 1, '2022-06-08', '02:59:03'),
 (87, 9, 1, 200, 1, '2022-06-08', '02:58:02'),
 (86, 9, 1, 200, 1, '2022-06-08', '02:57:46'),
@@ -275,7 +356,26 @@ INSERT INTO `customersell` (`nsell`, `client`, `item`, `price`, `quantity`, `dat
 (80, 9, 17, 200, 1, '2022-06-08', '02:54:22'),
 (79, 9, 17, 200, 1, '2022-06-08', '02:53:24'),
 (78, 9, 17, 200, 1, '2022-06-08', '02:53:06'),
-(77, 9, 17, 200, 1, '2022-06-08', '02:52:39');
+(77, 9, 17, 200, 1, '2022-06-08', '02:52:39'),
+(103, 9, 2, 200, 1, '2022-06-11', '02:26:22'),
+(104, 13, 2, 200, 1, '2022-06-11', '02:27:50'),
+(105, 13, 2, 200, 1, '2022-06-11', '02:28:19'),
+(106, 9, 35, 450, 1, '2022-06-16', '11:20:56'),
+(107, 9, 2, 200, 5, '2022-06-16', '14:23:22'),
+(108, 9, 35, 450, 3, '2022-06-16', '14:26:17'),
+(109, 10, 35, 450, 1, '2022-06-18', '21:29:56'),
+(110, 10, 2, 200, 1, '2022-06-20', '20:34:29'),
+(111, 9, 2, 200, 7, '2022-06-23', '05:37:43'),
+(112, 9, 35, 450, 10, '2022-06-23', '05:41:00'),
+(113, 9, 2, 200, 4325, '2022-06-23', '05:41:57'),
+(114, 9, 39, 200, 10, '2022-06-23', '05:43:02'),
+(115, 9, 39, 200, 10, '2022-06-23', '05:45:30'),
+(116, 9, 39, 2000, 10, '2022-06-23', '05:47:06'),
+(117, 1, 39, 400, 2, '2022-06-23', '05:48:29'),
+(119, 9, 39, 200, 1, '2022-06-23', '07:53:59'),
+(120, 15, 39, 200, 1, '2022-06-23', '08:36:40'),
+(121, 9, 39, 110, 1, '2022-06-23', '11:05:02'),
+(122, 9, 2, 1000, 10, '2022-06-23', '11:06:46');
 
 -- --------------------------------------------------------
 
@@ -308,7 +408,9 @@ INSERT INTO `extractionfromtypeitem` (`typeItem`, `element`, `quantity`) VALUES
 (43, 13, 5000),
 (44, 13, 5000),
 (45, 47, 2000),
-(46, 47, 2000);
+(46, 47, 2000),
+(51, 13, 10000),
+(52, 13, 20000);
 
 -- --------------------------------------------------------
 
@@ -380,7 +482,7 @@ CREATE TABLE IF NOT EXISTS `picture` (
   `url` text NOT NULL,
   PRIMARY KEY (`id_url`),
   KEY `item` (`item`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `picture`
@@ -400,7 +502,12 @@ INSERT INTO `picture` (`id_url`, `item`, `url`) VALUES
 (17, 43, 'https://64.media.tumblr.com/848bd02fd51337ffd09199ceaf4086de/cab1dee8cda8f7f9-2d/s250x400/7b6d5b215d54ca7278ae625f4340d2ed3ee9384e.jpg'),
 (18, 44, 'https://64.media.tumblr.com/1c4a45583cc4b23a50f2c88a2b590af5/703b2dd85b576515-bc/s540x810/7a1a74ec9a11d27b3dd837e5ca3f795f6884d299.pnj'),
 (19, 45, 'https://64.media.tumblr.com/33d7068a6448b4cef5841360e937948b/ff7d43eddf6f68dc-af/s540x810/463dee6f95f52a87285ce0a1a35327b8c958f30e.pnj'),
-(20, 46, 'https://64.media.tumblr.com/c18c0cbf9fe56b4699f876b5a7688e84/6d154c8006d52f4c-c8/s500x750/217d227c82ec05a975d1aea1e8c733442ed425ab.jpg');
+(20, 46, 'https://64.media.tumblr.com/c18c0cbf9fe56b4699f876b5a7688e84/6d154c8006d52f4c-c8/s500x750/217d227c82ec05a975d1aea1e8c733442ed425ab.jpg'),
+(22, 48, 'https://media-exp1.licdn.com/dms/image/C4D03AQHETZEqCWSVxg/profile-displayphoto-shrink_200_200/0/1649276877377?e=1659571200&v=beta&t=B5yvU3CZtQxP-ZSRY2EvnS8mQGEtuaoHEVZ73QROldU'),
+(23, 49, 'https://yt3.ggpht.com/ytc/AKedOLTdXhwLbtHrPYfZoGUtVTvVbAjE7vWkRWAGQANuCw=s900-c-k-c0x00ffffff-no-rj'),
+(24, 50, 'https://www.nicofleur.com/wp-content/uploads/2021/02/nico-fleur-rose-Furiosa-50-cm-fleuriste-saint-denis-les-bourg-ouvert-dimanche-4-scaled-e1621954551737.jpg'),
+(25, 51, 'https://64.media.tumblr.com/a4c366e427bec8aabac6a2eee7169c4e/e7eaa4f0968b0245-4a/s540x810/b6ebece985ec23cbb5fd619c58f3095f4b922a81.pnj'),
+(26, 52, 'https://64.media.tumblr.com/cefa3327493aadca0dc77297b7eba4fb/f27c432009ea41cd-cf/s540x810/9a8a37b87a6018f5079b7d00b8890ad5de192733.pnj');
 
 -- --------------------------------------------------------
 
@@ -413,31 +520,32 @@ CREATE TABLE IF NOT EXISTS `typeitem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` int(11) NOT NULL,
-  `byWho` int(11) NOT NULL COMMENT '1 = site, 2 = clients, 3 entreprises',
   `cat` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `typeitem`
 --
 
-INSERT INTO `typeitem` (`id`, `name`, `price`, `byWho`, `cat`) VALUES
-(1, 'Iphone 5', 200, 1, 2),
-(2, 'Fairphone 2', 120, 1, 2),
-(17, 'Galaxie TAB', 300, 1, 1),
-(31, 'Iphone X', 1000, 1, 2),
-(34, 'HP X24ih', 200, 1, 4),
-(35, 'Optix MPG341CQR', 800, 1, 4),
-(39, 'ASUS VZ229HE', 135, 1, 4),
-(40, 'Dell Inspiration 12', 750, 1, 3),
-(41, 'iMac', 900, 1, 3),
-(42, 'Msi GF65 Thin 10UE-034XFR', 1150, 1, 3),
-(43, 'iPad 2021', 1450, 1, 1),
-(44, 'Xiaomi PAD 5qe', 400, 1, 1),
-(45, 'Iphone 13 Pro', 1700, 1, 2),
-(46, 'Samsung Galaxie Ultra', 1300, 1, 2);
+INSERT INTO `typeitem` (`id`, `name`, `price`, `cat`) VALUES
+(1, 'Iphone 5', 200, 2),
+(2, 'Fairphone 2', 120, 2),
+(17, 'Galaxie TAB', 300, 1),
+(31, 'Iphone X', 1000, 2),
+(34, 'HP X24ih', 200, 4),
+(35, 'Optix MPG341CQR', 800, 4),
+(39, 'ASUS VZ229HE', 135, 4),
+(40, 'Dell Inspiration 12', 750, 3),
+(41, 'iMac', 900, 3),
+(42, 'Msi GF65 Thin 10UE-034XFR', 1150, 3),
+(43, 'iPad 2021', 1450, 1),
+(44, 'Xiaomi PAD 5qe', 400, 1),
+(45, 'Iphone 13 Pro', 1700, 2),
+(46, 'Samsung Galaxie Ultra', 1300, 2),
+(51, 'Samsung S7 Edge', 160, 2),
+(52, 'MacBook Pro 2017', 750, 3);
 
 -- --------------------------------------------------------
 
@@ -458,23 +566,18 @@ CREATE TABLE IF NOT EXISTS `typeitemdetails` (
 --
 
 INSERT INTO `typeitemdetails` (`typeItem`, `attribute`, `value`) VALUES
-(1, 'main camera', '8 Mpx'),
-(1, 'screen', '4 in, 1136 × 640 '),
-(1, 'second camera', '1.2 Mpx'),
-(31, 'cam', '10px'),
-(34, 'screen', '21,5\"'),
-(35, 'screen', '27\"');
+(1, 'Camera', '8 Mpx'),
+(1, 'Ecran', '4\"'),
+(1, 'Seconde Camera', '1.2 Mpx'),
+(31, 'Camera', '10px'),
+(34, 'Ecran', '21,5\"'),
+(35, 'Ecran', '27\"'),
+(51, 'Ecran', 'Incurve'),
+(52, 'Touch Bar', 'Oui');
 
 --
 -- Contraintes pour les tables déchargées
 --
-
---
--- Contraintes pour la table `businesssell`
---
-ALTER TABLE `businesssell`
-  ADD CONSTRAINT `BusinessSell_ibfk_1` FOREIGN KEY (`business`) REFERENCES `business` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `BusinessSell_ibfk_2` FOREIGN KEY (`typeItem`) REFERENCES `typeitem` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `customerextraction`

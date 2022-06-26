@@ -79,16 +79,14 @@
         return $fetch['email'];
     }
 
-    function getCustomersElementsExtraction($login){ //extrait les elements qu'il a extrait depuis un objet (nom + qte)
+    function getCustomersElementsExtraction($id){ //extrait les elements qu'il a extrait depuis un objet (nom + qte)
         require("../../db/db_connect.php");
-        $id = getLoginId($login);
         
         $req_extract = mysqli_query($db, "select M.name from mendeleiev M, customerextraction E where E.element=M.Z and E.Customer='$id'");
         if(!$req_extract){
             echo "Erreur de la fonction getCustomersElementsExtraction()";
             return false;
         } if(mysqli_num_rows($req_extract) == 0){
-            echo "Aucun Element extrait";
             return false;
         }
         $stop_while = mysqli_num_rows($req_extract);

@@ -26,7 +26,6 @@
                 - $_SESSION['cart'] est envoye a cart_instance.php
  -->
 
-
 <?php //initialisation
     session_start();
 
@@ -58,36 +57,45 @@
     }
 ?>
 
-<?php //systeme d'enregistrement de caddie
-    @$get = $_GET['nbitem'];
-    @$item = $_GET['item'];
-    @$qtecarte = $_GET['quantity'];
+<?php 
+    @$item = (int) $_GET['nbitem'];
+    @$qte = (int) $_GET['quantity'];
+    @$price = (int) $_GET['price'];
+    @$idreq = (int) $_GET['idrequest'];
+    @$businesss = (int) $_GET['business'];
 
-    //var_dump($_SESSION['cart']); //dump du panier
+    $_SESSION['cart'][$item] = (int) $price;
+    $_SESSION['qtecart'][$item] = (int) $qte;
+    $_SESSION['url'][$item] = (int) $item;
+
+    if($businesss == 'true'){
+        $_SESSION['cart-business'][$item] = (int) $idreq; 
+    } else{
+        $_SESSION['cart-business'][100] = null; 
+    }
 
     foreach($_SESSION['cart'] as $c => $v){
-        if(array_key_exists(1, $_SESSION['cart'])){
-            $get++;
-            $c++;
-        } else{
-            $c++;
+        if($c == null || $c == 0){
+            unset($_SESSION['cart'][$c]);
         }
     }
 
     foreach($_SESSION['qtecart'] as $c => $v){
-        if(array_key_exists(1, $_SESSION['qtecart'])){
-            $get++;
-            $c++;
-        } else{
-            $c++;
+        if($c == null || $c == 0){
+            unset($_SESSION['qtecart'][$c]);
         }
     }
-     
-    if(isset($get) and isset($item) and isset($qtecarte)){
-        $_SESSION['cart'][$get] = (int) $item;
-        $_SESSION['qtecart'][$get] = (int) $qtecarte;
 
-        $nbitem++;
+    foreach($_SESSION['url'] as $c => $v){
+        if($c == null || $c == 0){
+            unset($_SESSION['url'][$c]);
+        }
+    }
+
+    foreach($_SESSION['cart-business'] as $c => $v){
+        if($c == null || $c == 0){
+            unset($_SESSION['cart-business'][$c]);
+        }
     }
 ?>
 
@@ -130,9 +138,7 @@
             }
 
             .items button{ /*button*/
-                margin: 0;
                 width: 35%;
-                margin-top: 4%;
             }
 
             .items .item-img{ /*image */
@@ -149,9 +155,24 @@
                 height: auto;
             }
 
+            .buy-btn{
+                margin-top: 8.5%;
+                display: flex;
+                justify-content: space-around;
+            }
+
             .qte{
                 width: 15%;
                 padding: 2%;
+            }
+
+            .hyperl{
+                text-decoration: none;
+                background: yellow;
+                color: #0a1b2f;
+                padding: 1.2%;
+                text-transform: uppercase;
+                font-weight: bold;
             }
         </style>
 
@@ -159,44 +180,118 @@
             <div class='apresAjoutPanier'></div>
         </div>
             
-        <p style='text-align: center; margin-top: 4%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Selection <?php echo $prefix.$categorie; ?></p> 
         <?php 
-            $name = getAllItemFromCat($category);
-            $stop_while = count($name); 
-            $i = 0;
+            if($_GET['business'] == 'false'){ //VENDU PAR HARD-SYSTEM
+                echo "<p style='text-align: center; margin-top: 4%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Selection $prefix $categorie <span style='font-size: 20px;'> [vendu par Hard System] </span></p>"; 
+                $name = getAllItemFromCat($category);
+                $stop_while = count($name); 
+                $i = 0;
+                $bus = "false";
+                $iditem = getItemId($name[$i]);
 
-            echo "<div class='items-container'>";
-            while($i != $stop_while){
-                $price = getPriceInTypeItem(getItemId($name[$i]));
+                echo "<div class='items-container'>";
+                while($i != $stop_while){
+                    $price = getPriceInTypeItem(getItemId($name[$i]));
 
-                echo "<div class='items'>";
-                $img = getPicture(getItemId($name[$i]));
-                echo "<img class='item-img' src='$img'></img>";
-                echo "<p class='item'>".$name[$i]."</p>";
-                echo "<p>Vendu par HardSystem</p>";
+                    echo "<div class='items'>";
+                    $img = getPicture(getItemId($name[$i]));
+                    echo "<img class='item-img' src='$img'></img>";
+                    echo "<p class='item'>".$name[$i]."</p>";
+                    echo "<p>Vendu par HardSystem</p>";
 
-                echo "<form>";
-                echo "<br><a class='desc' href='#'>"."Fiche technique"."</a>";
-                echo "</form>";
+                    echo "<form>";
+                    echo "<br><a class='desc' href='./item_details.php?id=$iditem&business=$bus'>Fiche technique</a>";
+                    echo "</form>";
 
-                echo "<form method='get'>";
-                $get++;
+                    echo "<form method='get'>";
 
-                $send = getItemId($name[$i]);
-                echo "<input type='hidden' name='nbitem' value='$get'>"; //envoie en get de la cle contenant l'id de l'item dans $_SESSION['cart']
-                echo "<input type='hidden' name='item' value='$send'>"; //envoie en get l'id de l'item
-                echo "<input type='hidden' name='price' value='$price'>";
-                echo "<input type='hidden' name='cat' value='$categorie'>";
-                
-                echo "<br><p><b>".$price.",00€/u TTC</b></p>";
-                echo "<br><input class='qte' type='number' name='quantity' value='1'><br>";
-                echo "<button id='addCart-$send' class='btn-request'><img class='addCart' src='../../assets/logos/cart.png'></img></button>";
+                    $send = getItemId($name[$i]);
+                    echo "<input type='hidden' name='nbitem' value='$send'>"; //envoie en get de la cle contenant l'id de l'item dans $_SESSION['cart']
+                    echo "<input type='hidden' name='price' value='$price'>";
+                    echo "<input type='hidden' name='cat' value='$categorie'>";
+                    echo "<input type='hidden' name='business' value='false'>";
+                    
+                    echo "<br><p><b>".$price.",00€/u TTC</b></p>";
+                    echo "<br><input class='qte' type='number' min='1' name='quantity' value='1'><br>";
+                    echo "<div class='buy-btn'>";
+                    echo "<button id='addCart-$send' class='btn-request'><img class='addCart' src='../../assets/logos/cart.png'>+</img></button>";
+                    echo "</form>";
 
-                echo "</form>";
+                    echo "<form action='./cart_buy.php?' method='post'>";
+                    echo "<button style='width: 150px;' name='uniqueachat' value='$price' class='btn-request'>Acheter x1</button>";
+                    echo "<input type='hidden' name='iditem' value='$send'>";
+                    echo "</div>";
+                    echo "</form>";
+
+                    echo "</div>";
+                    $i++;
+                }
+
                 echo "</div>";
-                $i++;
+            } else{
+                echo "<p style='text-align: center; margin-top: 4%; margin-bottom: 2%; font-size: 2vw; font-weight: bold;'>Selection $prefix $categorie <span style='font-size: 20px;'> [vendu par nos partenaires] </span></p>";
+                $req_business = mysqli_query($db, "select BS.idrequest, B.site, BS.quantity, BS.price, T.name, T.cat, B.name, B.site from businesssell BS, typeitem T, business B where T.id = BS.typeitem and T.cat = $category and BS.business = B.id order by BS.idrequest asc");
+                $req_name_item = mysqli_query($db, "select T.name from businesssell BS, typeitem T, business B where T.id = BS.typeitem and T.cat = $category and BS.business = B.id order by BS.idrequest asc");
+                if(!$req_business){
+                    echo "Erreur dans la selection des informations";
+                    die;
+                } if(!$req_name_item){
+                    echo "Erreur dans la selection du nom de l'item";
+                    die;
+                }
+
+                if(mysqli_num_rows($req_business) == 0){
+                    echo "<p>Aucun objet n'est a vendre dans cette categorie</p>";
+                } else{ //VENDU PAR NOS PARTENAIRES
+                    echo "<div class='items-container'>";
+                        while($fetch = mysqli_fetch_assoc($req_business) and $fetch1 = mysqli_fetch_assoc($req_name_item)){
+                            $name_business = $fetch['name'];
+                            $name_item = $fetch1['name'];
+                            $price = $fetch['price'];
+                            $qtemax = $fetch['quantity'];
+                            $site = $fetch['site'];
+                            $idrequest = $fetch['idrequest'];
+                            $bus = "true";
+                            $idItem = getItemId($name_item);
+
+                            echo "<div class='items'>";
+                            $img = getPicture(getItemId($name_item));
+                            echo "<img class='item-img' src='$img'></img>";
+                            echo "<p class='item'>".$name_item."</p>";
+
+                            echo "<p style='margin-top: 10px;'>Vendu par <a class='hyperl' href='$site' target='_blank'>$name_business</a></p><br>";
+                            echo "<a class='desc' href='./item_details.php?id=$idItem&business=$bus'>Fiche technique</a>";
+
+                            echo "<form method='get'>";
+
+                            $send = getItemId($name_item);
+                            echo "<input type='hidden' name='nbitem' value='$send'>"; //envoie en get de la cle contenant l'id de l'item dans $_SESSION['cart']
+                            echo "<input type='hidden' name='price' value='$price'>";
+                            echo "<input type='hidden' name='cat' value='$categorie'>";
+                            echo "<input type='hidden' name='business' value='true'>";
+                            echo "<input type='hidden' name='idrequest' value='$idrequest'>";
+                            if($qtemax >= 1){
+                                echo "<br><p><b>".$price.",00€/u TTC</b></p>";
+                                echo "<br><input class='qte' type='number' min='1' name='quantity' value='1'>";
+                                echo "<span style='color: green;'> Disponible : x$qtemax</span>";
+                                echo "<div class='buy-btn'>";
+                                echo "<button id='addCart-$send' class='btn-request'><img class='addCart' src='../../assets/logos/cart.png'>+</img></button>";
+                                echo "</form>";
+
+                                echo "<form action='./cart_buy.php?' method='post'>";
+                                echo "<button style='width: 150px;' name='uniqueachat' value='$price' class='btn-request'>Acheter x1</button>";
+                                echo "<input type='hidden' name='iditem' value='$send'>";
+                                echo "</div>";
+                                echo "</form>";
+
+                                echo "</div>";
+                            } else{
+                                echo "<p style='color: red;'>Rupture de stock...</p>";
+                                echo "</div>";
+                            }
+                        }
+                }
             }
-            echo "</div>";
         ?>
 
         <script type="text/javascript">
@@ -224,12 +319,14 @@
 
             foreach($alreadycart as $id => $valeur){
                 echo "<script type='text/javascript'>";
-                echo "disable($valeur);";
+                echo "disable($id);";
                 echo "</script>";
                 $c++;
             }
 
             //var_dump($alreadycart); //check le tab $alreadycart
         ?>
+
+        <?php require('../instance/require_footer.php'); ?>
     </body>
 </html>

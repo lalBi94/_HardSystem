@@ -6,6 +6,25 @@
         header ("location: ../eClientLogin.php");
         die;
     }
+
+    //Donnees a entrer dans le graphique genere par google 
+    $current_stash = $_SESSION['stash'];
+    $id = $_SESSION['id_client'];
+    $go;
+
+    $req_date = mysqli_query($db, "select date_sell, price from customersell where client='$id' order by date_sell, time_sell asc");
+
+    if(!$req_date){
+        echo "erreur dans la requete pour date";
+        die;
+    }
+
+    $nbSell = mysqli_num_rows($req_date);
+    if($nbSell == 0){
+        $go = false;
+    } else{
+        $go = true;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -16,10 +35,13 @@
     
     <body>
         <style>
-            #elem-container{
+            #elem-container, #zone-btn, #curve_chart{
                 margin: 0 auto;
-                margin-top: 2%;
                 width: 400px;
+            }
+
+            main{
+                margin-bottom: 2%;
             }
 
             table, th, td, tr{
@@ -49,38 +71,96 @@
                 echo $cagnotte['stash'];
             ?>
         €</p>
-        <div id='elem-container'>
+
+        <main>
+            <div style='margin-top: 2%;' id='elem-container'>
                 <?php 
                     $i = 0;
-                    $elem = getCustomersElementsExtraction($_SESSION['login']); //liste dans un tableau la liste des elements extrait par l'user
-                    if(!$elem){
-                        echo "<form style='margin-top: 10%;'>";
-                        echo "<button class='btn-request' type='submit' formaction='./showHistorySells.php'>Consulter l'historique de vos ventes</button>";
-                        echo "</form>";
-                        die;
-                    }
+                    $elem = getCustomersElementsExtraction($id); //liste dans un tableau la liste des elements extrait par l'user
+                    //var_dump($elem);
+                    if($elem == false){
+                        echo "Aucun Element extrait";
+                    } else{
+                        echo "<table><tr><th>Nom de l'element</th><th>Quantite</th></tr>";
 
-                    echo "<table><tr><th>Nom de l'element</th><th>Quantite</th><th>Rapport</th></tr>";
+                        $qte = getCustomersQteElementsExtraction($_SESSION['login']); //liste dans un tableau la liste en mg la qte des elements extrait par l'user
+                        $nb = count($elem); //pour stop la boucle
 
-                    $qte = getCustomersQteElementsExtraction($_SESSION['login']); //liste dans un tableau la liste en mg la qte des elements extrait par l'user
-                    $nb = count($elem); //pour stop la boucle
+                        while($i != $nb){
+                            echo "<tr>"."<td>".$elem[$i]."</td>"."<td>".$qte[$i]." mg</td>"."</tr>"; //liste les elements
+                            $i++;
+                        }
 
-                    while($i != $nb){
-                        echo "<tr>"."<td>".$elem[$i]."</td>"."<td>".$qte[$i]." mg</td>"."</tr>"; //liste les elements
-                        $i++;
-                    }
-                ?>
-            </table>
-            <form style="margin-top: 10%;">
-                <button class='btn-request' type='submit' formaction='./showHistorySells.php'>Consulter l'historique de vos ventes</button>
-                <button style='margin-top: 3.5%;' class='btn-request' formaction='./process/showHistoryBuy.php'>Consulter l'historique de vos achats</button>
-                <?php 
-                    if($_SESSION['perm'] == 1){ //si le login est admin, afficher ce boutton en fin de page
-                        echo "<button style='margin-top: 2%;' class='btn-request' type='submit' formaction='./admin_instance.php'>Acceder a l'Admin Panel</button>";
-                        die;
+                        echo "</table>";
                     }
                 ?>
-            <form>
-        </div>
+            </div>
+            <?php 
+                if($_SESSION['stash'] > 0){
+                    echo "<div style='width: 1500px; height: 400px;' id='curve_chart'></div>";
+                }
+            ?>
+
+            <div style='margin-top: 2%;' id='zone-btn'>
+                <form>
+                    <input class='btn-request' type='submit' formaction='./showHistorySells.php' value="Consulter l'historique de vos ventes"><br><br>
+                    <input type='submit' class='btn-request' formaction='./process/showHistoryBuy.php' value="Consulter l'historique de vos achats">
+                
+                    <?php //Dev Mode
+                        if($_SESSION['perm'] == 1){
+                            echo "<div class='zone-dev' style='margin-top: 10%; border: 1px solid black; padding: 5%;'>";
+                            echo "<h2>Paneau D'administration</h2>";
+                            echo "<button style='margin-top: 5%;' class='btn-request' type='submit' formaction='./admin_instance.php'>Acceder au createur d'objet</button><br><br>";
+                            echo "<button class='btn-request' type='submit'>Supprimer un utilisateur</button>";
+                            echo "</div>";
+                        }
+                    ?>
+                </form>
+            </div>
+        </main>
+            
+        <?php require('./require_footer.php'); //requiere le fichier "./require_footer.php" ?> 
+
+        <!-- [DEBUT] Generee par Google Chart -->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Date', 'Gain'],
+                        <?php
+                            $i = 0;
+                            while($fetch = mysqli_fetch_assoc($req_date)){
+                                $gain_value = $fetch['price'];
+                                echo 
+                                "
+                                ['$i', $gain_value],
+                                ";
+
+                                $i++;
+
+                                if($i == ($nbSell-1)){
+                                    echo "['$i', $gain_value],";
+                                }
+                            }
+                        ?>
+                    ]);
+
+                    var options = {
+                    title: 'Evolution de votre cagnotte dans le temps',
+                    curveType: 'function',
+                    legend: { 
+                        position: 'bottom' 
+                    }
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                chart.draw(data, options);
+            }
+        </script>
+        <!-- [FIN] Generee par Google Chart -->
     </body>
 </html>

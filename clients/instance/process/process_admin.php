@@ -9,7 +9,7 @@
     $img = $_POST['url'];
     $attribut = $_POST['attrib'];
     $valAtribut = $_POST['desc'];
-    $who = $_SESSION['perm'];
+    $catego = $_POST['categorie'];
 
     $check = mysqli_query($db, "select name from typeitem where name='$nom'");
     if(mysqli_num_rows($check) != 0){
@@ -17,7 +17,7 @@
         die;
     } 
 
-    $insert_inTypeItem = mysqli_query($db, "insert into typeitem(name, price, byWho) values('$nom', $prix, $who)");
+    $insert_inTypeItem = mysqli_query($db, "insert into typeitem(name, price, cat) values('$nom', $prix, $catego)");
     if(!$insert_inTypeItem){
         echo "Echec de l'ajout dans typeitem.";
         die;
@@ -46,12 +46,10 @@
         }
     }
     
-    if($attribut != 0 and $valAtribut != 0){
-        $insert_inTypeitemdetails = mysqli_query($db, "insert into typeitemdetails values($id_item, '$attribut', '$valAtribut')");
-        if(!$insert_inTypeitemdetails){
-            echo "Echec de l'ajout dans typeitemdetails";
-            die;
-        }
+    $insert_inTypeitemdetails = mysqli_query($db, "insert into typeitemdetails values($id_item, '$attribut', '$valAtribut')");
+    if(!$insert_inTypeitemdetails){
+        echo "Echec de l'ajout dans typeitemdetails";
+        die;
     }
 
     echo "Item cree !";
